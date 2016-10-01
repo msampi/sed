@@ -1,0 +1,108 @@
+@extends('layouts.frontend')
+
+@section('content')
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="info-box bg-orange">
+        <span class="info-box-icon"><i class="ion ion-person-stalker"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">{!! $dictionary->translate('Evaluaciones Completadas') !!}</span>
+          <span class="info-box-number">100%</span>
+
+          <div class="progress">
+            <div style="width: 100%" class="progress-bar"></div>
+          </div>
+              <span class="progress-description">
+                70% Increase in 30 Days
+              </span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="info-box bg-red">
+        <span class="info-box-icon"><i class="ion ion-arrow-graph-up-right"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">{!! $dictionary->translate('Performance Global') !!}</span>
+          <span class="info-box-number">50%</span>
+
+          <div class="progress">
+            <div style="width: 50%" class="progress-bar"></div>
+          </div>
+              <span class="progress-description">
+                70% Increase in 30 Days
+              </span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="info-box bg-green">
+        <span class="info-box-icon"><i class="ion ion-code-working"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">{!! $dictionary->translate('Datos de Ejemplo') !!}</span>
+          <span class="info-box-number">70%</span>
+
+          <div class="progress">
+            <div style="width: 70%" class="progress-bar"></div>
+          </div>
+              <span class="progress-description">
+                70% Increase in 30 Days
+              </span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <div class="col-md-12">
+    	<table class="table table-bordered table-striped search-table" id="users-front-table">
+		    <thead>
+		        <th>ID</th>
+		        <th>User</th>
+		        <th>Date</th>
+		        <th>Status</th>
+		        <th>Area</th>
+		        <th>Evaluated By</th>
+		        <th>Reports</th>
+		        <th>Sel</th>
+		    </thead>
+		    <tbody>
+
+            @foreach($evaluationUserEvaluators as $ev)
+		        <tr>
+		            <td>{!! $ev->user->id !!}</td>
+		            <td><a href="{{ url('/objectives/'.$ev->user->id) }}">{!! $ev->user->name !!} {!! $ev->user->last_name !!}</a></td>
+		            <td>{!! $ev->created_at !!}</td>
+		            <td><small class="label pull-right bg-orange">{!! $ev->status !!}</small></td>
+		            <td>Human Resource</td>
+		            <td>{!! $ev->evaluator->name !!} {!! $ev->evaluator->last_name !!} </td>
+		            <td>Download</td>
+		            <td><input type="checkbox"> </td>
+		        </tr>
+            @endforeach
+
+            @foreach($evaluationUserEvaluators as $ev)
+                @foreach($ev->childrenEUA as $eua)
+                <tr>
+                    <td>{!! $eua->user->id !!}</td>
+                    <td><a href="{{ url('/objectives/'.$eua->user->id) }}">{!! $eua->user->name !!} {!! $eua->user->last_name !!}</a></td>
+                    <td>{!! $eua->created_at !!}</td>
+                    <td><small class="label pull-right bg-orange">{!! $eua->status !!}</small></td>
+                    <td>Human Resource</td>
+                    <td>{!! $eua->evaluator->name !!} {!! $eua->evaluator->last_name !!} </td>
+                    <td>Download</td>
+                    <td><input type="checkbox"> </td>
+                </tr>
+                @endforeach
+            @endforeach
+
+		    </tbody>
+		</table>
+    </div>
+
+@endsection
