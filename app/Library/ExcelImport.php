@@ -16,7 +16,7 @@ use App\Models\Post;
 
 class ExcelImport {
 
-    private $errors; 
+    private $errors;
     private $evaluation_id;
     private $client_id;
     private $languages;
@@ -41,9 +41,9 @@ class ExcelImport {
                                 PlanRepository $planRepo,
                                 ActionRepository $actionRepo)
     {
-        
+
         $this->errors = array();
-        $this->languages = Language::lists('name');
+        $this->languages = Language::lists('prefix');
         $this->userRepository = $userRepo;
         $this->postRepository = $postRepo;
         $this->evaluationUserEvaluatorRepository = $evaluationUserEvaluatorRepo;
@@ -83,7 +83,7 @@ class ExcelImport {
 
     private function validLanguage($lang, $line)
     {
-        $lang = ucfirst(strtolower($lang));
+        $lang = strtolower($lang);
         if ($this->languages->contains($lang))
             return true;
         else
@@ -91,12 +91,12 @@ class ExcelImport {
             $this->errors[$line][] = 'El idioma no existe';
             return false;
         }
-        
+
     }
 
     private function emptyField($field, $field_name, $sheet, $line)
     {
-        
+
         if ($field)
             return true;
         else
@@ -104,14 +104,14 @@ class ExcelImport {
             $this->errors[$line][] = 'La '.$sheet.' no tiene '.$field_name;
             return false;
         }
-        
+
     }
 
 
 
     private function validPostName($row, $line)
     {
-        
+
         if ($row->puesto)
             return true;
         else
@@ -119,10 +119,10 @@ class ExcelImport {
             $this->errors[$line][] = 'La competencia no tiene puesto';
             return false;
         }
-        
+
     }
 
-    
+
     public function validateUsersFields($row, $line)
     {
         if ($this->validLanguage($row->idioma,$line))
@@ -161,28 +161,28 @@ class ExcelImport {
         if ($users_file) :
 
             \Excel::selectSheets('PUESTOS')->load($users_file->getRealPath(), function($reader) {
-               
+
                 foreach ($reader->all() as $row) :
-                    
+
                         $this->postRepository->saveFromExcel($row, $this->evaluation_id, $this->lang, $this->client_id);
 
                 endforeach;
-                
+
 
             });
-        
+
             \Excel::selectSheets('DATOS PARTICIPANTES')->load($users_file->getRealPath(), function($reader) {
 
                 $line = 1;
                 foreach ($reader->all() as $row) :
 
                     if ($this->validateUsersFields($row,$line)) :
-                       
+
                        $data = $this->userRepository->saveFromExcel($row, $this->client_id);
                        $data['evaluation_id'] = $this->evaluation_id;
                        $data['post_id'] = $this->getPostId($row->puesto);
                        $this->evaluationUserEvaluatorRepository->create($data);
-                        
+
 
                     endif;
 
@@ -204,79 +204,79 @@ class ExcelImport {
 
     public function importEvaluation($evaluation_file)
     {
-        
+
         if ($evaluation_file) :
 
             \Excel::selectSheets('PUESTOS')->load($evaluation_file->getRealPath(), function($reader) {
-               
+
                 foreach ($reader->all() as $row) :
-                    
+
                         $this->postRepository->saveFromExcel($row, $this->evaluation_id, $this->lang, $this->client_id);
-                    
+
 
                 endforeach;
-                
+
 
             });
-        
+
             \Excel::selectSheets('COMPETENCIAS')->load($evaluation_file->getRealPath(), function($reader) {
                 $line = 1;
                 foreach ($reader->all() as $row) :
-                    
+
                     if ($this->validateCompetitionsFields($row,$line)) :
                         $competition = $this->competitionRepository->saveFromExcel($row, $this->evaluation_id, $this->getPostId($row->puesto), $this->lang);
-                
+
                         $this->behaviourRepository->saveFromExcel($row, $competition->id, $this->lang);
 
                     endif;
                 $line++;
                 endforeach;
-                
+
 
             });
 
             \Excel::selectSheets('VALORES')->load($evaluation_file->getRealPath(), function($reader) {
                 $line = 1;
                 foreach ($reader->all() as $row) :
-                    
+
                     if ($this->validateValorationsFields($row,$line)) :
-            
+
                         $this->valorationRepository->saveFromExcel($row, $this->evaluation_id, $this->getPostId($row->puesto), $this->lang);
-            
+
                     endif;
                 $line++;
                 endforeach;
-                
+
 
             });
 
             \Excel::selectSheets('OBJETIVOS')->load($evaluation_file->getRealPath(), function($reader) {
                 $line = 1;
                 foreach ($reader->all() as $row) :
-                    
+
                     if ($this->validateObjectivesFields($row,$line)) :
-            
+
                         $this->objectiveRepository->saveFromExcel($row, $this->evaluation_id, $this->getPostId($row->puesto), $this->lang);
-            
+
                     endif;
                 $line++;
                 endforeach;
-                
 
-            }); 
+
+            });
 
             \Excel::selectSheets('PDP')->load($evaluation_file->getRealPath(), function($reader) {
-                
+
                 foreach ($reader->all() as $row) :
-                
+
                         $plan = $this->planRepository->saveFromExcel($row, $this->evaluation_id, $this->getPostId($row->puesto), $this->lang);
 
                         $this->actionRepository->saveFromExcel($row, $plan->id, $this->lang);
-                    
-                endforeach;
-                
 
-            }); 
+                endforeach;
+
+
+            });
 
         endif;
 
@@ -290,12 +290,12 @@ class ExcelImport {
     public function getErrors()
     {
         $result = null;
-        foreach ($this->errors as $line => $errors) 
+        foreach ($this->errors as $line => $errors)
              foreach ($errors as $error) {
                  $result .= '- '.$error.' en la linea '.$line.' (Archivo de participantes)<br>';
              }
-             
-        
+
+
         return $result;
     }
 

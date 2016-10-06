@@ -25,18 +25,24 @@ class BaseModel extends Model
         return NULL;
     }
 
-    public function getAttributeTranslate($attr)
+    public function getAttributeTranslate($attr, $lang_id = NULL)
     {
-    	if (isset($attr[Auth::user()->language_id]))
-            return $attr[Auth::user()->language_id];
-        return NULL;
+			if (!$lang_id)
+				if (isset($attr[Auth::user()->language_id]))
+	            return $attr[Auth::user()->language_id];
+			else
+					if (isset($attr[$lang_id]))
+							return $attr[$lang_id];
+		
+
+			return NULL;
 
     }
 
 		public function listCurrentLang($value, $field)
     {
         $result = array();
-				
+
         foreach ($this->all() as $post) {
 
 						$result[$post->getAttribute($value)] = $post->getAttribute($field)[Auth::user()->language_id];
@@ -45,6 +51,22 @@ class BaseModel extends Model
 
         return $result;
     }
+
+		public function listCurrentClientLang($value, $field)
+    {
+        $result = array();
+
+        foreach ($this->where('client_id', Auth::user()->client_id)->orWhere('client_id','')->get() as $post) {
+
+						$result[$post->getAttribute($value)] = $post->getAttribute($field)[Auth::user()->language_id];
+
+        }
+
+        return $result;
+    }
+
+
+
 
 
 }

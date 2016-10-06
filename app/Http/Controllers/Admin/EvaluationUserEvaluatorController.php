@@ -145,8 +145,8 @@ class EvaluationUserEvaluatorController extends AdminBaseController
         }
 
         $input = $request->all();
-        $evaluation = $this->evaluationUserEvaluatorRepository->updateOrCreate(['evaluation_id' => $input['evaluation_id'], 'evaluator_id' => $input['evaluator_id'], 'user_id' => $input['user_id'] ], $input);
-
+        //$evaluation = $this->evaluationUserEvaluatorRepository->updateOrCreate(['evaluation_id' => $input['evaluation_id'], 'evaluator_id' => $input['evaluator_id'], 'user_id' => $input['user_id'] ], $input);
+        $evaluation = $this->evaluationUserEvaluatorRepository->update($input,$id);
 
         Flash::success($this->dictionary->translate('Evaluación actualizada correctamente'));
 

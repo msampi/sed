@@ -11,7 +11,7 @@ class ActionRepository extends AdminBaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        
+
     ];
 
     /**
@@ -24,14 +24,14 @@ class ActionRepository extends AdminBaseRepository
 
     public function saveFromExcel($row, $plan_id, $lang)
     {
-        
+
         $attributes = $row->all();
         foreach ($attributes as $attr => $value) {
             if (strpos($attr, 'accion') !== false) {
                 $data = explode('_', $attr);
-                if (isset($data[1]) && is_numeric($data[1])){  
-                    $action = $this->model->firstOrCreate(array('import_id' => $data[1], 'plan_id' => $plan_id));
+                if (isset($data[1]) && is_numeric($data[1])){
                     if ($value != ''):
+                        $action = $this->model->firstOrCreate(array('import_id' => $data[1], 'plan_id' => $plan_id));
                         $action->import_id = $data[1];
                         $action->description = $this->saveArrayField($action->description, $lang, $value);
                         $action->save();

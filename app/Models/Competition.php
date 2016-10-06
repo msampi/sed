@@ -13,7 +13,7 @@ class Competition extends BaseModel
 {
 
     public $table = 'competitions';
-    
+
 
 
     public $fillable = [
@@ -31,7 +31,8 @@ class Competition extends BaseModel
      */
     protected $casts = [
         'name' => 'array',
-        'description' => 'array'
+        'description' => 'array',
+        'weight' => 'integer'
     ];
 
     /**
@@ -43,12 +44,12 @@ class Competition extends BaseModel
         'name' => 'required'
     ];
 
-    public function behaviours() 
+    public function behaviours()
     {
         return $this->hasMany('App\Models\Behaviour');
     }
 
-    public function comments() 
+    public function comments()
     {
         return $this->hasMany('App\Models\CompetitionComment');
     }
@@ -63,7 +64,7 @@ class Competition extends BaseModel
         return new CompetitionComment();
     }
 
-    public function post() 
+    public function post()
     {
         return $this->belongsTo('App\Models\Post');
     }

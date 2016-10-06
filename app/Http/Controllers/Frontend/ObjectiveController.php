@@ -45,15 +45,17 @@ class ObjectiveController extends AppFrontendController
     {
 
         parent::setCurrentUser($id);
-        $objectives = $this->objectiveRepository->getObjectives($this->user);
+        $objectives = $this->objectiveRepository->getObjectives($this->user, $this->eue);
+        $sum_weight = $objectives->sum('weight');
         $current_stage = $this->evaluationRepository->getCurrentStage();
         $rating = $this->evaluationRepository->getObjectivesRating();
-
         return view('frontend.objectives')->with('objectives',$objectives)
                                           ->with('user',$this->user)
                                           ->with('is_logged_user',$this->is_logged_user)
                                           ->with('current_stage',$current_stage)
                                           ->with('rating',$rating)
+                                          ->with('sum_weight',$sum_weight)
+                                          ->with('eue',$this->eue)
                                           ->with('section_name','Objetivos');
 
     }
@@ -62,9 +64,9 @@ class ObjectiveController extends AppFrontendController
     {
 
         $input = json_decode($request->data);
-        $this->objectiveRepository->saveObjective($input);
+        $flags = $this->objectiveRepository->saveObjective($input);
         $this->objectiveReviewRepository->saveReview($input);
-        echo 1;
+        echo json_encode($flags);
 
     }
 

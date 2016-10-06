@@ -100,7 +100,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  {!! Form::text('first_stage', null, ['class' => 'form-control pull-right active date-range']) !!}
+                  {!! Form::text('vis_half_year', null, ['class' => 'form-control pull-right active date-range']) !!}
                 </div>
                 <!-- /.input group -->
               </div>
@@ -115,7 +115,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  {!! Form::text('second_stage', null, ['class' => 'form-control pull-right active date-range']) !!}
+                  {!! Form::text('vis_end_year', null, ['class' => 'form-control pull-right active date-range']) !!}
                 </div>
                 <!-- /.input group -->
               </div>
@@ -123,7 +123,7 @@
     <div class="col-md-2">
         <div class="form-group" style="margin-top:50px; text-align:center">
               <label style="font-size:16px">{!! $dictionary->translate('Activar visualizaciones?') !!}</label>
-              {!! Form::checkbox('name', 'value', true); !!}
+              {!! Form::checkbox('visualization'); !!}
         </div>
     </div>
 </div>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Requests\CreateMessageRequest;
+use App\Criteria\ClientCriteria;
+use App\Criteria\ClientEmptyCriteria;
 use App\Http\Requests\UpdateMessageRequest;
 use App\Repositories\MessageRepository;
 use App\Repositories\LanguageRepository;
@@ -34,7 +36,8 @@ class MessageController extends AdminBaseController
      */
     public function index(Request $request)
     {
-        $this->messageRepository->pushCriteria(new RequestCriteria($request));
+        $this->messageRepository->pushCriteria(new ClientCriteria($this->superadmin));
+        $this->messageRepository->pushCriteria(new ClientEmptyCriteria($this->superadmin));
         $messages = $this->messageRepository->all();
 
         return view('admin.messages.index')

@@ -25,6 +25,7 @@ class AppFrontendController extends AppBaseController
     protected $evaluationRepository;
     protected $alertRepository;
     protected $evaluationUserEvaluatorRepository;
+    protected $eue;
 
     public function __construct(UserRepository $userRepo,
                                 EvaluationRepository $evaluationRepo,
@@ -51,7 +52,14 @@ class AppFrontendController extends AppBaseController
         {
             $this->user = $this->userRepository->findWithoutFail($id);
             $this->is_logged_user = false;
+            $this->eue = $this->evaluationUserEvaluatorRepository->findWhere([['user_id','=',$this->user->id], ['evaluator_id','=',Auth::user()->id], ['evaluation_id','=',Session::get('evaluation_id')]])[0];
+
         }
+        else{
+          $this->eue = $this->evaluationUserEvaluatorRepository->findWhere([['user_id','=',Auth::user()->id], ['evaluation_id','=',Session::get('evaluation_id')]])[0];
+
+        }
+
     }
 
 

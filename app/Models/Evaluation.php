@@ -30,6 +30,14 @@ class Evaluation extends BaseModel
         'half_year_end',
         'end_year_start',
         'end_year_end',
+        'vis_end_year_start',
+        'vis_end_year_end',
+        'vis_half_year_start',
+        'vis_half_year_end',
+        'visualization',
+        'welcome_message_id',
+        'register_message_id',
+        'recovery_message_id'
 
     ];
 

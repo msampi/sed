@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'centro@centromultimedia.com.ar', 'name' => 'Nombre de envio'],
 
     /*
     |--------------------------------------------------------------------------

@@ -6,26 +6,28 @@ var BASE_URL = 'http://localhost/sed/public/';
 var objcounter = 0;
 
 
+
+
 function appendWeightSelect(num){
 
     return '<td class="weight-column rating-column" rowspan="2">'+
                 '<select id="weight-selector-'+num+'" class="form-control weight" onchange="changeWeightColor()">'+
-                    '<option>0%</option>'+
-                    '<option>25%</option>'+
-                    '<option>50%</option>'+
-                    '<option>75%</option>'+
-                    '<option>100%</option>'+
+                    '<option value="0">0%</option>'+
+                    '<option value="25">25%</option>'+
+                    '<option value="50">50%</option>'+
+                    '<option value="75">75%</option>'+
+                    '<option value="100">100%</option>'+
                 '</select>'+
             '</td>';
 }
 
-function appendRatingSelect(rating, disabled){
+function appendRatingSelect(op, disabled){
 
 
-    rating = $.parseJSON(rating);
+    rating = $.parseJSON(op.rating);
     var options = "";
     for(var key in rating)
-        options += '<option>'+rating[key].value+'</option>';
+        options += '<option>'+rating[key].value[op.lang]+'</option>';
 	return '<td class="rating-column">'+
 				'<select '+disabled+' class="form-control">'+
                     options+
@@ -43,11 +45,16 @@ function appendPDPObjective(){
                                 '</tr>');
 }
 function appendObjective(options){
+    var stage2, stage3 = '';
+    if (options.stage != 2)
+      stage2 = 'disabled';
+    if (options.stage != 3)
+        stage3 = 'disabled';
 
     objcounter = parseInt(objcounter) + parseInt(options.objnum);
 	$("#objectives-container").append('<table class="table table-bordered objective-table">'+
     	'<thead>'+
-    		'<th colspan="6" style="background-color:#3c8dbc"><button class="btn btn-xs btn-danger" onclick="$(this).parent().parent().parent().parent().remove()"><i class="fa fa-trash"></i></button></th>'+
+    		'<th colspan="6" style="background-color:#3c8dbc"><button class="btn btn-xs btn-danger" onclick="removeObjective($(this).parent().parent().parent().parent(),$(this).parent().parent().parent().parent().find(\'[data-id]\').attr(\'data-id\'), \'Esta seguro de eliminar este objetivo?\')"><i class="fa fa-trash"></i></button></th>'+
     	'</thead>'+
     	'<tbody>'+
     		'<tr>'+
@@ -59,18 +66,18 @@ function appendObjective(options){
     			'<td class="rating-column"><strong>Rating</strong></td>'+
     		'</tr>'+
     		'<tr>'+
-    			'<td rowspan="2"><textarea data-select="weight-selector-'+objcounter+'" data-id="" data-pid="'+options.pid+'" data-eid="'+options.eid+'" data-uid="'+options.uid+'" data-stage="objective"   class="form-control  objective-first-textarea textarea-small-'+objcounter+'"></textarea></td>'+
+    			'<td rowspan="2"><textarea data-flag="'+objcounter+'" data-select="weight-selector-'+objcounter+'" data-id="" data-oid="" data-pid="'+options.pid+'" data-eid="'+options.eid+'" data-uid="'+options.uid+'" data-stage="objective" data-pid="'+options.pid+'"  class="form-control  objective-first-textarea textarea-small-'+objcounter+'"></textarea></td>'+
     			appendWeightSelect(objcounter)+
     			'<td><textarea disabled class="form-control textarea-small-'+objcounter+'"></textarea></td>'+
-    			appendRatingSelect(options.rating, 'disabled')+
+    			appendRatingSelect(options, 'disabled')+
     			'<td><textarea disabled class="form-control textarea-small-'+objcounter+'"></textarea></td>'+
-    			appendRatingSelect(options.rating, 'disabled')+
+    			appendRatingSelect(options, 'disabled')+
     		'</tr>'+
     		'<tr>'+
-    			'<td><textarea class="form-control textarea-small-'+objcounter+'"></textarea></td>'+
-    			appendRatingSelect(options.rating)+
-    			'<td><textarea class="form-control textarea-small-'+objcounter+'"></textarea></td>'+
-    			appendRatingSelect(options.rating)+
+    			'<td><textarea '+stage2+' class="form-control textarea-small-'+objcounter+'"></textarea></td>'+
+    			appendRatingSelect(options, stage2)+
+    			'<td><textarea '+stage3+' class="form-control textarea-small-'+objcounter+'"></textarea></td>'+
+    			appendRatingSelect(options, stage3)+
     		'</tr>'+
     	'</tbody>'+
     '</table>');
@@ -94,7 +101,7 @@ function appendObjective(options){
 
 }
 
-function removeObjective(elem, id){
+function removeObjective(elem, id, message){
 
     if (confirm(message))
         $.ajax({
@@ -106,13 +113,14 @@ function removeObjective(elem, id){
           },
           dataType: 'json'
         });
+      
 
 }
 
 function getTotalWeight(){
     var total = 0;
     $('.weight').each(function(){
-        total += parseInt($(this).val().substring(0, $(this).val().length - 1));
+        total += parseInt($(this).val());
     })
     return total;
 }
@@ -120,7 +128,6 @@ function getTotalWeight(){
 
 
 function changeWeightColor(){
-
     if (getTotalWeight() != 100){
         $('.weight-column').css('background-color','#dd4b39');
          $("#add-objective").show();
@@ -137,18 +144,20 @@ function getObjectivesDataToSave(){
 
     var elements = Array();
     var data;
+    var flag = null;
 
     $('textarea').each(function(){
         data = {
             stage: $(this).data('stage'),
             entry: $(this).data('entry'),
-            id: $(this).data('id'),
+            id: $(this).attr('data-id'),
             uid: $(this).data('uid'),
             eid: $(this).data('eid'),
             pid: $(this).data('pid'),
             oid: $(this).data('oid'),
             selector: $("#"+$(this).data('select')).val(),
-            description: $(this).val()
+            description: $(this).val(),
+            flag: $(this).data('flag')
         };
 
         elements.push(data);
@@ -234,20 +243,23 @@ function getValorationsDataToSave(){
         elements.ratings.push(data);
     });
 
-
-    console.log(elements);
     return JSON.stringify(elements);
 
 }
 
 function objectivesSave(){
     $("#saving-label").show();
+    //console.log(getObjectivesDataToSave());
     $.ajax({
       type: "POST",
       url: BASE_URL+'objectives/save',
       data: {'_token': $('input[name=_token]').val(), 'data': getObjectivesDataToSave()},
-      success: function(){
+      success: function(data){
         $("#saving-label").hide();
+        $('[data-flag]').each(function(){
+           $(this).attr('data-id', parseInt(data[$(this).data('flag')]) );
+
+        })
       },
       dataType: 'json'
     });
@@ -285,17 +297,12 @@ function valorationsSave(){
 function getAverage(elemclass){
   var sum = 0;
   $('.'+elemclass).each(function(){
-    value = new String($(this).val());
-    sum += parseInt(value.replace('%',''));
+    sum += parseInt($(this).val());
   })
   return sum;
 }
 
 $(function(){
-    changeWeightColor();
-    $('.weight-column select').change(function(){
-        changeWeightColor();
-    })
 
     $('.pdp-selector').change(function(){
         child_selector = $('#'+$(this).data('child'));

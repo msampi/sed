@@ -15,7 +15,7 @@ class Valoration extends BaseModel
 {
 
     public $table = 'valorations';
-    
+
 
 
     public $fillable = [
@@ -34,7 +34,8 @@ class Valoration extends BaseModel
     protected $casts = [
         'name' => 'array',
         'description' => 'array',
-        'post_id' => 'integer'
+        'post_id' => 'integer',
+        'weight' => 'integer'
     ];
 
     /**
@@ -46,12 +47,12 @@ class Valoration extends BaseModel
         'name' => 'required'
     ];
 
-    public function evaluation() 
+    public function evaluation()
     {
         return $this->belongsTo('App\Models\Evaluation');
     }
 
-    public function comments() 
+    public function comments()
     {
         return $this->hasMany('App\Models\ValorationComment');
     }
@@ -65,14 +66,14 @@ class Valoration extends BaseModel
         }
         return new ValorationComment();
 
-        
+
     }
-    public function valorationRatings() 
+    public function valorationRatings()
     {
         return $this->hasMany('App\Models\ValorationRating');
     }
 
-    public function getValorationRating($stage, $entry, $user_id) 
+    public function getValorationRating($stage, $entry, $user_id)
     {
         foreach ($this->valorationRatings as $bh) {
             if ($bh->stage == $stage && $bh->entry == $entry && $bh->user_id == $user_id)
@@ -81,12 +82,12 @@ class Valoration extends BaseModel
         return new ValorationRating();
     }
 
-    public function post() 
+    public function post()
     {
         return $this->belongsTo('App\Models\Post');
     }
 
-    
 
-    
+
+
 }

@@ -14,9 +14,9 @@ class User extends Authenticatable
 {
 
     public $table = 'users';
-    
+
     public $fillable = ['name','last_name','email','password','dni','client_id','code','role_id','language_id',
-        'image','category','country','city','area','department'];
+        'image','category','country','city','area','department','register_message_id'];
 
     /**
      * The attributes that should be casted to native types.
@@ -41,7 +41,7 @@ class User extends Authenticatable
         'department' => 'string',
     ];
 
-    
+
     /**
      * Validation rules
      *
@@ -72,7 +72,7 @@ class User extends Authenticatable
 
     }
 
-    public function role() 
+    public function role()
     {
         return $this->belongsTo('App\Models\Role');
     }
@@ -89,12 +89,12 @@ class User extends Authenticatable
         return $value;
     }
 
-    public function evaluation() 
+    public function evaluation()
     {
         return $this->hasMany('App\Models\EvaluationUserEvaluator');
     }
 
-    public function getEvaluationById($id) 
+    public function getEvaluationById($id)
     {
         foreach ($this->evaluation as $ev) {
             if ($ev->evaluation_id == $id)

@@ -29,10 +29,9 @@ class CompetitionRepository extends AdminBaseRepository
 
         $competition = $this->model->firstOrCreate(['import_id' => $row->id_competencia, 'evaluation_id' => $evaluation_id,'post_id' => $post_id]);
         $competition->import_id = $row->id_competencia;
-        $competition->weight = $row->peso;
+        $competition->weight = $row->peso.'%';
         $competition->description = $this->saveArrayField($competition->description, $lang, $row->descripcion);
         $competition->name = $this->saveArrayField($competition->name, $lang, $row->competencia);
-
         $competition->post_id = $post_id;
         $competition->evaluation_id = $evaluation_id;
         $competition->save();

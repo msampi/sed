@@ -18,7 +18,8 @@ class Message extends BaseModel
     public $fillable = [
         'subject',
         'from',
-        'message'
+        'message',
+        'client_id'
     ];
 
     /**

@@ -26,14 +26,6 @@
     {!! Form::email('email', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Password Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('password', $dictionary->translate('Contraseña') . ':') !!}
-    <!-- {!! Form::password('password1', null, ['class' => 'form-control']) !!} -->
-    <input name="password" type="password" id="password" class="form-control">
-    <em class="red">{!! $password_message or '' !!} </em>
-</div>
-
 <!-- Language Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('language_id', $dictionary->translate('Idioma') . ':') !!}
@@ -43,11 +35,6 @@
     {!! Form::label('dni', 'DNI:') !!}
     {!! Form::text('dni', null, ['class' => 'form-control']) !!}
 </div>
-<div class="form-group col-sm-6">
-    {!! Form::label('role', 'Rol:') !!}
-    {!! Form::select('role_id', $roles, null, ['class' => 'form-control']); !!}
-</div>
-
 </fieldset>
 <fieldset>
     <legend>{!! $dictionary->translate('Información de Localidad') !!}:</legend>
@@ -78,6 +65,16 @@
         <hr>
         {!! Form::file('image', ['onchange' => 'readURL(this)']) !!}
     </div>
+    <div class="form-group">
+        {!! Form::label('role', 'Rol:') !!}
+        {!! Form::select('role_id', $roles, null, ['class' => 'form-control']); !!}
+    </div>
+    @if ($action == 'create')
+    <div class="form-group">
+        {!! Form::label('registro', $dictionary->translate('Mensaje de Registro').':') !!}
+        {!! Form::select('register_message_id',  $messages, null,  ['class' => 'form-control']) !!}
+    </div>
+    @endif
     <div class="form-group">
         {!! Form::label('client_id', $dictionary->translate('Cliente') . ':') !!}
         {!! Form::select('client_id', $clients, null, ['class' => 'form-control']); !!}

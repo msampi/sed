@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests;
+use App\Criteria\ClientCriteria;
 use App\Http\Requests\CreateEvaluationRequest;
 use App\Http\Requests\UpdateEvaluationRequest;
 use App\Repositories\UserRepository;
@@ -78,7 +79,7 @@ class EvaluationController extends AdminBaseController
      */
     public function index(Request $request)
     {
-        $this->evaRepo->pushCriteria(new RequestCriteria($request));
+        $this->evaRepo->pushCriteria(new ClientCriteria($this->superadmin));
         $evaluations = $this->evaRepo->all();
 
         return view('admin.evaluations.index')
@@ -96,7 +97,8 @@ class EvaluationController extends AdminBaseController
         $messages = $this->messageRepository->getRoleUserMessages($this->superadmin);
         return view('admin.evaluations.create')->with('clients', $this->clients)
                                                 ->with('ratings', Rating::lists('name', 'id'))
-                                                ->with('languages',$languages);
+                                                ->with('languages',$languages)
+                                                ->with('messages',$messages);
     }
 
     /**
@@ -120,6 +122,10 @@ class EvaluationController extends AdminBaseController
         $input['half_year_end'] = $this->transformToEnglishDate($request->input('second_stage'),1);
         $input['end_year_start'] = $this->transformToEnglishDate($request->input('third_stage'),0);
         $input['end_year_end'] = $this->transformToEnglishDate($request->input('third_stage'),1);
+        $input['vis_half_year_start'] = $this->transformToEnglishDate($request->input('vis_half_year'),0);
+        $input['vis_half_year_end'] = $this->transformToEnglishDate($request->input('vis_half_year'),1);
+        $input['vis_end_year_start'] = $this->transformToEnglishDate($request->input('vis_end_year'),0);
+        $input['vis_end_year_end'] = $this->transformToEnglishDate($request->input('vis_end_year'),1);
 
 
         $request->replace($input);
@@ -191,6 +197,8 @@ class EvaluationController extends AdminBaseController
         $evaluation->first_stage = $this->transformToSpanishDate($evaluation->start_year_start, $evaluation->start_year_end);
         $evaluation->second_stage = $this->transformToSpanishDate($evaluation->half_year_start, $evaluation->half_year_end);
         $evaluation->third_stage = $this->transformToSpanishDate($evaluation->end_year_start, $evaluation->end_year_end);
+        $evaluation->vis_half_year = $this->transformToSpanishDate($evaluation->vis_half_year_start, $evaluation->vis_half_year_end);
+        $evaluation->vis_end_year = $this->transformToSpanishDate($evaluation->vis_end_year_start, $evaluation->vis_end_year_end);
         $messages = $this->messageRepository->getRoleUserMessages($this->superadmin);
         $languages = $this->languageRepository->all();
 
@@ -295,6 +303,10 @@ class EvaluationController extends AdminBaseController
         $input['half_year_end'] = $this->transformToEnglishDate($request->input('second_stage'),1);
         $input['end_year_start'] = $this->transformToEnglishDate($request->input('third_stage'),0);
         $input['end_year_end'] = $this->transformToEnglishDate($request->input('third_stage'),1);
+        $input['vis_half_year_start'] = $this->transformToEnglishDate($request->input('vis_half_year'),0);
+        $input['vis_half_year_end'] = $this->transformToEnglishDate($request->input('vis_half_year'),1);
+        $input['vis_end_year_start'] = $this->transformToEnglishDate($request->input('vis_end_year'),0);
+        $input['vis_end_year_end'] = $this->transformToEnglishDate($request->input('vis_end_year'),1);
 
 
         $upload_status = $this->uploadFiles($request->file('docs'), $evaluation->id);

@@ -12,7 +12,7 @@ class MessageRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'title'
+        'client_id'
     ];
 
     /**
@@ -28,7 +28,7 @@ class MessageRepository extends BaseRepository
       if ($superadmin)
         return $this->model->listCurrentLang('id', 'subject');
       else
-        return $this->model->where('client_id', Auth::user()->client_id)->orWhere('client_id','')->listCurrentLang('id', 'subject');
+        return $this->model->listCurrentClientLang('id', 'subject');
 
     }
 }

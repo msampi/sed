@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Models\Language;
 use InfyOm\Generator\Common\BaseRepository;
 
 class UserRepository extends BaseRepository
@@ -13,7 +14,7 @@ class UserRepository extends BaseRepository
     protected $fieldSearchable = [
         'name',
         'email'
-        
+
     ];
 
     /**
@@ -51,16 +52,22 @@ class UserRepository extends BaseRepository
 
         $cad = "";
 
-        for( $i=1; $i<=2; $i++ ) 
+        for( $i=1; $i<=2; $i++ )
             $cad .= substr( $str1, rand( 0, 25 ), 1 );
-        for( $i=1; $i<=2; $i++ ) 
+        for( $i=1; $i<=2; $i++ )
             $cad .= substr( $str2, rand( 0, 25 ), 1 );
-        for( $i=1; $i<=2; $i++ ) 
+        for( $i=1; $i<=2; $i++ )
             $cad .= substr( $str3, rand( 0, 25 ), 1 );
-        for( $i=1; $i<=2; $i++ ) 
+        for( $i=1; $i<=2; $i++ )
             $cad .= substr( $str4, rand( 0, 25 ), 1 );
-        
+
         return $cad;
+    }
+
+    public function getLanguageByPrefix($prefix)
+    {
+        $lang = Language::where('prefix',$prefix)->first();
+        return $lang->id;
     }
 
     public function saveFromExcel($row, $client_id)
@@ -74,7 +81,7 @@ class UserRepository extends BaseRepository
         $user->email = $row->email;
         $user->client_id = $client_id;
         $user->dni = $row->dni;
-        $user->language_id = 1;
+        $user->language_id = $this->getLanguageByPrefix($row->idioma);
         $pass = $this->generatePass();
         $user->password = bcrypt($pass);
         $user->country = $row->pais;
@@ -90,7 +97,7 @@ class UserRepository extends BaseRepository
             $response['evaluator_id'] = $evaluator->id;
         }
         return $response;
-        
-        
+
+
     }
 }

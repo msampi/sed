@@ -14,7 +14,7 @@ class Objective extends BaseModel
 {
 
     public $table = 'objectives';
-    
+
 
 
     public $fillable = [
@@ -47,12 +47,12 @@ class Objective extends BaseModel
         'name' => 'required'
     ];
 
-    public function reviews() 
+    public function reviews()
     {
         return $this->hasMany('App\Models\ObjectiveReview');
     }
 
-    public function post() 
+    public function post()
     {
         return $this->belongsTo('App\Models\Post');
     }
@@ -69,6 +69,6 @@ class Objective extends BaseModel
     }
 
 
-   
-    
+
+
 }

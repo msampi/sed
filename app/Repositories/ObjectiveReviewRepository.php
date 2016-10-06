@@ -30,9 +30,9 @@ class ObjectiveReviewRepository extends BaseRepository
 
     public function saveReview($input)
     {
-    
+
         foreach ($input as $value) {
-            if (($value->stage != 'objective')) 
+            if ( isset($value->stage) && ($value->stage != 'objective')) 
             {
 
                 $objective = $this->model->findOrNew($value->id);
@@ -44,7 +44,7 @@ class ObjectiveReviewRepository extends BaseRepository
                 $objective->stage = $value->stage;
                 $objective->entry = $value->entry;
                 $objective->save();
-               
+
 
             }
         }
