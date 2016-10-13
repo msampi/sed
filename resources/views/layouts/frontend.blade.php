@@ -172,7 +172,7 @@
                       <a href="#" class="btn btn-default btn-flat">Profile</a>
                     </div>
                     <div class="pull-right">
-                      <a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="{{ url('quit') }}" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                   </li>
                 </ul>
@@ -240,6 +240,12 @@
             <li>
               <a href="{!! URL::asset( 'documents' ) !!}">
                 <i class="fa fa-file-text-o"></i> <span>{!! $dictionary->translate('Documentos') !!}</span>
+
+              </a>
+            </li>
+            <li>
+              <a href="{!! URL::asset( 'performances' ) !!}">
+                <i class="fa fa-bar-chart"></i> <span>{!! $dictionary->translate('Valoración Global') !!}</span>
 
               </a>
             </li>

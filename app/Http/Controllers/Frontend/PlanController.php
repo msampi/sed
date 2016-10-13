@@ -8,6 +8,7 @@ use App\Repositories\UserRepository;
 use App\Repositories\EvaluationUserEvaluatorRepository;
 use App\Repositories\EvaluationRepository;
 use App\Repositories\PlanRepository;
+use App\Repositories\PlanCommentRepository;
 use Illuminate\Http\Request;
 use App\Models\PlanImprovement;
 use App\Models\PlanComment;
@@ -20,14 +21,17 @@ class PlanController extends AppFrontendController
     /** @var  CompetitionRepository */
 
     private $planRepository;
+    private $planCommentRepository;
 
     public function __construct(UserRepository $userRepo,
                                 EvaluationRepository $evaluationRepo,
                                 EvaluationUserEvaluatorRepository $evaluationUserEvaluatorRepo,
-                                PlanRepository $planRepo)
+                                PlanRepository $planRepo,
+                                PlanCommentRepository $planCommentRepo)
     {
         parent::__construct($userRepo, $evaluationRepo, $evaluationUserEvaluatorRepo);
         $this->planRepository = $planRepo;
+        $this->planCommentRepository = $planCommentRepo;
 
 
     }
@@ -39,16 +43,22 @@ class PlanController extends AppFrontendController
      * @param Request $request
      * @return Response
      */
-//echo 'actions['.$plan->id.'].push("'.$action->getAttributeTranslate($action->description).'");';
+
     public function printJSactions($plans)
     {
+      
         echo "<script>
-                var actions = [];";
+                var plans = [];";
 
             foreach ($plans as $plan) {
-                echo 'actions['.$plan->id.'] = [];';
-                foreach ($plan->actions as $action)
-                     echo 'actions["'.$plan->id.'"].push("'.$action->getAttributeTranslate($action->description).'");';
+                echo 'plans['.$plan->id.'] = [];';
+                foreach ($plan->actions as $action){
+                  echo 'var action = new Object();';
+                  echo 'action.id = '.$action->id.';';
+                  echo 'action.desc = "'.$action->getAttributeTranslate($action->description).'";';
+                  echo 'plans['.$plan->id.'].push(action);';
+                }
+
             }
 
         echo "</script>";
@@ -58,12 +68,13 @@ class PlanController extends AppFrontendController
     {
         parent::setCurrentUser($id);
 
-        /* El plan de accion va completado por el usuario en la evaluacion o por el evaluador hacia el usuario en la evaluacion  */
 
         $plans = $this->planRepository->findWhere(['evaluation_id' => Session::get('evaluation_id'), 'post_id' => $this->user->getEvaluationById(Session::get('evaluation_id'))->post_id]);
-        $plan_actions = PlanAction::where('name', 'pattern');
+        //$plan_actions = PlanAction::where('name', 'pattern');
         $plan_improvements = PlanImprovement::where('evaluation_id', Session::get('evaluation_id'))
                                              ->where('user_id', $this->user->id)->get();
+
+        $this->planCommentRepository->createComments(NULL, $this->user);
 
         $plan_comments = new PlanComment();
         $current_stage = $this->evaluationRepository->getCurrentStage();
@@ -85,9 +96,10 @@ class PlanController extends AppFrontendController
     {
 
         $input = json_decode($request->data);
-
-        // /$this->valorationCommentRepository->saveComment($input->comments);
+        $this->planCommentRepository->saveComment($input->comments, TRUE);
         //$this->behaviourRatingRepository->saveRating($input->ratings);
+
+        echo 1;
 
     }
 

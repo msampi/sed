@@ -12,29 +12,29 @@
           {!! $dictionary->translate('Guardando...') !!}
         </div>
       </div>
-        
+
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">{!! $dictionary->translate($section_name) !!}</li>
       </ol>
 
-      
-        
-      
+
+
+
 
 </section>
 <section class="content-sub">
-<div class="col-md-3">
+<div class="col-md-6">
       <h3 class="header-h3">{!! $dictionary->translate($section_name) !!}  : {!! $dictionary->translate('Etapa') !!} {!! $current_stage !!}</h3>
 </div>
 @if (!$is_logged_user)
-<div class="col-md-9">
+<div class="col-md-6">
     <ul>
         <li><a href="{!! url( 'objectives/'.$user->id ) !!}"><i class="fa fa-check-square-o"></i>{!! $dictionary->translate('Objetivos') !!}</a></li>
         <li><a href="{!! url( 'competitions/'.$user->id ) !!}"><i class="fa fa-suitcase"></i>{!! $dictionary->translate('Competencias') !!}</a></li>
         <li><a href="{!! url( 'valorations/'.$user->id ) !!}"><i class="fa fa-check"></i>{!! $dictionary->translate('valores') !!}</a></li>
         <li><a href="{!! url( 'pdp/'.$user->id ) !!}"><i class="fa fa-list"></i>PDP</a></li>
-        
+
     </ul>
 </div>
 @endif

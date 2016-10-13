@@ -45,6 +45,10 @@ class ObjectiveController extends AppFrontendController
     {
 
         parent::setCurrentUser($id);
+        if ($this->is_logged_user)
+          $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso a objetivos');
+        else
+          $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso a objetivos del empleado');
         $objectives = $this->objectiveRepository->getObjectives($this->user, $this->eue);
         $sum_weight = $objectives->sum('weight');
         $current_stage = $this->evaluationRepository->getCurrentStage();
@@ -74,6 +78,7 @@ class ObjectiveController extends AppFrontendController
     {
 
         $this->objectiveRepository->delete($request->get('id'));
+        echo 1;
 
     }
 

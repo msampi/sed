@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Repositories\CompetitionRepository;
 use App\Repositories\EvaluationUserEvaluatorRepository;
 use App\Repositories\EvaluationRepository;
+use App\Repositories\TrackingRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\AlertRepository;
 use Illuminate\Http\Request;
@@ -24,20 +25,25 @@ class AppFrontendController extends AppBaseController
     protected $userRepository;
     protected $evaluationRepository;
     protected $alertRepository;
+    protected $trackingRepository;
     protected $evaluationUserEvaluatorRepository;
     protected $eue;
+    protected $tracking;
 
     public function __construct(UserRepository $userRepo,
                                 EvaluationRepository $evaluationRepo,
                                 EvaluationUserEvaluatorRepository $evaluationUserEvaluatorRepo )
     {
-        //$this->middleware('auth');
+        
         $this->alertRepository = App::make(AlertRepository::class);
+        $this->trackingRepository = App::make(TrackingRepository::class);
         $this->userRepository = $userRepo;
         $this->evaluationRepository = $evaluationRepo;
         $this->evaluationUserEvaluatorRepository = $evaluationUserEvaluatorRepo;
+
         if (!(Session::get('evaluation_id')))
                 Session::set('evaluation_id',$this->evaluationUserEvaluatorRepository->getLastEvaluation(Auth::user()->id));
+        $this->tracking = $this->trackingRepository->firstOrCreate(['user_id'=>Auth::user()->id, 'evaluation_id' => Session::get('evaluation_id'), 'client_id'=>Auth::user()->client_id ]);
 
         $alerts = $this->alertRepository->findWhere(['evaluation_id' => Session::get('evaluation_id')]);
         View::share('alerts', $alerts);

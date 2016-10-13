@@ -92,9 +92,9 @@ class UserController extends AdminBaseController
         $input['password'] = bcrypt($pass);
         $user = $this->userRepository->create($input);
 
-        $email = new EmailSend($user->register_message_id, NULL, $user, $pass);
+        //$email = new EmailSend($user->register_message_id, NULL, $user, $pass);
 
-        $email->send();
+        //$email->send();
 
         Flash::success($this->dictionary->translate('El usuario se ha guardado correctamente'));
 

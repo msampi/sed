@@ -60,7 +60,8 @@
                 @endforeach
             </select>
             {{-- */ $bhrating = $behaviour->getBehaviourRating('half-year','evaluator', $user->id) /* --}}
-            <select data-id="" data-entry="evaluator" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" data-stage="half-year" data-bid="{!! $behaviour->id !!}" class="form-control sel-ev-half margin-top-3" @if ($is_logged_user) disabled @endif>
+
+            <select data-id="" data-entry="evaluator" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" data-stage="half-year" data-bid="{!! $behaviour->id !!}" class="form-control  bh-selector sel-ev-half margin-top-3" @if ($is_logged_user) disabled @endif>
                 @foreach( $rating->values as $value)
                     <option @if ($bhrating->rating == $value->getAttributeTranslate($value->value)) selected="selected" @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
                 @endforeach

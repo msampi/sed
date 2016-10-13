@@ -44,6 +44,20 @@ function appendPDPObjective(){
                                     '<td><a onclick="$(this).parent().parent().remove()" class="btn btn-danger btn-sm"><i class="fa fa-trash" style="font-size:16px"></i></a></td>'+
                                 '</tr>');
 }
+function appendPDPArea(target_selector, append_elem){
+
+    var plan_id = $('#'+target_selector).val();
+    var plan_text = $("#"+target_selector+" option:selected").text();
+    var action_selector = $('#'+target_selector).data('child');
+    var action_id = $('#'+action_selector).val();
+    var action_text = $("#"+action_selector+" option:selected").text();
+
+    $("#"+append_elem).append('<tr class="plan-action-added" data-plan="'+plan_id+'" data-action="'+action_id+'">'+
+                                    '<td><input type="text" class="form-control" value="'+plan_text+'" readonly></td>'+
+                                    '<td><input type="text" class="form-control" value="'+action_text+'" readonly></td>'+
+                                    '<td width="2%"><a onclick="$(this).parent().parent().remove()" class="btn btn-danger btn-sm"><i class="fa fa-trash" style="font-size:16px"></i></a></td>'+
+                                '</tr>');
+}
 function appendObjective(options){
     var stage2, stage3 = '';
     if (options.stage != 2)
@@ -111,10 +125,11 @@ function removeObjective(elem, id, message){
           success: function(){
             $(elem).remove();
           },
+          error: function(){
+            $(elem).remove();
+          },
           dataType: 'json'
         });
-      
-
 }
 
 function getTotalWeight(){
@@ -136,7 +151,6 @@ function changeWeightColor(){
         $('.weight-column').css('background-color','#00a65a');
         $("#add-objective").hide();
     }
-
 
 }
 
@@ -202,8 +216,6 @@ function getCompetitionsDataToSave(){
         elements.ratings.push(data);
     });
 
-
-
     return JSON.stringify(elements);
 
 }
@@ -241,6 +253,28 @@ function getValorationsDataToSave(){
         };
 
         elements.ratings.push(data);
+    });
+
+    return JSON.stringify(elements);
+
+}
+
+function getPDPDataToSave(){
+
+    var elements = {'comments': [],'objectives': [], 'plans': []};
+    var data;
+
+    $('textarea.comment').each(function(){
+        data = {
+            stage: $(this).data('stage'),
+            id: $(this).data('id'),
+            uid: $(this).data('uid'),
+            eid: $(this).data('eid'),
+            entry: $(this).data('entry'),
+            comment: $(this).val()
+        };
+
+        elements.comments.push(data);
     });
 
     return JSON.stringify(elements);
@@ -294,26 +328,42 @@ function valorationsSave(){
 
 }
 
+function pdpSave(){
+    $("#saving-label").show();
+    $.ajax({
+      type: "POST",
+      url: BASE_URL+'pdp/save',
+      data: {'_token': $('input[name=_token]').val(), 'data': getPDPDataToSave()},
+      success: function(){
+        $("#saving-label").hide();
+      },
+      dataType: 'json'
+    });
+
+}
+
 function getAverage(elemclass){
   var sum = 0;
+  var count = 0;
   $('.'+elemclass).each(function(){
     sum += parseInt($(this).val());
+    count++;
   })
-  return sum;
+  return sum/(count/2);
 }
+
+
 
 $(function(){
 
     $('.pdp-selector').change(function(){
         child_selector = $('#'+$(this).data('child'));
         child_selector.empty();
-        options = actions[$(this).val()];
+        options = plans[$(this).val()];
 
         options.forEach(function(action){
-            child_selector.append('<option>'+action+'</option>');
+            child_selector.append('<option value="'+action.id+'">'+action.desc+'</option>');
         })
-
-
     })
 
     $('#average-comp-user-half').html(getAverage('sel-us-half'));
@@ -337,7 +387,7 @@ $(function(){
     });
 
 
-
+    
 
 
 

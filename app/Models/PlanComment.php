@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Session;
 
 use Eloquent as Model;
 
@@ -12,7 +13,7 @@ class PlanComment extends BaseModel
 {
 
     public $table = 'plan_comments';
-    
+
 
     public $fillable = [
         'comment',
@@ -44,13 +45,13 @@ class PlanComment extends BaseModel
      */
     public static $rules = [];
 
-    public function getComment($evaluation_id, $user_id, $stage, $entry, $type )
+    public function getComment($user_id, $stage, $entry, $type )
     {
-        return $this->where('evaluation_id', $evaluation_id)
+        return $this->where('evaluation_id', Session::get('evaluation_id'))
                     ->where('user_id', $user_id)
                     ->where('entry', $entry)
                     ->where('type', $type)
                     ->where('stage', $stage)->first();
     }
-    
+
 }

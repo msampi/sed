@@ -12,11 +12,11 @@ class Tracking extends Model
 {
 
     public $table = 'trackings';
-    
+
 
 
     public $fillable = [
-        'browser'
+
     ];
 
     /**
@@ -25,7 +25,7 @@ class Tracking extends Model
      * @var array
      */
     protected $casts = [
-        'browser' => 'string'
+
     ];
 
     /**
@@ -34,6 +34,17 @@ class Tracking extends Model
      * @var array
      */
     public static $rules = [
-        
+
     ];
+
+    public function user(){
+        return $this->belongsTo('App\Models\User');
+    }
+    public function evaluation(){
+        return $this->belongsTo('App\Models\Evaluation');
+    }
+
+    public function actions(){
+        return $this->hasMany('App\Models\TrackingAction');
+    }
 }

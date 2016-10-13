@@ -12,7 +12,7 @@ class Plan extends BaseModel
 {
 
     public $table = 'plans';
-    
+
 
     public $fillable = [
         'name',
@@ -49,4 +49,5 @@ class Plan extends BaseModel
     public function post(){
         return $this->belongsTo('App\Models\Post');
     }
+    
 }

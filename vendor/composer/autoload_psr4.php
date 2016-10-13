@@ -29,6 +29,7 @@ return array(
     'Swagger\\' => array($vendorDir . '/zircote/swagger-php/src'),
     'SuperClosure\\' => array($vendorDir . '/jeremeamia/SuperClosure/src'),
     'Psy\\' => array($vendorDir . '/psy/psysh/src/Psy'),
+    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Prettus\\Validator\\' => array($vendorDir . '/prettus/laravel-validation/src/Prettus/Validator'),
     'Prettus\\Repository\\' => array($vendorDir . '/prettus/l5-repository/src/Prettus/Repository'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),

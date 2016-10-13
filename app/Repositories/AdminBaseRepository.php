@@ -43,13 +43,13 @@ class AdminBaseRepository extends BaseRepository
 
         return parent::create($input);
     }
-    
+
 
     public function update(array $input, $id)
     {
         if ($new_post_id = $this->saveNewPost($input))
             $input['post_id'] = $new_post_id;
-        
+
         return parent::update($input, $id);
 
     }
@@ -69,7 +69,7 @@ class AdminBaseRepository extends BaseRepository
         $word = str_replace('Ñ','\u00d1', $word);
         return $word;
     }
- 
+
 
     public function saveArrayField($array_field,$index, $value)
     {
@@ -77,9 +77,11 @@ class AdminBaseRepository extends BaseRepository
             $array_field[$index] = $value;
         else
             $array_field = [$index => $value];
-        
+
         return $array_field;
 
     }
+
+    
 
 }

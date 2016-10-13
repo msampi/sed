@@ -25,6 +25,9 @@ Route::group(['namespace' => 'Frontend', 'middleware' => 'auth', 'prefix' => '']
 	Route::post('pdp/save', 'PlanController@save');
 
 	Route::get('documents', 'DocumentController@index');
+	Route::get('quit', 'HomeController@quit');
+
+	Route::resource('performances', 'PerformanceController');
 
 
 });

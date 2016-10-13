@@ -38,6 +38,7 @@ class DocumentController extends AppFrontendController
     public function index(Request $request)
     {
         parent::setCurrentUser(NULL);
+        $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso a documentos');
         $this->documentRepository->pushCriteria(new RequestCriteria($request));
         $documents = $this->documentRepository->all();
         $current_stage = $this->evaluationRepository->getCurrentStage();

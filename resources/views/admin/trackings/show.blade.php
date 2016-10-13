@@ -10,8 +10,8 @@
         <div class="box box-primary">
             <div class="box-body">
                 <div class="row" style="padding-left: 20px">
-                    @include('trackings.show_fields')
-                    <a href="{!! route('trackings.index') !!}" class="btn btn-default">Back</a>
+                    @include('admin.trackings.show_fields')
+                    <a href="{!! route('admin.trackings.index') !!}" class="btn btn-default">{!! $dictionary->translate('Volver') !!}</a>
                 </div>
             </div>
         </div>

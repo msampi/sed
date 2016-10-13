@@ -17,9 +17,9 @@ class ComposerStaticInitd3ac784bee54a567b1f07cf9642b4361
         '0ccdf99b8f62f02c52cba55802e0c2e7' => __DIR__ . '/..' . '/zircote/swagger-php/src/functions.php',
         'e23faeee409e941dc9b4c80386209c39' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/functions.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
-        'a28599dc506da421718fad75955a4b9d' => __DIR__ . '/..' . '/infyomlabs/laravel-generator/src/helpers.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
+        'a28599dc506da421718fad75955a4b9d' => __DIR__ . '/..' . '/infyomlabs/laravel-generator/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -63,6 +63,7 @@ class ComposerStaticInitd3ac784bee54a567b1f07cf9642b4361
         'P' => 
         array (
             'Psy\\' => 4,
+            'Psr\\Log\\' => 8,
             'Prettus\\Validator\\' => 18,
             'Prettus\\Repository\\' => 19,
             'PhpParser\\' => 10,
@@ -198,6 +199,10 @@ class ComposerStaticInitd3ac784bee54a567b1f07cf9642b4361
         array (
             0 => __DIR__ . '/..' . '/psy/psysh/src/Psy',
         ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
         'Prettus\\Validator\\' => 
         array (
             0 => __DIR__ . '/..' . '/prettus/laravel-validation/src/Prettus/Validator',
@@ -267,10 +272,6 @@ class ComposerStaticInitd3ac784bee54a567b1f07cf9642b4361
     public static $prefixesPsr0 = array (
         'P' => 
         array (
-            'Psr\\Log\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/psr/log',
-            ),
             'Prophecy\\' => 
             array (
                 0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
@@ -340,9 +341,9 @@ class ComposerStaticInitd3ac784bee54a567b1f07cf9642b4361
     public static $classMap = array (
         'App\\Console\\Commands\\Inspire' => __DIR__ . '/../..' . '/app/Console/Commands/Inspire.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
-        'App\\Criteria\\EqualCriteria' => __DIR__ . '/../..' . '/app/Criteria/EqualCriteria.php',
+        'App\\Criteria\\ClientCriteria' => __DIR__ . '/../..' . '/app/Criteria/ClientCriteria.php',
+        'App\\Criteria\\ClientEmptyCriteria' => __DIR__ . '/../..' . '/app/Criteria/ClientEmptyCriteria.php',
         'App\\Criteria\\EvaluationUserEvaluatorCriteria' => __DIR__ . '/../..' . '/app/Criteria/EvaluationUserEvaluatorCriteria.php',
-        'App\\Criteria\\OrCriteria' => __DIR__ . '/../..' . '/app/Criteria/OrCriteria.php',
         'App\\Events\\Event' => __DIR__ . '/../..' . '/app/Events/Event.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Admin\\AdminBaseController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AdminBaseController.php',
@@ -359,6 +360,7 @@ class ComposerStaticInitd3ac784bee54a567b1f07cf9642b4361
         'App\\Http\\Controllers\\Admin\\PlanController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/PlanController.php',
         'App\\Http\\Controllers\\Admin\\PostController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/PostController.php',
         'App\\Http\\Controllers\\Admin\\RatingController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/RatingController.php',
+        'App\\Http\\Controllers\\Admin\\TrackingController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/TrackingController.php',
         'App\\Http\\Controllers\\Admin\\TranslationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/TranslationController.php',
         'App\\Http\\Controllers\\Admin\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserController.php',
         'App\\Http\\Controllers\\Admin\\ValorationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ValorationController.php',
@@ -374,14 +376,17 @@ class ComposerStaticInitd3ac784bee54a567b1f07cf9642b4361
         'App\\Http\\Controllers\\Frontend\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Frontend/HomeController.php',
         'App\\Http\\Controllers\\Frontend\\ObjectiveController' => __DIR__ . '/../..' . '/app/Http/Controllers/Frontend/ObjectiveController.php',
         'App\\Http\\Controllers\\Frontend\\PlanController' => __DIR__ . '/../..' . '/app/Http/Controllers/Frontend/PlanController.php',
+        'App\\Http\\Controllers\\Frontend\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Frontend/UserController.php',
         'App\\Http\\Controllers\\Frontend\\ValorationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Frontend/ValorationController.php',
         'App\\Http\\Controllers\\ObjectiveReviewController' => __DIR__ . '/../..' . '/app/Http/Controllers/Frontend/ObjectiveReviewController.php',
-        'App\\Http\\Controllers\\TrackingController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/TrackingController.php',
+        'App\\Http\\Controllers\\PerformanceController' => __DIR__ . '/../..' . '/app/Http/Controllers/PerformanceController.php',
+        'App\\Http\\Controllers\\TrackingController' => __DIR__ . '/../..' . '/app/Http/Controllers/Frontend/TrackingController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\AdminMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/AdminMiddleware.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
+        'App\\Http\\Middleware\\SuperAdminMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/SuperAdminMiddleware.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\API\\CreateCompanyAPIRequest' => __DIR__ . '/../..' . '/app/Http/Requests/API/CreateCompanyAPIRequest.php',
         'App\\Http\\Requests\\API\\UpdateCompanyAPIRequest' => __DIR__ . '/../..' . '/app/Http/Requests/API/UpdateCompanyAPIRequest.php',
@@ -400,6 +405,7 @@ class ComposerStaticInitd3ac784bee54a567b1f07cf9642b4361
         'App\\Http\\Requests\\CreateMessageRequest' => __DIR__ . '/../..' . '/app/Http/Requests/CreateMessageRequest.php',
         'App\\Http\\Requests\\CreateObjectiveRequest' => __DIR__ . '/../..' . '/app/Http/Requests/CreateObjectiveRequest.php',
         'App\\Http\\Requests\\CreateObjectiveReviewRequest' => __DIR__ . '/../..' . '/app/Http/Requests/CreateObjectiveReviewRequest.php',
+        'App\\Http\\Requests\\CreatePerformanceRequest' => __DIR__ . '/../..' . '/app/Http/Requests/CreatePerformanceRequest.php',
         'App\\Http\\Requests\\CreatePlanRequest' => __DIR__ . '/../..' . '/app/Http/Requests/CreatePlanRequest.php',
         'App\\Http\\Requests\\CreatePostRequest' => __DIR__ . '/../..' . '/app/Http/Requests/CreatePostRequest.php',
         'App\\Http\\Requests\\CreateRatingRequest' => __DIR__ . '/../..' . '/app/Http/Requests/CreateRatingRequest.php',
@@ -425,6 +431,7 @@ class ComposerStaticInitd3ac784bee54a567b1f07cf9642b4361
         'App\\Http\\Requests\\UpdateMessageRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateMessageRequest.php',
         'App\\Http\\Requests\\UpdateObjectiveRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateObjectiveRequest.php',
         'App\\Http\\Requests\\UpdateObjectiveReviewRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateObjectiveReviewRequest.php',
+        'App\\Http\\Requests\\UpdatePerformanceRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdatePerformanceRequest.php',
         'App\\Http\\Requests\\UpdatePlanRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdatePlanRequest.php',
         'App\\Http\\Requests\\UpdatePostRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdatePostRequest.php',
         'App\\Http\\Requests\\UpdateRatingRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateRatingRequest.php',
@@ -437,6 +444,7 @@ class ComposerStaticInitd3ac784bee54a567b1f07cf9642b4361
         'App\\Http\\ViewComposers\\GlobalComposer' => __DIR__ . '/../..' . '/app/Http/ViewComposers/GlobalComposer.php',
         'App\\Jobs\\Job' => __DIR__ . '/../..' . '/app/Jobs/Job.php',
         'App\\Library\\Dictionary' => __DIR__ . '/../..' . '/app/Library/Dictionary.php',
+        'App\\Library\\EmailSend' => __DIR__ . '/../..' . '/app/Library/EmailSend.php',
         'App\\Library\\ExcelImport' => __DIR__ . '/../..' . '/app/Library/ExcelImport.php',
         'App\\Models\\Action' => __DIR__ . '/../..' . '/app/Models/Action.php',
         'App\\Models\\Alert' => __DIR__ . '/../..' . '/app/Models/Alert.php',
@@ -454,6 +462,7 @@ class ComposerStaticInitd3ac784bee54a567b1f07cf9642b4361
         'App\\Models\\Message' => __DIR__ . '/../..' . '/app/Models/Message.php',
         'App\\Models\\Objective' => __DIR__ . '/../..' . '/app/Models/Objective.php',
         'App\\Models\\ObjectiveReview' => __DIR__ . '/../..' . '/app/Models/ObjectiveReview.php',
+        'App\\Models\\Performance' => __DIR__ . '/../..' . '/app/Models/Performance.php',
         'App\\Models\\Plan' => __DIR__ . '/../..' . '/app/Models/Plan.php',
         'App\\Models\\PlanAction' => __DIR__ . '/../..' . '/app/Models/PlanAction.php',
         'App\\Models\\PlanComment' => __DIR__ . '/../..' . '/app/Models/PlanComment.php',
@@ -462,6 +471,7 @@ class ComposerStaticInitd3ac784bee54a567b1f07cf9642b4361
         'App\\Models\\Rating' => __DIR__ . '/../..' . '/app/Models/Rating.php',
         'App\\Models\\Role' => __DIR__ . '/../..' . '/app/Models/Role.php',
         'App\\Models\\Tracking' => __DIR__ . '/../..' . '/app/Models/Tracking.php',
+        'App\\Models\\TrackingAction' => __DIR__ . '/../..' . '/app/Models/TrackingAction.php',
         'App\\Models\\Translation' => __DIR__ . '/../..' . '/app/Models/Translation.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\Valoration' => __DIR__ . '/../..' . '/app/Models/Valoration.php',
@@ -489,6 +499,8 @@ class ComposerStaticInitd3ac784bee54a567b1f07cf9642b4361
         'App\\Repositories\\MessageRepository' => __DIR__ . '/../..' . '/app/Repositories/MessageRepository.php',
         'App\\Repositories\\ObjectiveRepository' => __DIR__ . '/../..' . '/app/Repositories/ObjectiveRepository.php',
         'App\\Repositories\\ObjectiveReviewRepository' => __DIR__ . '/../..' . '/app/Repositories/ObjectiveReviewRepository.php',
+        'App\\Repositories\\PerformanceRepository' => __DIR__ . '/../..' . '/app/Repositories/PerformanceRepository.php',
+        'App\\Repositories\\PlanCommentRepository' => __DIR__ . '/../..' . '/app/Repositories/PlanCommentRepository.php',
         'App\\Repositories\\PlanRepository' => __DIR__ . '/../..' . '/app/Repositories/PlanRepository.php',
         'App\\Repositories\\PostRepository' => __DIR__ . '/../..' . '/app/Repositories/PostRepository.php',
         'App\\Repositories\\RatingRepository' => __DIR__ . '/../..' . '/app/Repositories/RatingRepository.php',
@@ -532,6 +544,7 @@ class ComposerStaticInitd3ac784bee54a567b1f07cf9642b4361
         'CreateBehavioursTable' => __DIR__ . '/../..' . '/database/migrations/2016_05_01_150509_create_behaviours_table.php',
         'CreateLocationsTable' => __DIR__ . '/../..' . '/database/migrations/2016_05_01_001621_create_locations_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+        'CreatePerformancesTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_12_210403_create_performances_table.php',
         'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2016_05_01_000749_create_roles_table.php',
         'CreateTypesTable' => __DIR__ . '/../..' . '/database/migrations/2016_05_02_231727_create_types_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',

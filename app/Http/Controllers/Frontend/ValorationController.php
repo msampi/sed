@@ -21,8 +21,8 @@ class ValorationController extends AppFrontendController
     private $valorationRatingRepository;
     private $valorationCommentRepository;
 
-    public function __construct(UserRepository $userRepo, 
-                                EvaluationRepository $evaluationRepo, 
+    public function __construct(UserRepository $userRepo,
+                                EvaluationRepository $evaluationRepo,
                                 EvaluationUserEvaluatorRepository $evaluationUserEvaluatorRepo,
                                 ValorationRepository $valorationRepo,
                                 ValorationCommentRepository $valorationCommentRepo,
@@ -32,7 +32,7 @@ class ValorationController extends AppFrontendController
         $this->valorationRepository = $valorationRepo;
         $this->valorationCommentRepository = $valorationCommentRepo;
         $this->valorationRatingRepository = $valorationRatingRepo;
-        
+
     }
 
 
@@ -46,6 +46,10 @@ class ValorationController extends AppFrontendController
     public function index($id = NULL)
     {
         parent::setCurrentUser($id);
+        if ($this->is_logged_user)
+          $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso a valores');
+        else
+          $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso a valores del empleado');
         $valorations = $this->valorationRepository->findWhere(['evaluation_id' => Session::get('evaluation_id'), 'post_id' => $this->user->getEvaluationById(Session::get('evaluation_id'))->post_id]);
         $rating = $this->evaluationRepository->getValorationsRating();
         $current_stage = $this->evaluationRepository->getCurrentStage();
@@ -64,9 +68,9 @@ class ValorationController extends AppFrontendController
 
     public function save(Request $request)
     {
-        
+
         $input = json_decode($request->data);
-        
+
         $this->valorationCommentRepository->saveComment($input->comments);
         $this->valorationRatingRepository->saveRating($input->ratings);
         echo 1;

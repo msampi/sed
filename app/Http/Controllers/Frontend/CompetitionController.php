@@ -47,10 +47,13 @@ class CompetitionController extends AppFrontendController
     public function index($id = NULL)
     {
         parent::setCurrentUser($id);
-        $competitions = $this->competitionRepository->findWhere(['evaluation_id' => Session::get('evaluation_id'), 'post_id' => $this->user->getEvaluationById(Session::get('evaluation_id'))->post_id]);
+        $competitions = $this->competitionRepository->findWhere(['evaluation_id' => Session::get('evaluation_id'), 'post_id' => $this->eue->post_id]);
         $rating = $this->evaluationRepository->getCompetitionsRating();
         $current_stage = $this->evaluationRepository->getCurrentStage();
-
+        if ($this->is_logged_user)
+          $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso a competencias');
+        else
+          $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso a competencias del empleado');
         foreach ($competitions as $competition) {
            $this->competitionCommentRepository->createComments($competition, $this->user);
         }

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Requests\CreateTrackingRequest;
+use App\Criteria\ClientCriteria;
 use App\Http\Requests\UpdateTrackingRequest;
 use App\Repositories\TrackingRepository;
 use App\Http\Controllers\AppBaseController as InfyOmBaseController;
@@ -12,13 +13,16 @@ use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
-class TrackingController extends InfyOmBaseController
+class TrackingController extends AdminBaseController
 {
     /** @var  TrackingRepository */
     private $trackingRepository;
 
+
     public function __construct(TrackingRepository $trackingRepo)
     {
+        parent::__construct();
+
         $this->trackingRepository = $trackingRepo;
     }
 
@@ -30,21 +34,11 @@ class TrackingController extends InfyOmBaseController
      */
     public function index(Request $request)
     {
-        $this->trackingRepository->pushCriteria(new RequestCriteria($request));
+        $this->trackingRepository->pushCriteria(new ClientCriteria($this->superadmin));
         $trackings = $this->trackingRepository->all();
 
-        return view('trackings.index')
+        return view('admin.trackings.index')
             ->with('trackings', $trackings);
-    }
-
-    /**
-     * Show the form for creating a new Tracking.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        return view('trackings.create');
     }
 
     /**
@@ -62,7 +56,7 @@ class TrackingController extends InfyOmBaseController
 
         Flash::success('Tracking saved successfully.');
 
-        return redirect(route('trackings.index'));
+        return redirect(route('admin.trackings.index'));
     }
 
     /**
@@ -79,31 +73,13 @@ class TrackingController extends InfyOmBaseController
         if (empty($tracking)) {
             Flash::error('Tracking not found');
 
-            return redirect(route('trackings.index'));
+            return redirect(route('admin.trackings.index'));
         }
 
-        return view('trackings.show')->with('tracking', $tracking);
+        return view('admin.trackings.show')->with('tracking', $tracking);
     }
 
-    /**
-     * Show the form for editing the specified Tracking.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
-    public function edit($id)
-    {
-        $tracking = $this->trackingRepository->findWithoutFail($id);
 
-        if (empty($tracking)) {
-            Flash::error('Tracking not found');
-
-            return redirect(route('trackings.index'));
-        }
-
-        return view('trackings.edit')->with('tracking', $tracking);
-    }
 
     /**
      * Update the specified Tracking in storage.
@@ -120,14 +96,14 @@ class TrackingController extends InfyOmBaseController
         if (empty($tracking)) {
             Flash::error('Tracking not found');
 
-            return redirect(route('trackings.index'));
+            return redirect(route('admin.trackings.index'));
         }
 
         $tracking = $this->trackingRepository->update($request->all(), $id);
 
         Flash::success('Tracking updated successfully.');
 
-        return redirect(route('trackings.index'));
+        return redirect(route('admin.trackings.index'));
     }
 
     /**
@@ -144,13 +120,13 @@ class TrackingController extends InfyOmBaseController
         if (empty($tracking)) {
             Flash::error('Tracking not found');
 
-            return redirect(route('trackings.index'));
+            return redirect(route('admin.trackings.index'));
         }
 
         $this->trackingRepository->delete($id);
 
         Flash::success('Tracking deleted successfully.');
 
-        return redirect(route('trackings.index'));
+        return redirect(route('admin.trackings.index'));
     }
 }

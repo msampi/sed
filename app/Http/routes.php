@@ -16,9 +16,3 @@ Route::auth();
 
 require app_path().'/Http/Routes/admin_routes.php';
 require app_path().'/Http/Routes/frontend_routes.php';
-
-
-
-
-
-

@@ -7,41 +7,52 @@ use Session;
 
 abstract class BaseCommentRepository extends BaseRepository
 {
-    
+
 
     abstract protected function setCommentReferenceId($comment, $value);
-    
 
-    public function saveComment($input)
+
+    public function saveComment($input, $nonreference = FALSE)
     {
-        
+
         foreach ($input as $value) {
-            
+
             $comment = $this->model->findOrNew($value->id);
-            $comment = $this->setCommentReferenceId($comment, $value->cid); //$comment->competition_id = $value->cid;
+            if (!$nonreference)
+              $comment = $this->setCommentReferenceId($comment, $value->cid); //$comment->competition_id = $value->cid;
             $comment->comment = $value->comment;
             $comment->user_id = $value->uid;
             $comment->entry = $value->entry;
             $comment->evaluator_id = $value->eid;
             $comment->evaluation_id = Session::get('evaluation_id');
+            if (isset($value->type))
+              $comment->type = $value->type;
             $comment->save();
-            
-            
+
+
         }
-        
+
     }
 
-    public function createComment($model_id, $user_id, $stage, $entry) 
+    public function createComment($model_id, $user_id, $stage, $entry, $type = NULL)
     {
-        
-        $comment = $this->model->firstOrNew([$this->reference() =>$model_id, 
-                                            'user_id' =>$user_id, 
-                                            'evaluation_id' => Session::get('evaluation_id'), 
-                                            'stage' => $stage, 
-                                            'entry' => $entry ]);
-        
-        $comment = $this->setCommentReferenceId($comment, $model_id);
 
+        if ($model_id) :
+            $comment = $this->model->firstOrNew([$this->reference() =>$model_id,
+                                            'user_id' =>$user_id,
+                                            'evaluation_id' => Session::get('evaluation_id'),
+                                            'stage' => $stage,
+                                            'entry' => $entry ]);
+            $comment = $this->setCommentReferenceId($comment, $model_id);
+        else :
+          $comment = $this->model->firstOrNew(['user_id' =>$user_id,
+                                          'evaluation_id' => Session::get('evaluation_id'),
+                                          'stage' => $stage,
+                                          'entry' => $entry,
+                                          'type' => $type ]);
+
+
+        endif;
         $comment->user_id = $user_id;
         $comment->evaluation_id = Session::get('evaluation_id');
         $comment->stage = $stage;

@@ -42,7 +42,7 @@ class UserController extends AppFrontendController
         if ($id)
             Session::set('evaluation_id',$id);
 
-
+        $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso a listado de usuarios');
         $this->evaluationUserEvaluatorRepository->pushCriteria(new EvaluationUserEvaluatorCriteria());
         $evaluationUserEvaluators = $this->evaluationUserEvaluatorRepository->all();
 
