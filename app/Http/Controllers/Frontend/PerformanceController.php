@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Requests;
+use App\Repositories\UserRepository;
+use App\Repositories\EvaluationUserEvaluatorRepository;
+use App\Repositories\EvaluationRepository;
 use App\Http\Requests\CreatePerformanceRequest;
 use App\Http\Requests\UpdatePerformanceRequest;
 use App\Repositories\PerformanceRepository;
@@ -19,8 +22,12 @@ class PerformanceController extends AppFrontendController
     /** @var  PerformanceRepository */
     private $performanceRepository;
 
-    public function __construct(PerformanceRepository $performanceRepo)
+    public function __construct(UserRepository $userRepo,
+                                EvaluationRepository $evaluationRepo,
+                                PerformanceRepository $performanceRepo,
+                                EvaluationUserEvaluatorRepository $evaluationUserEvaluatorRepo)
     {
+        parent::__construct($userRepo, $evaluationRepo, $evaluationUserEvaluatorRepo);
         $this->performanceRepository = $performanceRepo;
     }
 
@@ -30,18 +37,33 @@ class PerformanceController extends AppFrontendController
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request)
+    public function index($id = NULL)
     {
+        parent::setCurrentUser($id);
         $this->performanceRepository->pushCriteria(new EqualCriteria('evaluation_id', Session::get('evaluation_id')));
-        //$this->performanceRepository->pushCriteria(new EqualCriteria('user_id', $this->user->id));
+        $this->performanceRepository->pushCriteria(new EqualCriteria('user_id', $this->user->id));
         $performance = $this->performanceRepository->first();
 
+        $viewControlls = new \stdClass();
+        $viewControlls->evaluationId = Session::get('evaluation_id');
+        $viewControlls->userId = $this->user->id;
+        $viewControlls->isEmpleado = $this->is_logged_user;
+
+        if (!$this->is_logged_user) :
+            $viewControlls->evaluatorId = Auth::user()->id;
+
+        else:
+            $viewControlls->evaluatorId = NULL;
+
+        endif;
+
+
         if (!$performance)
-            return view('frontend.performances.create')->with('is_logged_user', $this->is_logged_user);
+            return view('frontend.performances.create')->with('viewControlls', $viewControlls);
         else
             if (($this->is_logged_user && $performance->finish_user) || (!$this->is_logged_user && $performance->finish_evaluator))
               return view('frontend.performances.edit')->with('performance', $performance)
-                                                       ->with('is_logged_user', $this->is_logged_user);
+                                                       ->with('viewControlls', $viewControlls);
             else
               return view('frontend.performances.show')->with('performance', $performance);
 
@@ -62,9 +84,7 @@ class PerformanceController extends AppFrontendController
 
         $performance = $this->performanceRepository->create($input);
 
-        Flash::success('Performance saved successfully.');
-
-        return redirect(route('frontend.performances.index'));
+        return redirect(route('frontend.home'));
     }
 
 

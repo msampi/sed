@@ -21,7 +21,10 @@ class Performance extends Model
         'user_agree',
         'evaluator_agree',
         'user_final_score',
-        'evaluator_final_score'
+        'evaluator_final_score',
+        'user_id',
+        'evaluator_id',
+        'evaluation_id'
     ];
 
     /**

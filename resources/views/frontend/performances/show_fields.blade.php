@@ -1,48 +1,31 @@
 <!-- Id Field -->
-<div class="form-group">
-    {!! Form::label('id', 'Id:') !!}
-    <p>{!! $performance->id !!}</p>
+<div class="col-md-6">
+  <h4>{!! $dictionary->translate('Promedio Empleado') !!}: </h4>
+  <div class="form-group col-sm-12">
+      {!! Form::label('user_comment', $dictionary->translate('Comentarios Empleado')) !!}
+      {!! $performance->user_comment !!}
+  </div>
+  <div class="form-group col-sm-12">
+      {!! Form::label('user_comment', $dictionary->translate('Conforme')) !!}?
+      {!! ($performance->user_agree) ? $dictionary->translate('Si') : $dictionary->translate('No') !!}
+  </div>
+  <div class="form-group col-sm-12">
+      {!! Form::label('user_final_score', $dictionary->translate('Puntuación final empleado')) !!}
+      {!! $performance->user_final_score !!}
+  </div>
 </div>
-
-<!-- Objectives Field -->
-<div class="form-group">
-    {!! Form::label('objectives', 'Objectives:') !!}
-    <p>{!! $performance->objectives !!}</p>
+<div class="col-md-6">
+  <h4>{!! $dictionary->translate('Promedio Manager') !!}: </h4>
+  <div class="form-group col-sm-12">
+      {!! Form::label('evaluator_comment', $dictionary->translate('Comentarios Manager')) !!}
+      {!! $performance->evaluator_comment !!}
+  </div>
+  <div class="form-group col-sm-12">
+      {!! Form::label('evaluator_agree', $dictionary->translate('Conforme')) !!}?
+      {!! ($performance->evaluator_agree) ? $dictionary->translate('Si') : $dictionary->translate('No') !!}
+  </div>
+  <div class="form-group col-sm-12">
+      {!! Form::label('evaluator_final_score', $dictionary->translate('Puntuación final manager')) !!}
+      {!! $performance->evaluator_final_score !!}
+  </div>
 </div>
-
-<!-- Comment Field -->
-<div class="form-group">
-    {!! Form::label('comment', 'Comment:') !!}
-    <p>{!! $performance->comment !!}</p>
-</div>
-
-<!-- Competition Field -->
-<div class="form-group">
-    {!! Form::label('competition', 'Competition:') !!}
-    <p>{!! $performance->competition !!}</p>
-</div>
-
-<!-- Valoration Field -->
-<div class="form-group">
-    {!! Form::label('valoration', 'Valoration:') !!}
-    <p>{!! $performance->valoration !!}</p>
-</div>
-
-<!-- Final Field -->
-<div class="form-group">
-    {!! Form::label('final', 'Final:') !!}
-    <p>{!! $performance->final !!}</p>
-</div>
-
-<!-- Created At Field -->
-<div class="form-group">
-    {!! Form::label('created_at', 'Created At:') !!}
-    <p>{!! $performance->created_at !!}</p>
-</div>
-
-<!-- Updated At Field -->
-<div class="form-group">
-    {!! Form::label('updated_at', 'Updated At:') !!}
-    <p>{!! $performance->updated_at !!}</p>
-</div>
-
