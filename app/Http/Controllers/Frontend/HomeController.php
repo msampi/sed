@@ -54,6 +54,6 @@ class HomeController extends AppFrontendController
     {
       $this->trackingRepository->saveTrackingAction($this->tracking->id,'Salida del sistema');
       return redirect('logout');
-      
+
     }
 }

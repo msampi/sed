@@ -4,7 +4,7 @@
 </div>
 
 <div class="form-group col-sm-12 multilang-group">
-    {!! Form::label('description', 'Description:') !!}
+    {!! Form::label('description', $dictionary->translate('Descripción').':') !!}
 
         @foreach ($languages as $language)
             <div class="multilang" data-lang="{!! $language->name !!}">

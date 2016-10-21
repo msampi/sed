@@ -63,12 +63,13 @@
     	<table class="table table-bordered table-striped search-table" id="users-front-table">
 		    <thead>
 		        <th>ID</th>
-		        <th>User</th>
-		        <th>Date</th>
+		        <th>{!! $dictionary->translate('Usuario') !!}</th>
+		        <th>{!! $dictionary->translate('Fecha') !!}</th>
 		        <th>Status</th>
-		        <th>Area</th>
-		        <th>Evaluated By</th>
-		        <th>Reports</th>
+		        <th>{!! $dictionary->translate('Puesto') !!}</th>
+		        <th>{!! $dictionary->translate('Evaluador') !!}</th>
+            <th>{!! $dictionary->translate('Puntuación Final') !!}</th>
+		        <th>{!! $dictionary->translate('Informe') !!}</th>
 		        <th>Sel</th>
 		    </thead>
 		    <tbody>
@@ -78,10 +79,11 @@
 		            <td>{!! $ev->user->id !!}</td>
 		            <td><a href="{{ url('/objectives/'.$ev->user->id) }}">{!! $ev->user->name !!} {!! $ev->user->last_name !!}</a></td>
 		            <td>{!! $ev->created_at !!}</td>
-		            <td><small class="label pull-right bg-orange">{!! $ev->status !!}</small></td>
-		            <td>Human Resource</td>
+		            <td><small class="label bg-green">{!! $dictionary->translate('Iniciado') !!}</small></td>
+		            <td>{!! $ev->getAttributeTranslate($ev->post->name) !!}</td>
 		            <td>{!! $ev->evaluator->name !!} {!! $ev->evaluator->last_name !!} </td>
-		            <td>Download</td>
+                <td>{!! $dictionary->translate('Aún no asignada') !!}</td>
+		            <td>{!! $dictionary->translate('No disponible') !!}</td>
 		            <td><input type="checkbox"> </td>
 		        </tr>
             @endforeach

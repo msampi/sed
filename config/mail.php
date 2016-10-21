@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'centro@centromultimedia.com.ar', 'name' => 'Nombre de envio'],
+    'from' => ['address' => 'sed@people-experts.com', 'name' => 'People Experts'],
 
     /*
     |--------------------------------------------------------------------------

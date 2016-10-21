@@ -34,7 +34,7 @@ class AppFrontendController extends AppBaseController
                                 EvaluationRepository $evaluationRepo,
                                 EvaluationUserEvaluatorRepository $evaluationUserEvaluatorRepo )
     {
-        
+
         $this->alertRepository = App::make(AlertRepository::class);
         $this->trackingRepository = App::make(TrackingRepository::class);
         $this->userRepository = $userRepo;

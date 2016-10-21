@@ -106,7 +106,6 @@ class Evaluation extends BaseModel
         return $this->hasMany('App\Models\Document');
     }
 
-
-
+    
 
 }

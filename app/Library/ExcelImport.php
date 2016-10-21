@@ -13,6 +13,7 @@ use App\Repositories\BehaviourRepository;
 use App\Repositories\ObjectiveRepository;
 use App\Models\Language;
 use App\Models\Post;
+use App\Models\Evaluation;
 
 class ExcelImport {
 
@@ -53,6 +54,8 @@ class ExcelImport {
         $this->objectiveRepository = $objectiveRepo;
         $this->planRepository = $planRepo;
         $this->actionRepository = $actionRepo;
+
+
     }
 
     public function setClientId($client_id)
@@ -158,6 +161,9 @@ class ExcelImport {
 
     public function importUsers($users_file)
     {
+
+
+
         if ($users_file) :
 
             \Excel::selectSheets('PUESTOS')->load($users_file->getRealPath(), function($reader) {
@@ -181,7 +187,7 @@ class ExcelImport {
                        $data = $this->userRepository->saveFromExcel($row, $this->client_id);
                        $data['evaluation_id'] = $this->evaluation_id;
                        $data['post_id'] = $this->getPostId($row->puesto);
-                       $this->evaluationUserEvaluatorRepository->create($data);
+                       $this->evaluationUserEvaluatorRepository->saveFromExcel($data);
 
 
                     endif;

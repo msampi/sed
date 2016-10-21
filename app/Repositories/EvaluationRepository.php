@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Evaluation;
+use App\Criteria\EqualCriteria;
 use InfyOm\Generator\Common\BaseRepository;
 use Session;
 use Carbon\Carbon;
@@ -79,10 +80,37 @@ class EvaluationRepository extends BaseRepository
       $result = array();
       foreach ($evaluations as $evaluation) {
           $result[$evaluation->id] = $evaluation->name;
-      
+
       }
 
       return $result;
+    }
+
+    public function userVisibility()
+    {
+      $this->pushCriteria(new EqualCriteria('id',Session::get('evaluation_id')));
+      $evaluation = $this->first();
+
+      $now = Carbon::now();
+      $current_stage = $this->getCurrentStage();
+
+      if (!$evaluation->visualization)
+        return false;
+      if ($current_stage == 1)
+        return false;
+      if ($current_stage == 2)
+          if ($evaluation->vis_half_year_start->lt($now) && $evaluation->vis_half_year_end->gt($now))
+            return true;
+          else
+            return false;
+      if ($current_stage == 3)
+          if ($evaluation->vis_end_year_start->lt($now) && $evaluation->vis_end_year_end->gt($now))
+            return true;
+          else
+            return false;
+
+      return false;
+
     }
 
 

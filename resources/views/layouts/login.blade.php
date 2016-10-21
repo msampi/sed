@@ -25,7 +25,7 @@
             <a href="../../index2.html"><b>SED</b><br>Sistema de Evaluación de Desempeño</a>
         </div><!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg"></p>
             @yield('content')
         </div>
     </div>

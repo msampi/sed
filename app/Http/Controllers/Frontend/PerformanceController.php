@@ -16,6 +16,7 @@ use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use Session;
+use Auth;
 
 class PerformanceController extends AppFrontendController
 {

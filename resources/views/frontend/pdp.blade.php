@@ -17,15 +17,14 @@
       </thead>
       <tbody id="pdp-objective">
         @foreach ($plan_improvements as $pi)
-
-            <tr>
-              <td><textarea class="form-control" @if (!$is_logged_user) disabled @endif>{!! $pi->objectives !!}</textarea></td>
-              <td><textarea class="form-control" @if (!$is_logged_user) disabled @endif>{!! $pi->meta !!}</textarea></td>
-              <td><textarea class="form-control" @if (!$is_logged_user) disabled @endif>{!! $pi->dev_action !!}</textarea></td>
-              <td><textarea class="form-control" @if (!$is_logged_user) disabled @endif>{!! $pi->resources !!}</textarea></td>
+            <tr class="pdp-improvement" data-id="{!! $pi->id  !!}" data-flag="-1">
+              <td><textarea class="form-control" data-field='objective' @if (!$is_logged_user) disabled @endif>{!! $pi->objectives !!}</textarea></td>
+              <td><textarea class="form-control" data-field='meta' @if (!$is_logged_user) disabled @endif>{!! $pi->meta !!}</textarea></td>
+              <td><textarea class="form-control" data-field='action' @if (!$is_logged_user) disabled @endif>{!! $pi->dev_action !!}</textarea></td>
+              <td><textarea class="form-control" data-field='resource' @if (!$is_logged_user) disabled @endif>{!! $pi->resources !!}</textarea></td>
               <td><a onclick="$(this).parent().parent().remove()" class="btn btn-danger btn-sm"><i class="fa fa-trash" style="font-size:16px"></i></a></td>
             </tr>
-            
+
         @endforeach
       </tbody>
   </table>

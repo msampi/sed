@@ -15,18 +15,17 @@ use Response;
 
 
 
-class TranslationController extends AppBaseController
+class TranslationController extends AdminBaseController
 {
     /** @var  TranslationRepository */
     private $translationRepository;
-    private $languageRepository;
-    
+
 
     public function __construct(TranslationRepository $translationRepo, LanguageRepository $languageRepo)
     {
         $this->translationRepository = $translationRepo;
-        $this->languageRepository = $languageRepo;
-       
+        parent::__construct();
+
     }
 
     /**

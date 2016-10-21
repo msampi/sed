@@ -204,9 +204,13 @@
 </div>
 <!-- Submit Field -->
 <div class="col-sm-12" style="margin-top:20px">
+    <div class="col-md-12">
+      <label style="font-size:16px">{!! $dictionary->translate('Lanzar simulación') !!}</label>
+      {!! Form::checkbox('start',false); !!}    
+    </div>
      <div class="col-md-12">
-    {!! Form::submit($dictionary->translate('Guardar'), ['class' => 'btn btn-primary']) !!}
-    <a href="{!! route('admin.evaluations.index') !!}" class="btn btn-default">{!! $dictionary->translate('Cancelar')!!}</a>
+        {!! Form::submit($dictionary->translate('Guardar'), ['class' => 'btn btn-primary']) !!}
+        <a href="{!! route('admin.evaluations.index') !!}" class="btn btn-default">{!! $dictionary->translate('Cancelar')!!}</a>
     </div>
 </div>
 <script type="text/javascript">

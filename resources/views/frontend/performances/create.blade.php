@@ -12,7 +12,7 @@
 
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'performances.store']) !!}
+                    {!! Form::open(['url' => 'performances/store']) !!}
 
                         @include('frontend.performances.fields')
 

@@ -9,12 +9,12 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use App\Library\EmailSend;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Repositories\MessageRepository;
 use App\Models\Client;
-use App\Library\EmailSend;
 use App\Models\Language;
 use App\Models\Role;
 use Auth;
@@ -89,12 +89,13 @@ class UserController extends AdminBaseController
 
         $input['image'] = $this->uploadImage($request, 'image');
         $pass = $this->generatePass();
-        $input['password'] = bcrypt($pass);
+        $input['password'] = $pass;
         $user = $this->userRepository->create($input);
+        if ($input['role_id'] == 2) :
+            $email = new EmailSend($user->register_message_id, NULL, $user, $pass);
+            $email->send();
+        endif;
 
-        //$email = new EmailSend($user->register_message_id, NULL, $user, $pass);
-
-        //$email->send();
 
         Flash::success($this->dictionary->translate('El usuario se ha guardado correctamente'));
 

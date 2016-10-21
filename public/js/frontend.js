@@ -1,8 +1,9 @@
 
 /* Objectives */
 
-var BASE_URL = 'http://localhost/sed/public/';
+//var BASE_URL = 'http://localhost/sed/public/';
 //var BASE_URL = 'http://sed.centromultimedia.com.ar/public/';
+var BASE_URL = 'http://www.evaluaciononline.es/';
 var objcounter = 0;
 
 
@@ -36,13 +37,14 @@ function appendRatingSelect(op, disabled){
 }
 
 function appendPDPObjective(){
-    $("#pdp-objective").append('<tr>'+
-                                    '<td><textarea class="form-control"></textarea></td>'+
-                                    '<td><textarea class="form-control"></textarea></td>'+
-                                    '<td><textarea class="form-control"></textarea></td>'+
-                                    '<td><textarea class="form-control"></textarea></td>'+
+    $("#pdp-objective").append('<tr class="pdp-improvement" data-id="" data-flag="'+objcounter+'">'+
+                                    '<td><textarea data-field="objective" class="form-control"></textarea></td>'+
+                                    '<td><textarea data-field="meta" class="form-control"></textarea></td>'+
+                                    '<td><textarea data-field="action" class="form-control"></textarea></td>'+
+                                    '<td><textarea data-field="resource" class="form-control"></textarea></td>'+
                                     '<td><a onclick="$(this).parent().parent().remove()" class="btn btn-danger btn-sm"><i class="fa fa-trash" style="font-size:16px"></i></a></td>'+
                                 '</tr>');
+    objcounter++;
 }
 function appendPDPArea(target_selector, append_elem){
 
@@ -261,7 +263,7 @@ function getValorationsDataToSave(){
 
 function getPDPDataToSave(){
 
-    var elements = {'comments': [],'objectives': [], 'plans': []};
+    var elements = {'comments': [],'improvements': []};
     var data;
 
     $('textarea.comment').each(function(){
@@ -276,6 +278,18 @@ function getPDPDataToSave(){
 
         elements.comments.push(data);
     });
+    $('.pdp-improvement').each(function(){
+        data = {
+            id: $(this).data('id'),
+            objective: $(this).find('textarea[data-field="objective"]')[0].value,
+            meta: $(this).find('textarea[data-field="meta"]')[0].value,
+            action: $(this).find('textarea[data-field="action"]')[0].value,
+            resource: $(this).find('textarea[data-field="resource"]')[0].value,
+            flag:$(this).data('flag')
+        };
+
+        elements.improvements.push(data);
+    });
 
     return JSON.stringify(elements);
 
@@ -283,7 +297,7 @@ function getPDPDataToSave(){
 
 function objectivesSave(){
     $("#saving-label").show();
-    //console.log(getObjectivesDataToSave());
+
     $.ajax({
       type: "POST",
       url: BASE_URL+'objectives/save',
@@ -334,7 +348,11 @@ function pdpSave(){
       type: "POST",
       url: BASE_URL+'pdp/save',
       data: {'_token': $('input[name=_token]').val(), 'data': getPDPDataToSave()},
-      success: function(){
+      success: function(data){
+        $('[data-flag]').each(function(){
+           $(this).attr('data-id', parseInt(data[$(this).data('flag')]) );
+
+        })
         $("#saving-label").hide();
       },
       dataType: 'json'
@@ -387,7 +405,7 @@ $(function(){
     });
 
 
-    
+
 
 
 

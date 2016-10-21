@@ -8,6 +8,7 @@ use App\Repositories\UserRepository;
 use App\Repositories\EvaluationUserEvaluatorRepository;
 use App\Repositories\EvaluationRepository;
 use App\Repositories\PlanRepository;
+use App\Repositories\PlanImprovementRepository;
 use App\Repositories\PlanCommentRepository;
 use Illuminate\Http\Request;
 use App\Models\PlanImprovement;
@@ -21,17 +22,20 @@ class PlanController extends AppFrontendController
     /** @var  CompetitionRepository */
 
     private $planRepository;
+    private $planImprovementRepository;
     private $planCommentRepository;
 
     public function __construct(UserRepository $userRepo,
                                 EvaluationRepository $evaluationRepo,
                                 EvaluationUserEvaluatorRepository $evaluationUserEvaluatorRepo,
                                 PlanRepository $planRepo,
-                                PlanCommentRepository $planCommentRepo)
+                                PlanCommentRepository $planCommentRepo,
+                                PlanImprovementRepository $planImprovementRepo)
     {
         parent::__construct($userRepo, $evaluationRepo, $evaluationUserEvaluatorRepo);
         $this->planRepository = $planRepo;
         $this->planCommentRepository = $planCommentRepo;
+        $this->planImprovementRepository = $planImprovementRepo;
 
 
     }
@@ -46,7 +50,7 @@ class PlanController extends AppFrontendController
 
     public function printJSactions($plans)
     {
-      
+
         echo "<script>
                 var plans = [];";
 
@@ -97,10 +101,9 @@ class PlanController extends AppFrontendController
 
         $input = json_decode($request->data);
         $this->planCommentRepository->saveComment($input->comments, TRUE);
-        //$this->behaviourRatingRepository->saveRating($input->ratings);
-
-        echo 1;
-
+        $flags = $this->planImprovementRepository->saveImprovements($input->improvements);
+        echo json_encode($flags);
+      
     }
 
 }

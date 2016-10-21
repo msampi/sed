@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 use App\Models\Post;
+use Auth;
 
 use InfyOm\Generator\Common\BaseRepository;
 
@@ -27,7 +28,7 @@ class AdminBaseRepository extends BaseRepository
         if (!empty($input['new_post'])) :
 
             $post = new Post();
-            $post->name = $input['new_post'];
+            $post->name = [Auth::user()->language_id => $input['new_post']];
             $post->save();
             return $post->id;
 
@@ -82,6 +83,6 @@ class AdminBaseRepository extends BaseRepository
 
     }
 
-    
+
 
 }

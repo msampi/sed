@@ -16,7 +16,9 @@ class Tracking extends Model
 
 
     public $fillable = [
-
+        'user_id',
+        'evaluation_id',
+        'client_id'
     ];
 
     /**

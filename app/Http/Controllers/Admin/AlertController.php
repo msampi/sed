@@ -51,7 +51,7 @@ class AlertController extends AdminBaseController
         /* Recordar que si es admin solo muestro los puestos de su cliente */
         $languages = $this->languageRepository->all();
 
-        return view('admin.alerts.create')->with('evaluation', $this->evaRepo->getEvaluationsList())
+        return view('admin.alerts.create')->with('evaluations', $this->evaRepo->getEvaluationsList())
                                           ->with('languages', $languages);
     }
 

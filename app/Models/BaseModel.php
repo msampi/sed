@@ -31,11 +31,11 @@ class BaseModel extends Model
 				if (isset($attr[Auth::user()->language_id]))
 	            return $attr[Auth::user()->language_id];
 			else
-					if (isset($attr[$lang_id]))
+					if ($attr[$lang_id])
 							return $attr[$lang_id];
-		
 
-			return NULL;
+
+			return $attr[$lang_id];
 
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Eloquent as Model;
 
 /**
@@ -12,7 +13,7 @@ class EvaluationUserEvaluator extends BaseModel
 {
 
     public $table = 'evaluation_user_evaluators';
-    
+
 
 
     public $fillable = [
@@ -40,7 +41,7 @@ class EvaluationUserEvaluator extends BaseModel
      * @var array
      */
     public static $rules = [
-        
+
     ];
 
 
@@ -69,5 +70,7 @@ class EvaluationUserEvaluator extends BaseModel
         return $this->childrenEUA()->with('allChildrenEUA');
     }
 
-    
+
+
+
 }

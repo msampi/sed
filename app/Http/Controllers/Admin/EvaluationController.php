@@ -154,6 +154,9 @@ class EvaluationController extends AdminBaseController
         $excel->importUsers($request->file('users_excel'));
         $excel->importEvaluation($request->file('evaluation_excel'));
 
+        if (isset($input['start']))
+          $this->evaluationUserEvaluatorRepository->startEvaluation($evaluation);
+
         if ($upload_status == 2) {
 
             Flash::error('Uno o varios archivos que desea importar ya existen en la base de datos. Por favor cambie el/los nombre/s e intente nuevamente');
@@ -226,13 +229,17 @@ class EvaluationController extends AdminBaseController
 
     private function transformToEnglishDate($date,$i)
     {
-        $date = explode('-', $date);
-        if (isset($date[$i]))
-            $date = explode('/', $date[$i]);
-        if ($date[0] && $date[1] && $date[2])
-            return trim($date[2]).'-'.trim($date[1]).'-'.trim($date[0]).' 00:00:00';
-        else
-            return NULL;
+        if ($date) :
+          $date = explode('-', $date);
+          if (isset($date[$i]))
+              $date = explode('/', $date[$i]);
+          if ($date[0] && $date[1] && $date[2])
+              return trim($date[2]).'-'.trim($date[1]).'-'.trim($date[0]).' 00:00:00';
+          else
+              return NULL;
+        else:
+          return NULL;
+        endif;
     }
 
     private function transformToSpanishDate($start_date, $end_date)
@@ -338,6 +345,8 @@ class EvaluationController extends AdminBaseController
 
 
         $evaluation = $this->evaRepo->update($request->all(), $id);
+        if (isset($input['start']))
+          $this->evaluationUserEvaluatorRepository->startEvaluation($evaluation);
 
         $deleteInput = explode(',',$input['remove-item-list']);
         foreach ($deleteInput as $value) {

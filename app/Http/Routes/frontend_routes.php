@@ -27,7 +27,12 @@ Route::group(['namespace' => 'Frontend', 'middleware' => 'auth', 'prefix' => '']
 	Route::get('documents', 'DocumentController@index');
 	Route::get('quit', 'HomeController@quit');
 
-	Route::resource('performances', 'PerformanceController');
+	Route::get('performances', 'PerformanceController@index');
+	Route::get('performances/{id}', 'PerformanceController@index');
+	Route::post('performances/store', 'PerformanceController@store');
+
+
+
 
 
 });
