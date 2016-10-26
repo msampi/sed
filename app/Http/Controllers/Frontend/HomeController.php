@@ -41,12 +41,12 @@ class HomeController extends AppFrontendController
 
         if ($id)
             Session::set('evaluation_id',$id);
+        $this->setCurrentUser();
         $evaluation = $this->evaluationRepository->find(Session::get('evaluation_id'));
         $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso al sistema');
         $this->evaluationUserEvaluatorRepository->pushCriteria(new EvaluationUserEvaluatorCriteria());
-        //$evaluationUserEvaluators = $this->evaluationUserEvaluatorRepository->all();
-
-        return view('frontend.home')->with('evaluation', $evaluation);
+        return view('frontend.home')->with('evaluation', $evaluation)
+                                    ->with('eue', $this->eue);
 
     }
 

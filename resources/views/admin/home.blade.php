@@ -88,7 +88,7 @@
           <!-- small box -->
           <div class="small-box bg-orange">
             <div class="inner">
-              <h3>{!! $evaluationCount !!}</h3>
+              <h3>{!! $messageCount !!}</h3>
 
               <p>{!! $dictionary->translate('Mensajes')!!}</p>
             </div>
@@ -106,7 +106,7 @@
           <!-- small box -->
           <div class="small-box bg-gray">
             <div class="inner">
-              <h3>{!! $evaluationCount !!}</h3>
+              <h3>{!! $ratingCount !!}</h3>
 
               <p>{!! $dictionary->translate('Ratings')!!}</p>
             </div>

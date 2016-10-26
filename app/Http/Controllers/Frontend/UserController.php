@@ -41,13 +41,14 @@ class UserController extends AppFrontendController
 
         if ($id)
             Session::set('evaluation_id',$id);
-
+        $this->setCurrentUser();
         $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso a listado de usuarios');
         $this->evaluationUserEvaluatorRepository->pushCriteria(new EvaluationUserEvaluatorCriteria());
         $evaluationUserEvaluators = $this->evaluationUserEvaluatorRepository->all();
 
         return view('frontend.users')
-            ->with('evaluationUserEvaluators', $evaluationUserEvaluators);
+            ->with('evaluationUserEvaluators', $evaluationUserEvaluators)
+            ->with('eue', $this->eue);
 
     }
 }

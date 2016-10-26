@@ -76,19 +76,16 @@
                     <p>
                     @if (Auth::user())
                       {{ Auth::user()->name }} {{ Auth::user()->last_name }}
-                      <small>Member since Nov. 2012</small>
+
                     </p>
                     @endif
                   </li>
 
                   <!-- Menu Footer-->
                   <li class="user-footer">
-                    <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Profile</a>
-                    </div>
-                    <div class="pull-right">
-                      <a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Sign out</a>
-                    </div>
+
+                    <a href="{{ url('/logout') }}" class="btn btn-default btn-flat">{!! $dictionary->translate('Salir') !!}</a>
+
                   </li>
                 </ul>
               </li>
@@ -156,7 +153,7 @@
             <li>
               <a href="{!! URL::asset( 'admin/messages' ) !!}">
                 <i class="ion ion-ios-email"></i> <span>{!! $dictionary->translate('Mensajes') !!}</span>
-                <small class="label pull-right bg-orange">2</small>
+                <small class="label pull-right bg-orange">{{ $messageCount }}</small>
               </a>
             </li>
             @if ($superadmin)
@@ -169,7 +166,7 @@
             <li>
                 <a href="{!! URL::asset( 'admin/trackings' ) !!}">
                   <i class="ion ion-arrow-graph-up-right"></i> Tracking
-                  <small class="label pull-right bg-red">{{ $ratingCount }}</small>
+                  <small class="label pull-right bg-red">{{ $trackingCount }}</small>
                 </a>
             </li>
             @endif
@@ -177,7 +174,7 @@
             <li>
                 <a href="{!! URL::asset( 'admin/alerts' ) !!}">
                   <i class="ion ion-alert-circled"></i> {!! $dictionary->translate('Alertas') !!}
-                  <small class="label pull-right bg-blue">{{ $ratingCount }}</small>
+                  <small class="label pull-right bg-blue">{{ $alertCount }}</small>
                 </a>
             </li>
 
@@ -250,7 +247,10 @@
 
      <script src="{{ URL::asset('js/scripts.js') }}"></script>
 
-    <script>
+
+    <script type="text/javascript">
+      var BASE_URL = '{!! url('/') !!}';
+
       $(function () {
 
         $('.search-table').DataTable({

@@ -8,19 +8,10 @@ use InfyOm\Generator\Common\BaseRepository;
 
 class AdminBaseRepository extends BaseRepository
 {
-    /**
-     * @var array
-     */
-    protected $fieldSearchable = [
-        'name'
-    ];
 
-    /**
-     * Configure the Model
-     **/
     public function model()
     {
-        return Document::class;
+        return NULL;
     }
 
     public function saveNewPost(array $input)
@@ -81,6 +72,10 @@ class AdminBaseRepository extends BaseRepository
 
         return $array_field;
 
+    }
+
+    public function getCountRecords() {
+        return $this->all()->count();
     }
 
 

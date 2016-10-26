@@ -13,7 +13,16 @@ class Evaluation extends BaseModel
 
     public $table = 'evaluations';
 
-    public $dates = ['start_year_start', 'start_year_end', 'half_year_start', 'half_year_end', 'end_year_start', 'end_year_end'];
+    public $dates = ['start_year_start',
+                     'start_year_end',
+                     'half_year_start',
+                     'half_year_end',
+                     'end_year_start',
+                     'end_year_end',
+                     'vis_half_year_start',
+                     'vis_half_year_end',
+                     'vis_end_year_start',
+                     'vis_end_year_end'];
 
 
 
@@ -49,7 +58,8 @@ class Evaluation extends BaseModel
     protected $casts = [
         'name' => 'string',
         'instructions' => 'string',
-        'client_id' => 'integer'
+        'client_id' => 'integer',
+        'visualization' => 'boolean'
     ];
 
     /**
@@ -106,6 +116,6 @@ class Evaluation extends BaseModel
         return $this->hasMany('App\Models\Document');
     }
 
-    
+
 
 }

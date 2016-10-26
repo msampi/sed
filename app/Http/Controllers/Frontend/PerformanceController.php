@@ -50,6 +50,7 @@ class PerformanceController extends AppFrontendController
         $viewControlls->userId = $this->user->id;
         $viewControlls->isEmpleado = $this->is_logged_user;
 
+
         if (!$this->is_logged_user) :
             $viewControlls->evaluatorId = Auth::user()->id;
 
@@ -60,13 +61,16 @@ class PerformanceController extends AppFrontendController
 
 
         if (!$performance)
-            return view('frontend.performances.create')->with('viewControlls', $viewControlls);
+            return view('frontend.performances.create')->with('viewControlls', $viewControlls)
+                                                        ->with('eue', $this->eue);
         else
             if (($this->is_logged_user && $performance->finish_user) || (!$this->is_logged_user && $performance->finish_evaluator))
               return view('frontend.performances.edit')->with('performance', $performance)
-                                                       ->with('viewControlls', $viewControlls);
+                                                       ->with('viewControlls', $viewControlls)
+                                                       ->with('eue', $this->eue);
             else
-              return view('frontend.performances.show')->with('performance', $performance);
+              return view('frontend.performances.show')->with('performance', $performance)
+                                                      ->with('eue', $this->eue);
 
 
     }

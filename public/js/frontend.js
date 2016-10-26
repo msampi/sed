@@ -1,22 +1,29 @@
-
-/* Objectives */
-
-//var BASE_URL = 'http://localhost/sed/public/';
-//var BASE_URL = 'http://sed.centromultimedia.com.ar/public/';
-var BASE_URL = 'http://www.evaluaciononline.es/';
 var objcounter = 0;
-
-
-
 
 function appendWeightSelect(num){
 
     return '<td class="weight-column rating-column" rowspan="2">'+
                 '<select id="weight-selector-'+num+'" class="form-control weight" onchange="changeWeightColor()">'+
                     '<option value="0">0%</option>'+
+                    '<option value="5">5%</option>'+
+                    '<option value="10">10%</option>'+
+                    '<option value="15">15%</option>'+
+                    '<option value="20">10%</option>'+
                     '<option value="25">25%</option>'+
+                    '<option value="30">30%</option>'+
+                    '<option value="35">35%</option>'+
+                    '<option value="40">40%</option>'+
+                    '<option value="45">45%</option>'+
                     '<option value="50">50%</option>'+
+                    '<option value="55">55%</option>'+
+                    '<option value="60">60%</option>'+
+                    '<option value="65">65%</option>'+
+                    '<option value="70">70%</option>'+
                     '<option value="75">75%</option>'+
+                    '<option value="80">80%</option>'+
+                    '<option value="85">85%</option>'+
+                    '<option value="90">90%</option>'+
+                    '<option value="95">95%</option>'+
                     '<option value="100">100%</option>'+
                 '</select>'+
             '</td>';
@@ -37,7 +44,7 @@ function appendRatingSelect(op, disabled){
 }
 
 function appendPDPObjective(){
-    $("#pdp-objective").append('<tr class="pdp-improvement" data-id="" data-flag="'+objcounter+'">'+
+    $("#pdp-objective").append('<tr class="pdp-improvement" data-id="" data-uid="'+options.uid+'" data-flag="'+objcounter+'">'+
                                     '<td><textarea data-field="objective" class="form-control"></textarea></td>'+
                                     '<td><textarea data-field="meta" class="form-control"></textarea></td>'+
                                     '<td><textarea data-field="action" class="form-control"></textarea></td>'+
@@ -122,7 +129,7 @@ function removeObjective(elem, id, message){
     if (confirm(message))
         $.ajax({
           type: "POST",
-          url: BASE_URL+'objectives/delete',
+          url: BASE_URL+'/objectives/delete',
           data: {'_token': $('input[name=_token]').val(), 'id': id},
           success: function(){
             $(elem).remove();
@@ -280,14 +287,15 @@ function getPDPDataToSave(){
     });
     $('.pdp-improvement').each(function(){
         data = {
-            id: $(this).data('id'),
+            id: $(this).attr('data-id'),
+            uid: $(this).data('uid'),
             objective: $(this).find('textarea[data-field="objective"]')[0].value,
             meta: $(this).find('textarea[data-field="meta"]')[0].value,
             action: $(this).find('textarea[data-field="action"]')[0].value,
             resource: $(this).find('textarea[data-field="resource"]')[0].value,
             flag:$(this).data('flag')
         };
-
+        console.log(data);
         elements.improvements.push(data);
     });
 
@@ -295,58 +303,64 @@ function getPDPDataToSave(){
 
 }
 
-function objectivesSave(){
+function objectivesSave(redirect = false){
     $("#saving-label").show();
 
     $.ajax({
       type: "POST",
-      url: BASE_URL+'objectives/save',
+      url: BASE_URL+'/objectives/save',
       data: {'_token': $('input[name=_token]').val(), 'data': getObjectivesDataToSave()},
       success: function(data){
         $("#saving-label").hide();
         $('[data-flag]').each(function(){
            $(this).attr('data-id', parseInt(data[$(this).data('flag')]) );
 
-        })
+        });
+        if (redirect)
+          window.location.href=BASE_URL;
       },
       dataType: 'json'
     });
 
 }
 
-function competitionsSave(){
+function competitionsSave(redirect = false){
     $("#saving-label").show();
     $.ajax({
       type: "POST",
-      url: BASE_URL+'competitions/save',
+      url: BASE_URL+'/competitions/save',
       data: {'_token': $('input[name=_token]').val(), 'data': getCompetitionsDataToSave()},
       success: function(){
         $("#saving-label").hide();
+        if (redirect)
+          window.location.href=BASE_URL;
       },
       dataType: 'json'
     });
 
 }
 
-function valorationsSave(){
+function valorationsSave(redirect = false){
     $("#saving-label").show();
     $.ajax({
       type: "POST",
-      url: BASE_URL+'valorations/save',
+      url: BASE_URL+'/valorations/save',
       data: {'_token': $('input[name=_token]').val(), 'data': getValorationsDataToSave()},
       success: function(){
         $("#saving-label").hide();
+        if (redirect)
+          window.location.href=BASE_URL;
       },
       dataType: 'json'
     });
 
 }
 
-function pdpSave(){
+function pdpSave(redirect = false){
     $("#saving-label").show();
     $.ajax({
       type: "POST",
-      url: BASE_URL+'pdp/save',
+      url: BASE_URL+'/pdp/save',
       data: {'_token': $('input[name=_token]').val(), 'data': getPDPDataToSave()},
       success: function(data){
         $('[data-flag]').each(function(){
@@ -354,6 +368,8 @@ function pdpSave(){
 
         })
         $("#saving-label").hide();
+        if (redirect)
+          window.location.href=BASE_URL;
       },
       dataType: 'json'
     });
@@ -367,7 +383,7 @@ function getAverage(elemclass){
     sum += parseInt($(this).val());
     count++;
   })
-  return sum/(count/2);
+  return parseFloat(sum/(count/2)).toFixed(2);
 }
 
 

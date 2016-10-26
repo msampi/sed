@@ -103,6 +103,8 @@ class EvaluationUserEvaluatorController extends AdminBaseController
     {
         $eue = $this->evaluationUserEvaluatorRepository->findWithoutFail($id);
         $evaluation = $this->evaRepo->find($eue->evaluation_id);
+        $users = User::where('role_id', 3)->where('client_id', $evaluation->client_id)->lists('email', 'id');
+        $users->prepend('Ninguno', '');
         $post = new Post();
         if (empty($evaluation)) {
             Flash::error($this->dictionary->translate('Evaluación no encontrada'));
@@ -113,7 +115,7 @@ class EvaluationUserEvaluatorController extends AdminBaseController
         return view('admin.evaluationUserEvaluators.edit')->with('evaluation', $evaluation)
                                                           ->with('eue', $eue)
                                                           ->with('posts', $post->listCurrentLang('id', 'name'))
-                                                          ->with('users', User::where('role_id', 3)->lists('email', 'id'));;
+                                                          ->with('users', $users);
     }
 
     /**

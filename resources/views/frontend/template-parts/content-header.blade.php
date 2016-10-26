@@ -5,8 +5,7 @@
         </div>
         <div class="pull-left info">
           <p>{!! $user->name !!} {!! $user->last_name !!}</p>
-          <div>Area:</div>
-          <div>Job Position:</div>
+          <div>{!! $eue->getAttributeTranslate($eue->post->name) !!}</div>
         </div>
         <div class="pull-right" id="saving-label">
           {!! $dictionary->translate('Guardando...') !!}

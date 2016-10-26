@@ -48,9 +48,10 @@ class AppFrontendController extends AppBaseController
         $alerts = $this->alertRepository->findWhere(['evaluation_id' => Session::get('evaluation_id')]);
         View::share('alerts', $alerts);
 
+
     }
 
-    public function setCurrentUser($id)
+    public function setCurrentUser($id = NULL)
     {
         $this->is_logged_user = true;
         $this->user = Auth::user();

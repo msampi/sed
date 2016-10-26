@@ -123,7 +123,8 @@
     <div class="col-md-2">
         <div class="form-group" style="margin-top:50px; text-align:center">
               <label style="font-size:16px">{!! $dictionary->translate('Activar visualizaciones?') !!}</label>
-              {!! Form::checkbox('visualization'); !!}
+              {{ Form::hidden('visualization', false) }}
+              {!! Form::checkbox('visualization', true); !!}
         </div>
     </div>
 </div>
@@ -206,7 +207,7 @@
 <div class="col-sm-12" style="margin-top:20px">
     <div class="col-md-12">
       <label style="font-size:16px">{!! $dictionary->translate('Lanzar simulación') !!}</label>
-      {!! Form::checkbox('start',false); !!}    
+      {!! Form::checkbox('start',false); !!}
     </div>
      <div class="col-md-12">
         {!! Form::submit($dictionary->translate('Guardar'), ['class' => 'btn btn-primary']) !!}

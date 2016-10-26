@@ -6,7 +6,7 @@ use App\Models\Rating;
 use App\Models\Value;
 use InfyOm\Generator\Common\BaseRepository;
 
-class RatingRepository extends BaseRepository
+class RatingRepository extends AdminBaseRepository
 {
     /**
      * @var array
@@ -22,15 +22,6 @@ class RatingRepository extends BaseRepository
     {
         return Rating::class;
     }
-
-    /**
-     * Gets the rating count.
-     *
-     * @return     <type>  The rating count.
-     */
-    public function getRatingCount() {
-        return $this->all()->count();
-    }    
 
 
     public function create(array $input)
@@ -53,7 +44,7 @@ class RatingRepository extends BaseRepository
     {
 
         $rating = parent::update($input, $id);
-       
+
         if (isset($input['values']))
             foreach ($input['values'] as $key => $v) {
                 $value = Value::firstOrNew(['id' => $key]);

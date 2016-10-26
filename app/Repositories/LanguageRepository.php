@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Language;
 use InfyOm\Generator\Common\BaseRepository;
 
-class LanguageRepository extends BaseRepository
+class LanguageRepository extends AdminBaseRepository
 {
     /**
      * @var array
@@ -23,12 +23,5 @@ class LanguageRepository extends BaseRepository
         return Language::class;
     }
 
-    /**
-     * Gets the languaje count.
-     *
-     * @return     <type>  The languaje count.
-     */
-    public function getLanguageCount() {
-        return $this->all()->count();
-    }       
+  
 }

@@ -58,13 +58,18 @@ class CompetitionController extends AppFrontendController
            $this->competitionCommentRepository->createComments($competition, $this->user);
         }
 
+        $visualization_st1 = $this->evaluationRepository->userVisibilityStageOne($this->is_logged_user);
+        $visualization_st2 = $this->evaluationRepository->userVisibilityStageTwo($this->is_logged_user);
 
         return view('frontend.competitions')->with('user',$this->user)
                                             ->with('is_logged_user',$this->is_logged_user)
                                             ->with('section_name','Competencias')
                                             ->with('competitions',$competitions)
                                             ->with('rating',$rating)
-                                            ->with('current_stage',$current_stage);
+                                            ->with('current_stage',$current_stage)
+                                            ->with('eue', $this->eue)
+                                            ->with('visualization_st1',$visualization_st1)
+                                            ->with('visualization_st2',$visualization_st2);
     }
 
     public function save(Request $request)

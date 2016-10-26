@@ -57,10 +57,10 @@ class EmailSend
 
 	    $config = [
 	        'driver' => 'smtp',
-	        'host' => 'smtp.mandrillapp.com',
-	        'port' => '587',
-	        'username' => 'contactos@ciale.com',
-	        'password' => 't0Sj3SPV1L2acP8Xsur4sw',
+	        'host' => 'evaluaciononline.es',
+	        'port' => '25',
+	        'username' => 'sed@evaluaciononline.es',
+	        'password' => 'kyfC10&4',
 	        ];
         \Config::set('mail',$config);
 
