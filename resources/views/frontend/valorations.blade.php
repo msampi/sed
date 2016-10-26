@@ -33,12 +33,13 @@
             </select>
 
             {{-- */ $valrating = $valoration->getValorationRating('half-year','evaluator', $user->id) /* --}}
-
+            @if($visualization_st1)
             <select data-id="" data-entry="evaluator" data-uid="{!! $user->id !!}"  data-eid="" data-stage="half-year" data-bid="{!! $valoration->id !!}" class="form-control bh-selector margin-top-3" @if ($is_logged_user) disabled @endif>
                 @foreach( $rating->values as $value)
                     <option @if ($valrating->rating == $value->getAttributeTranslate($value->value)) selected="selected" @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
                 @endforeach
             </select>
+          @endif
 
           </td>
           <td>
@@ -51,12 +52,13 @@
             </select>
 
             {{-- */ $valrating = $valoration->getValorationRating('end-year','evaluator', $user->id) /* --}}
-
+            @if($visualization_st2)
             <select data-id="" data-entry="evaluator" data-uid="{!! $user->id !!}"  data-eid="" data-stage="end-year" data-bid="{!! $valoration->id !!}" class="form-control bh-selector margin-top-3" @if ($is_logged_user) disabled @endif>
                 @foreach( $rating->values as $value)
                     <option @if ($valrating->rating == $value->getAttributeTranslate($value->value)) selected="selected" @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
                 @endforeach
             </select>
+          @endif
           </td>
         </tr>
       </tbody>
@@ -75,19 +77,26 @@
           </tr>
           <tr>
             {{-- */ $comment = $valoration->getComment('half-year','evaluator', $user->id) /* --}}
-            <td><textarea placeholder="Comentarios Manager" data-entry="evaluator" data-id="{!! $comment->id !!}" data-cid="{!! $valoration->id!!}" data-stage="half-year" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" class="form-control" @if ($is_logged_user) disabled @endif>{!! $comment->comment !!}</textarea></td>
+            <td>
+              @if($visualization_st1)
+              <textarea placeholder="Comentarios Manager" data-entry="evaluator" data-id="{!! $comment->id !!}" data-cid="{!! $valoration->id!!}" data-stage="half-year" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" class="form-control" @if ($is_logged_user) disabled @endif>{!! $comment->comment !!}</textarea>
+              @endif
+              </td>
             {{-- */ $comment = $valoration->getComment('end-year','evaluator', $user->id) /* --}}
-            <td><textarea placeholder="Comentarios Manager" data-entry="evaluator" data-id="{!! $comment->id !!}" data-cid="{!! $valoration->id!!}" data-stage="end-year" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" class="form-control" @if ($is_logged_user) disabled @endif>{!! $comment->comment !!}</textarea></td>
+            <td>
+              @if($visualization_st2)
+              <textarea placeholder="Comentarios Manager" data-entry="evaluator" data-id="{!! $comment->id !!}" data-cid="{!! $valoration->id!!}" data-stage="end-year" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" class="form-control" @if ($is_logged_user) disabled @endif>{!! $comment->comment !!}</textarea>
+              @endif
+              </td>
           </tr>
         </tbody>
     </table>
     @endforeach
     {!! Form::close() !!}
 </div>
-<!--<div class="col-lg-12 buttons-pad">
-    <button class="btn btn-success" onclick=""><i class="fa fa-save"></i> {!! $dictionary->translate('Guardar') !!}</button>
-    <button class="btn btn-danger pull-right"><i class="fa fa-eye"></i> {!! $dictionary->translate('Status') !!}</button>
-</div>-->
+<div class="col-lg-12 buttons-pad">
+    <button class="btn btn-success" onclick="valorationsSave(true)"><i class="fa fa-save"></i> {!! $dictionary->translate('Guardar') !!}</button>
+</div>
 <script type="text/javascript">
 
   $(function(){

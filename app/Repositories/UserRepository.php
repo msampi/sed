@@ -7,7 +7,7 @@ use App\Library\EmailSend;
 use App\Models\Language;
 use InfyOm\Generator\Common\BaseRepository;
 
-class UserRepository extends BaseRepository
+class UserRepository extends AdminBaseRepository
 {
     /**
      * @var array
@@ -26,16 +26,7 @@ class UserRepository extends BaseRepository
         return User::class;
     }
 
-    /**
-     * Gets the user count.
-     *
-     * @return     <type>  The user count.
-     */
-    public function getUserCount() {
-        return $this->all()->count();
-    }
 
-  
     public function getLanguageByPrefix($prefix)
     {
         $lang = Language::where('prefix',$prefix)->first();

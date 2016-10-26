@@ -9,7 +9,7 @@ use Session;
 use Carbon\Carbon;
 use Auth;
 
-class EvaluationRepository extends BaseRepository
+class EvaluationRepository extends AdminBaseRepository
 {
     /**
      * @var array
@@ -26,15 +26,6 @@ class EvaluationRepository extends BaseRepository
         return Evaluation::class;
     }
 
-
-    /**
-     * Gets the evaluation count.
-     *
-     * @return     <type>  The evaluation count.
-     */
-    public function getEvaluationCount() {
-        return $this->all()->count();
-    }
 
     public function getObjectivesRating() {
         return $this->model->where('id', Session::get('evaluation_id'))->first()->objectivesRating;
@@ -86,28 +77,39 @@ class EvaluationRepository extends BaseRepository
       return $result;
     }
 
-    public function userVisibility()
+    public function userVisibilityStageOne($is_logged_user_view)
     {
       $this->pushCriteria(new EqualCriteria('id',Session::get('evaluation_id')));
       $evaluation = $this->first();
 
       $now = Carbon::now();
-      $current_stage = $this->getCurrentStage();
 
+      if (!$is_logged_user_view)
+        return true;
       if (!$evaluation->visualization)
         return false;
-      if ($current_stage == 1)
+
+      if ($evaluation->vis_half_year_start->lt($now) && $evaluation->vis_half_year_end->gt($now))
+          return true;
+
+      return false;
+
+    }
+
+    public function userVisibilityStageTwo($is_logged_user_view)
+    {
+
+      $this->pushCriteria(new EqualCriteria('id',Session::get('evaluation_id')));
+      $evaluation = $this->first();
+
+      $now = Carbon::now();
+      if (!$is_logged_user_view)
+        return true;
+      if (!$evaluation->visualization)
         return false;
-      if ($current_stage == 2)
-          if ($evaluation->vis_half_year_start->lt($now) && $evaluation->vis_half_year_end->gt($now))
-            return true;
-          else
-            return false;
-      if ($current_stage == 3)
-          if ($evaluation->vis_end_year_start->lt($now) && $evaluation->vis_end_year_end->gt($now))
-            return true;
-          else
-            return false;
+
+      if ($evaluation->vis_end_year_start->lt($now) && $evaluation->vis_end_year_end->gt($now))
+          return true;
 
       return false;
 

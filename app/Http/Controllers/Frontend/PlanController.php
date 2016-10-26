@@ -93,7 +93,8 @@ class PlanController extends AppFrontendController
                                    ->with('plan_comments',$plan_comments)
                                    ->with('plans',$plans)
                                    ->with('current_stage',$current_stage)
-                                   ->with('evaluation_id',Session::get('evaluation_id'));
+                                   ->with('evaluation_id',Session::get('evaluation_id'))
+                                   ->with('eue', $this->eue);
     }
 
     public function save(Request $request)
@@ -103,7 +104,7 @@ class PlanController extends AppFrontendController
         $this->planCommentRepository->saveComment($input->comments, TRUE);
         $flags = $this->planImprovementRepository->saveImprovements($input->improvements);
         echo json_encode($flags);
-      
+
     }
 
 }

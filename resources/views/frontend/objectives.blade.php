@@ -26,9 +26,26 @@
     			<td rowspan="2" class="rating-column weight-column">
     				<select id="weight-selector-{!! $objnum !!}" class="form-control weight" @if (($is_logged_user) || ((!$objective->user_id) && (!$objective->evaluator_id))) disabled  @endif>
     					<option value="0" @if ($objective->weight == '0') selected @endif >0%</option>
+                        <option value="0" @if ($objective->weight == '0') selected @endif>0%</option>
+                        <option value="5" @if ($objective->weight == '5') selected @endif>5%</option>
+                        <option value="10" @if ($objective->weight == '10') selected @endif>10%</option>
+                        <option value="15" @if ($objective->weight == '15') selected @endif>15%</option>
+                        <option value="20" @if ($objective->weight == '20') selected @endif>20%</option>
                         <option value="25" @if ($objective->weight == '25') selected @endif>25%</option>
+                        <option value="30" @if ($objective->weight == '30') selected @endif>30%</option>
+                        <option value="35" @if ($objective->weight == '35') selected @endif>35%</option>
+                        <option value="40" @if ($objective->weight == '40') selected @endif>40%</option>
+                        <option value="45" @if ($objective->weight == '45') selected @endif>45%</option>
                         <option value="50" @if ($objective->weight == '50') selected @endif>50%</option>
+                        <option value="55" @if ($objective->weight == '55') selected @endif>55%</option>
+                        <option value="60" @if ($objective->weight == '60') selected @endif>60%</option>
+                        <option value="65" @if ($objective->weight == '65') selected @endif>65%</option>
+                        <option value="70" @if ($objective->weight == '70') selected @endif>70%</option>
                         <option value="75" @if ($objective->weight == '75') selected @endif>75%</option>
+                        <option value="80" @if ($objective->weight == '80') selected @endif>80%</option>
+                        <option value="85" @if ($objective->weight == '85') selected @endif>85%</option>
+                        <option value="90" @if ($objective->weight == '90') selected @endif>90%</option>
+                        <option value="95" @if ($objective->weight == '95') selected @endif>95%</option>
                         <option value="100" @if ($objective->weight == '100') selected @endif>100%</option>
 
     				</select>
@@ -61,7 +78,9 @@
 
                 {{-- */ $review = $objective->getReviewsBy('half-year','evaluator', $user->id) /* --}}
 
-    			<td><textarea data-select="half-year-manager-selector-{!! $objnum !!}"
+    			<td>
+            @if($visualization_st1)
+              <textarea data-select="half-year-manager-selector-{!! $objnum !!}"
                         data-oid="{!! $objective->id !!}"
                         data-pid="{!! $objective->post_id !!}"
                         data-entry="evaluator"
@@ -69,24 +88,45 @@
                         data-uid="{!! $user->id !!}"
                         data-eid="{!! Auth::user()->id !!}"
                         data-stage="half-year"
-                        class="form-control @if ((!$is_logged_user) && ($current_stage == 2)) textarea-small @else textarea-small-disabled @endif">{!! $review->description !!}</textarea></td>
+                        class="form-control @if ((!$is_logged_user) && ($current_stage == 2)) textarea-small @else textarea-small-disabled @endif"> {!! $review->description !!} </textarea>
+            @endif
+          </td>
     			<td class="rating-column">
+            @if($visualization_st1)
     				<select id="half-year-manager-selector-{!! $objnum !!}" class="form-control" @if (($is_logged_user) || ($current_stage != 2)) disabled @endif>
+
                         @foreach( $rating->values as $value)
                             <option @if ($review->rating == $value->value) selected @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
                         @endforeach
+
     				</select>
+            @endif
     			</td>
 
                 {{-- */ $review = $objective->getReviewsBy('end-year','evaluator', $user->id) /* --}}
 
-    			<td><textarea data-select="end-year-manager-selector-{!! $objnum !!}" data-oid="{!! $objective->id !!}" data-pid="{!! $objective->post_id !!}" data-entry="evaluator" data-id="{!! $review->id !!}" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" data-stage="end-year" class="form-control @if ((!$is_logged_user) && ($current_stage == 3)) textarea-small @else textarea-small-disabled @endif">{!! $review->description !!}</textarea></td>
+    			<td>
+            @if($visualization_st2)
+                <textarea data-select="end-year-manager-selector-{!! $objnum !!}"
+                          data-oid="{!! $objective->id !!}"
+                          data-pid="{!! $objective->post_id !!}"
+                          data-entry="evaluator"
+                          data-id="{!! $review->id !!}"
+                          data-uid="{!! $user->id !!}"
+                          data-eid="{!! Auth::user()->id !!}"
+                          data-stage="end-year" class="form-control @if ((!$is_logged_user) && ($current_stage == 3)) textarea-small @else textarea-small-disabled @endif">{!! $review->description !!} </textarea>
+            @endif
+          </td>
     			<td class="rating-column">
-    				<select id="end-year-manager-selector-{!! $objnum !!}" class="form-control" @if (($is_logged_user) || ($current_stage != 3)) disabled @endif>
+            @if($visualization_st2)
+              <select id="end-year-manager-selector-{!! $objnum !!}" class="form-control" @if (($is_logged_user) || ($current_stage != 3)) disabled @endif>
+
                         @foreach( $rating->values as $value)
                             <option @if ($review->rating == $value->value) selected @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
                         @endforeach
-    				</select>
+
+    				  </select>
+            @endif
     			</td>
     		</tr>
 
@@ -102,9 +142,8 @@
 <div class="col-lg-12 buttons-pad">
   @if (!$is_logged_user)
     <button class="btn btn-success" id="add-objective" onclick="appendObjective(options)"><i class="fa fa-plus"></i> {!! $dictionary->translate('Agregar objetivo') !!}</button>
-    <!--<button class="btn btn-success" onclick="objectivesSave();"><i class="fa fa-save"></i> {!! $dictionary->translate('Guardar') !!}</button>
-    <button class="btn btn-danger pull-right"><i class="fa fa-eye"></i> {!! $dictionary->translate('Status') !!}</button>-->
   @endif
+  <button class="btn btn-success" onclick="objectivesSave(true);"><i class="fa fa-save"></i> {!! $dictionary->translate('Guardar') !!}</button>
 </div>
 
 <script type="text/javascript">

@@ -156,7 +156,9 @@
       </tbody>
   </table>
 </div>
-<!--<a class="btn btn-success" onclick="pdpSave()"><i class="fa fa-plus"></i> {!! $dictionary->translate('Guardar') !!}</a>-->
+<div class="col-lg-12 buttons-pad">
+    <button class="btn btn-success" onclick="pdpSave(true)"><i class="fa fa-save"></i> {!! $dictionary->translate('Guardar') !!}</button>
+</div>
 
 {!! Form::close() !!}
 

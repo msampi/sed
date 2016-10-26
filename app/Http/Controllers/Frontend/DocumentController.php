@@ -48,7 +48,8 @@ class DocumentController extends AppFrontendController
             ->with('section_name','Documentos')
             ->with('is_logged_user',$this->is_logged_user)
             ->with('user',$this->user)
-            ->with('current_stage',$current_stage);
+            ->with('current_stage',$current_stage)
+            ->with('eue', $this->eue);
     }
 
 

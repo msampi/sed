@@ -1,9 +1,9 @@
 
 /* Objectives */
 
-//var BASE_URL = 'http://localhost/sed/public/';
+var BASE_URL = 'http://localhost/sed/public/';
 //var BASE_URL = 'http://sed.centromultimedia.com.ar/public/';
-var BASE_URL = 'http://www.evaluaciononline.es/';
+//var BASE_URL = 'http://www.evaluaciononline.es/';
 var objcounter = 0;
 
 
@@ -14,9 +14,25 @@ function appendWeightSelect(num){
     return '<td class="weight-column rating-column" rowspan="2">'+
                 '<select id="weight-selector-'+num+'" class="form-control weight" onchange="changeWeightColor()">'+
                     '<option value="0">0%</option>'+
+                    '<option value="5">5%</option>'+
+                    '<option value="10">10%</option>'+
+                    '<option value="15">15%</option>'+
+                    '<option value="20">10%</option>'+
                     '<option value="25">25%</option>'+
+                    '<option value="30">30%</option>'+
+                    '<option value="35">35%</option>'+
+                    '<option value="40">40%</option>'+
+                    '<option value="45">45%</option>'+
                     '<option value="50">50%</option>'+
+                    '<option value="55">55%</option>'+
+                    '<option value="60">60%</option>'+
+                    '<option value="65">65%</option>'+
+                    '<option value="70">70%</option>'+
                     '<option value="75">75%</option>'+
+                    '<option value="80">80%</option>'+
+                    '<option value="85">85%</option>'+
+                    '<option value="90">90%</option>'+
+                    '<option value="95">95%</option>'+
                     '<option value="100">100%</option>'+
                 '</select>'+
             '</td>';
@@ -295,7 +311,7 @@ function getPDPDataToSave(){
 
 }
 
-function objectivesSave(){
+function objectivesSave(redirect = false){
     $("#saving-label").show();
 
     $.ajax({
@@ -307,14 +323,16 @@ function objectivesSave(){
         $('[data-flag]').each(function(){
            $(this).attr('data-id', parseInt(data[$(this).data('flag')]) );
 
-        })
+        });
+        if (redirect)
+          window.location.href=BASE_URL;
       },
       dataType: 'json'
     });
 
 }
 
-function competitionsSave(){
+function competitionsSave(redirect = false){
     $("#saving-label").show();
     $.ajax({
       type: "POST",
@@ -322,13 +340,15 @@ function competitionsSave(){
       data: {'_token': $('input[name=_token]').val(), 'data': getCompetitionsDataToSave()},
       success: function(){
         $("#saving-label").hide();
+        if (redirect)
+          window.location.href=BASE_URL;
       },
       dataType: 'json'
     });
 
 }
 
-function valorationsSave(){
+function valorationsSave(redirect = false){
     $("#saving-label").show();
     $.ajax({
       type: "POST",
@@ -336,13 +356,15 @@ function valorationsSave(){
       data: {'_token': $('input[name=_token]').val(), 'data': getValorationsDataToSave()},
       success: function(){
         $("#saving-label").hide();
+        if (redirect)
+          window.location.href=BASE_URL;
       },
       dataType: 'json'
     });
 
 }
 
-function pdpSave(){
+function pdpSave(redirect = false){
     $("#saving-label").show();
     $.ajax({
       type: "POST",
@@ -354,6 +376,8 @@ function pdpSave(){
 
         })
         $("#saving-label").hide();
+        if (redirect)
+          window.location.href=BASE_URL;
       },
       dataType: 'json'
     });
@@ -367,7 +391,7 @@ function getAverage(elemclass){
     sum += parseInt($(this).val());
     count++;
   })
-  return sum/(count/2);
+  return parseFloat(sum/(count/2)).toFixed(2);
 }
 
 
