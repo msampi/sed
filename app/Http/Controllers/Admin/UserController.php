@@ -18,10 +18,12 @@ use App\Models\Client;
 use App\Models\Language;
 use App\Models\Role;
 use Auth;
-
+use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class UserController extends AdminBaseController
 {
+    use ResetsPasswords;
+
     /** @var  UserRepository */
     private $userRepository;
     private $messageRepository;
@@ -96,6 +98,7 @@ class UserController extends AdminBaseController
             $email->send();
         endif;
 
+        $this->postEmail($request);
 
         Flash::success($this->dictionary->translate('El usuario se ha guardado correctamente'));
 
