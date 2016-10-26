@@ -1,7 +1,6 @@
 
-/* Autoload image upload */
-var BASE_URL = 'http://localhost/sed/public/admin/';
-//var BASE_URL = 'http://sed.centromultimedia.com.ar/public/';
+var BASE_URL = BASE_URL+'/admin/';
+
 
 function readURL(input) {
     if (input.files && input.files[0]) {
@@ -35,13 +34,13 @@ function removeManyListItem(elem, id) {
 
 function multilangItemShow(lang, parent, button)
 {
-    
+
     $(parent).find(".multilang").each(function(index){
         if ($(this).data('lang') != lang )
             $(this).hide();
         else
             $(this).show();
-        
+
 
     });
 
@@ -54,7 +53,7 @@ function multilangItemShow(lang, parent, button)
 }
 
 $(function () {
-    
+
     $(".textarea").wysihtml5();
     $(".select2").select2();
 
@@ -72,7 +71,7 @@ $(function () {
           }
         });
     $editor.attr('disabled','disabled');
-    
+
 
     $(".textarea-small").wysihtml5({
         toolbar: {
@@ -87,20 +86,20 @@ $(function () {
             "size": 'xs', // options are xs, sm, lg
           }
         });
-    
+
     $(':password').val('');
 
     $(".many-list-button").click(function(){
 
-        
+
         if ($(".many-list .panel-body").children().length == 2)
             $(".many-list .panel-body .callout").remove();
-        
+
         var inputs = '';
         id = Math.random().toString(36).replace(/[^a-z]+/g, '');
 
         for (var key in languages) {
-                
+
                 inputs+='<input type="text" data-lang="'+languages[key]+'" name="values['+id+']['+key+']" class="form-control multilang">';
         }
 
@@ -118,21 +117,21 @@ $(function () {
                 if (index != 0){
                     $(this).hide();
                     $(this).parent().append('<a class="btn btn-xs btn-danger" onclick="multilangItemShow(\''+$(this).data('lang')+'\', this.parentElement, this)" style="margin:2px">'+$(this).data('lang')+'</a>');
-                
+
                 }
                 else
                     $(this).parent().append('<a class="btn btn-xs btn-danger active" onclick="multilangItemShow(\''+$(this).data('lang')+'\', this.parentElement, this)" style="margin:2px">'+$(this).data('lang')+'</a>');
-                
+
             })
 
         });
-        
-        
+
+
     });
 
     $(".documents-list-button").click(function(){
 
-        
+
         if ($(".documents-list .panel-body").children().length == 2)
             $(".many-list .panel-body .callout").remove();
 
@@ -142,23 +141,23 @@ $(function () {
                                 '<div class="col-md-2">'+
                                     '<a class="btn btn-danger" onclick="removeManyListItem(this);"><i class="glyphicon glyphicon-trash"></i> Eliminar</a>'+
                                 '</div></div>');
-        
 
-        
+
+
     });
 
-   
+
 
     $(".behaviour-list-button").click(function(){
 
-        
+
         if ($(".behaviour-list .panel-body").children().length == 2)
             $(".behaviour-list .panel-body .callout").remove();
 
         var inputs = '';
         id = Math.random().toString(36).replace(/[^a-z]+/g, '');
         for (var key in languages) {
-                
+
                 inputs+='<textarea data-lang="'+languages[key]+'" name="behaviours['+id+']['+key+']" class="form-control multilang"></textarea>';
         }
 
@@ -176,15 +175,15 @@ $(function () {
                 if (index != 0){
                     $(this).hide();
                     $(this).parent().append('<a class="btn btn-xs btn-danger" onclick="multilangItemShow(\''+$(this).data('lang')+'\', this.parentElement, this)" style="margin:2px">'+$(this).data('lang')+'</a>');
-                
+
                 }
                 else
                     $(this).parent().append('<a class="btn btn-xs btn-danger active" onclick="multilangItemShow(\''+$(this).data('lang')+'\', this.parentElement, this)" style="margin:2px">'+$(this).data('lang')+'</a>');
-                
+
             })
 
         });
-        
+
 
     });
 
@@ -197,17 +196,17 @@ $(function () {
             if (index != 0){
                 $(this).hide();
                 $(this).parent().append('<a class="btn btn-xs btn-danger" onclick="multilangItemShow(\''+$(this).data('lang')+'\', this.parentElement, this)" style="margin:2px">'+$(this).data('lang')+'</a>');
-            
+
             }
             else
                 $(this).parent().append('<a class="btn btn-xs btn-danger active" onclick="multilangItemShow(\''+$(this).data('lang')+'\', this.parentElement, this)" style="margin:2px">'+$(this).data('lang')+'</a>');
-            
+
         })
 
     });
 
     $(".new-post").keyup(function(){
-       
+
         if (!this.value)
             $(".post-list").prop( "disabled", false );
         else
@@ -215,12 +214,10 @@ $(function () {
 
     })
 
-   
+
 
 
 
 
 
 });
-
-    

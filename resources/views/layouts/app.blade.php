@@ -247,7 +247,10 @@
 
      <script src="{{ URL::asset('js/scripts.js') }}"></script>
 
-    <script>
+
+    <script type="text/javascript">
+      var BASE_URL = '{!! url('/') !!}';
+
       $(function () {
 
         $('.search-table').DataTable({

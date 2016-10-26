@@ -17,11 +17,11 @@
       </thead>
       <tbody id="pdp-objective">
         @foreach ($plan_improvements as $pi)
-            <tr class="pdp-improvement" data-id="{!! $pi->id  !!}" data-flag="-1">
-              <td><textarea class="form-control" data-field='objective' @if (!$is_logged_user) disabled @endif>{!! $pi->objectives !!}</textarea></td>
-              <td><textarea class="form-control" data-field='meta' @if (!$is_logged_user) disabled @endif>{!! $pi->meta !!}</textarea></td>
-              <td><textarea class="form-control" data-field='action' @if (!$is_logged_user) disabled @endif>{!! $pi->dev_action !!}</textarea></td>
-              <td><textarea class="form-control" data-field='resource' @if (!$is_logged_user) disabled @endif>{!! $pi->resources !!}</textarea></td>
+            <tr class="pdp-improvement" data-id="{!! $pi->id  !!}" data-uid="{!! $user->id !!}">
+              <td><textarea class="form-control"  data-field='objective' @if (!$is_logged_user) disabled @endif>{!! $pi->objectives !!}</textarea></td>
+              <td><textarea class="form-control"  data-field='meta' @if (!$is_logged_user) disabled @endif>{!! $pi->meta !!}</textarea></td>
+              <td><textarea class="form-control"  data-field='action' @if (!$is_logged_user) disabled @endif>{!! $pi->dev_action !!}</textarea></td>
+              <td><textarea class="form-control"  data-field='resource' @if (!$is_logged_user) disabled @endif>{!! $pi->resources !!}</textarea></td>
               <td><a onclick="$(this).parent().parent().remove()" class="btn btn-danger btn-sm"><i class="fa fa-trash" style="font-size:16px"></i></a></td>
             </tr>
 
@@ -158,12 +158,15 @@
 </div>
 <div class="col-lg-12 buttons-pad">
     <button class="btn btn-success" onclick="pdpSave(true)"><i class="fa fa-save"></i> {!! $dictionary->translate('Guardar') !!}</button>
+    
 </div>
 
 {!! Form::close() !!}
 
 <script type="text/javascript">
-
+var options = {
+        uid: "{!! $user->id !!}",
+    };
 $(function(){
 
     // Guardado automatico
