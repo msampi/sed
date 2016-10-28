@@ -49,8 +49,6 @@ class EmailSend
         $msg->message = str_replace("evaluation_name", $evaluation->name, $msg->message);
       }
 
-      http://localhost/sed/public/password/reset/57d34ba7083b5ba09d227054ac909851384ba32b956e05afdb54355a9c69682f?email=matiassampietro%40gmail.com
-
       //$msg->message = str_replace("web_link", URL::to('/'), $msg->message);
 
       $config = array();

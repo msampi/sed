@@ -163,7 +163,6 @@
         };
 
     $(function(){
-
         // Guardado automatico objetivos
 
             setInterval(function() {

@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'sed@people-experts.com', 'name' => 'People Experts'],
+    'from' => ['address' => 'sed@evaluaciononline.es', 'name' => 'People Experts'],
 
     /*
     |--------------------------------------------------------------------------

@@ -84,6 +84,8 @@ class PlanController extends AppFrontendController
         $current_stage = $this->evaluationRepository->getCurrentStage();
 
         $this->printJSactions($plans);
+        $visualization_st1 = $this->evaluationRepository->userVisibilityStageOne($this->is_logged_user);
+        $visualization_st2 = $this->evaluationRepository->userVisibilityStageTwo($this->is_logged_user);
 
 
         return view('frontend.pdp')->with('user',$this->user)
@@ -94,7 +96,9 @@ class PlanController extends AppFrontendController
                                    ->with('plans',$plans)
                                    ->with('current_stage',$current_stage)
                                    ->with('evaluation_id',Session::get('evaluation_id'))
-                                   ->with('eue', $this->eue);
+                                   ->with('eue', $this->eue)
+                                   ->with('visualization_st1',$visualization_st1)
+                                   ->with('visualization_st2',$visualization_st2);
     }
 
     public function save(Request $request)
@@ -104,6 +108,14 @@ class PlanController extends AppFrontendController
         $this->planCommentRepository->saveComment($input->comments, TRUE);
         $flags = $this->planImprovementRepository->saveImprovements($input->improvements);
         echo json_encode($flags);
+
+    }
+
+    public function delete(Request $request)
+    {
+
+        $this->planImprovementRepository->delete($request->get('id'));
+        echo 1;
 
     }
 
