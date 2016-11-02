@@ -245,12 +245,15 @@ class EvaluationController extends AdminBaseController
     private function transformToSpanishDate($start_date, $end_date)
     {
 
-        $date_st = explode(' ', $start_date);
-        $date_st = explode('-', $date_st[0]);
-        $date_en = explode(' ', $end_date);
-        $date_en = explode('-', $date_en[0]);
+        if ($start_date && $end_date) :
+          $date_st = explode(' ', $start_date);
+          $date_st = explode('-', $date_st[0]);
+          $date_en = explode(' ', $end_date);
+          $date_en = explode('-', $date_en[0]);
 
-        return trim($date_st[2]).'/'.trim($date_st[1]).'/'.trim($date_st[0]).' - '.trim($date_en[2]).'/'.trim($date_en[1]).'/'.trim($date_en[0]);
+          return trim($date_st[2]).'/'.trim($date_st[1]).'/'.trim($date_st[0]).' - '.trim($date_en[2]).'/'.trim($date_en[1]).'/'.trim($date_en[0]);
+        endif;
+        return "";
     }
 
     public function uploadFiles($files, $evaluation_id)

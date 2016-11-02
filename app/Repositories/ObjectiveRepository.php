@@ -28,12 +28,32 @@ class ObjectiveRepository extends AdminBaseRepository
 
     public function getObjectives($user, $eue)
     {
-
-        return $this->model->where('user_id',$user->id)
+        
+        return $this->model->where(function ($query) use ($user,$eue) {
+                            $query->where('user_id',$user->id)
+                                  ->where('evaluation_id',Session::get('evaluation_id'))
+                                  ->where('post_id',$eue->post_id);
+                                 
+                        })->orWhere(function ($query) use ($user,$eue) {
+                            $query->where('user_id',NULL)
+                                  ->where('evaluation_id',Session::get('evaluation_id'))
+                                  ->where('post_id',$eue->post_id);
+                        })->orWhere(function ($query) use ($user,$eue) {
+                            $query->where('user_id',0)
+                                  ->where('evaluation_id',Session::get('evaluation_id'))
+                                  ->where('post_id',$eue->post_id);
+                        })->get();
+                  
+        /*return $this->model->where('user_id',$user->id)
                            ->orWhere('user_id', NULL)
                            ->orWhere('user_id', 0)
                            ->where('evaluation_id',Session::get('evaluation_id'))
-                           ->where('post_id',$eue->post_id)->get();
+                           ->where('post_id',$eue->post_id)->get();*/
+        
+        
+        
+        
+           
 
     }
 
@@ -45,7 +65,7 @@ class ObjectiveRepository extends AdminBaseRepository
             if (isset($value->stage) && ($value->stage == 'objective'))
             {
                 //echo $value->description.': '.$value->id;
-                $objective = $this->model->firstOrCreate(['id' => $value->id]);
+                $objective = $this->model->firstOrNew(['id' => $value->id]);
                 $objective->description = $this->saveArrayField($objective->description, Auth::user()->language_id, $value->description);
                 $objective->weight = $value->selector;
                 $objective->user_id = $value->uid;

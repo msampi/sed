@@ -10,7 +10,7 @@
         <tr>
             <td><img src={{ URL('/uploads/'.$client->logo) }} width="40" height="40" /></td>
             <td>{!! $client->name !!}</td>
-            <td>{!! $client->description !!}</td>
+            <td>{!! substr($client->description, 0, 300) !!}...</td>
             <td>
                 {!! Form::open(['route' => ['admin.clients.destroy', $client->id], 'method' => 'delete']) !!}
                   {{-- */ $confirm = $dictionary->translate('Esta seguro de eliminar este cliente?') /* --}}

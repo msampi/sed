@@ -51,7 +51,10 @@ class ObjectiveController extends AppFrontendController
           $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso a objetivos del empleado');
         $objectives = $this->objectiveRepository->getObjectives($this->user, $this->eue);
         $sum_weight = $objectives->sum('weight');
-        $current_stage = $this->evaluationRepository->getCurrentStage();
+        $is_stage_one = $this->evaluationRepository->isStageOne();
+        $is_stage_two = $this->evaluationRepository->isStageTwo();
+        $is_stage_three = $this->evaluationRepository->isStageThree();
+        
         $rating = $this->evaluationRepository->getObjectivesRating();
         $visualization_st1 = $this->evaluationRepository->userVisibilityStageOne($this->is_logged_user);
         $visualization_st2 = $this->evaluationRepository->userVisibilityStageTwo($this->is_logged_user);
@@ -59,7 +62,9 @@ class ObjectiveController extends AppFrontendController
         return view('frontend.objectives')->with('objectives',$objectives)
                                           ->with('user',$this->user)
                                           ->with('is_logged_user',$this->is_logged_user)
-                                          ->with('current_stage',$current_stage)
+                                          ->with('is_stage_one',$is_stage_one)
+                                          ->with('is_stage_two',$is_stage_two)
+                                          ->with('is_stage_three',$is_stage_three)
                                           ->with('rating',$rating)
                                           ->with('sum_weight',$sum_weight)
                                           ->with('eue',$this->eue)

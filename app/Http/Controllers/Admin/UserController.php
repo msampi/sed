@@ -61,6 +61,7 @@ class UserController extends AdminBaseController
     {
 
         $messages = $this->messageRepository->getRoleUserMessages($this->superadmin);
+        $this->clients->prepend('Seleccione...', '');
         return View( 'admin.users.create', array(
                                         'clients' => $this->clients,
                                         'languages' => Language::lists('name', 'id'),
@@ -117,7 +118,7 @@ class UserController extends AdminBaseController
     {
 
         $user = $this->userRepository->findWithoutFail($id);
-
+        $this->clients->prepend('Seleccione...', '');
         if (empty($user)) {
             Flash::error($this->dictionary->translate('Usuario no encontrado'));
             return redirect()->route('admin.users.index');

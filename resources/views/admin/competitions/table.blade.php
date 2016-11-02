@@ -9,7 +9,7 @@
     @foreach($competitions as $competition)
         <tr>
             <td>{!! $competition->getName() !!}</td>
-            <td>{!! $competition->getDescription() !!}</td>
+            <td>{!! substr($competition->getDescription(), 0, 300) !!}...</td>
             <td>@if ($competition->post) {!! $competition->post->getName() !!} @endif</td>
             <td>
                 {!! Form::open(['route' => ['admin.competitions.destroy', $competition->id], 'method' => 'delete']) !!}

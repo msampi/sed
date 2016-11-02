@@ -45,8 +45,10 @@ class HomeController extends AppFrontendController
         $evaluation = $this->evaluationRepository->find(Session::get('evaluation_id'));
         $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso al sistema');
         $this->evaluationUserEvaluatorRepository->pushCriteria(new EvaluationUserEvaluatorCriteria());
+        $is_stage_three = $this->evaluationRepository->isStageThree();
         return view('frontend.home')->with('evaluation', $evaluation)
-                                    ->with('eue', $this->eue);
+                                    ->with('eue', $this->eue)
+                                    ->with('is_stage_three', $is_stage_three);
 
     }
 

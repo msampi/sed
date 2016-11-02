@@ -58,14 +58,14 @@
           <td>
             {{-- */ $bhrating = $behaviour->getBehaviourRating('half-year','user', $user->id) /* --}}
 
-            <select data-id="" data-entry="user" data-uid="{!! $user->id !!}"  data-eid="" data-stage="half-year" data-bid="{!! $behaviour->id !!}" class="form-control bh-selector sel-us-half" @if (!$is_logged_user) disabled @endif>
+            <select data-id="" data-entry="user" data-uid="{!! $user->id !!}"  data-eid="" data-stage="half-year" data-bid="{!! $behaviour->id !!}" class="form-control bh-selector sel-us-half" @if (!$is_logged_user || !$is_stage_two) disabled @endif>
                 @foreach( $rating->values as $value)
                     <option @if ($bhrating->rating == $value->getAttributeTranslate($value->value)) selected="selected" @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
                 @endforeach
             </select>
             {{-- */ $bhrating = $behaviour->getBehaviourRating('half-year','evaluator', $user->id) /* --}}
             @if($visualization_st1)
-            <select data-id="" data-entry="evaluator" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" data-stage="half-year" data-bid="{!! $behaviour->id !!}" class="form-control  bh-selector sel-ev-half margin-top-3" @if ($is_logged_user) disabled @endif>
+            <select data-id="" data-entry="evaluator" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" data-stage="half-year" data-bid="{!! $behaviour->id !!}" class="form-control  bh-selector sel-ev-half margin-top-3" @if ($is_logged_user || !$is_stage_two) disabled @endif>
                 @foreach( $rating->values as $value)
                     <option @if ($bhrating->rating == $value->getAttributeTranslate($value->value)) selected="selected" @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
                 @endforeach
@@ -74,14 +74,14 @@
           </td>
           <td>
             {{-- */ $bhrating = $behaviour->getBehaviourRating('end-year','user', $user->id) /* --}}
-            <select data-id="" data-entry="user" data-uid="{!! $user->id !!}" data-eid="" data-stage="end-year" data-bid="{!! $behaviour->id !!}" class="form-control bh-selector sel-us-full" @if (!$is_logged_user) disabled @endif>
+            <select data-id="" data-entry="user" data-uid="{!! $user->id !!}" data-eid="" data-stage="end-year" data-bid="{!! $behaviour->id !!}" class="form-control bh-selector sel-us-full" @if (!$is_logged_user || !$is_stage_three) disabled @endif>
                 @foreach( $rating->values as $value)
                     <option @if ($bhrating->rating == $value->getAttributeTranslate($value->value)) selected="selected" @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
                 @endforeach
             </select>
             {{-- */ $bhrating = $behaviour->getBehaviourRating('end-year','evaluator', $user->id) /* --}}
             @if($visualization_st2)
-            <select data-id="" data-entry="evaluator" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" data-stage="end-year" data-bid="{!! $behaviour->id !!}" class="form-control bh-selector sel-ev-full margin-top-3" @if ($is_logged_user) disabled @endif>
+            <select data-id="" data-entry="evaluator" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" data-stage="end-year" data-bid="{!! $behaviour->id !!}" class="form-control bh-selector sel-ev-full margin-top-3" @if ($is_logged_user || !$is_stage_three) disabled @endif>
                 @foreach( $rating->values as $value)
                     <option @if ($bhrating->rating == $value->getAttributeTranslate($value->value)) selected="selected" @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
                 @endforeach
@@ -102,21 +102,21 @@
         <tbody>
           <tr>
             {{-- */ $comment = $competition->getComment('half-year','user', $user->id) /* --}}
-            <td><textarea placeholder="Comentarios Empleado" data-id="{!! $comment->id !!}" data-entry="user" data-cid="{!! $competition->id!!}" data-stage="half-year" data-uid="{!! $user->id !!}" data-eid="" class="form-control" @if (!$is_logged_user) disabled @endif>{!! $comment->comment !!}</textarea></td>
+            <td><textarea placeholder="Comentarios Empleado" data-id="{!! $comment->id !!}" data-entry="user" data-cid="{!! $competition->id!!}" data-stage="half-year" data-uid="{!! $user->id !!}" data-eid="" class="form-control" @if (!$is_logged_user || !$is_stage_two) disabled @endif>{!! $comment->comment !!}</textarea></td>
             {{-- */ $comment = $competition->getComment('end-year','user', $user->id) /* --}}
-            <td><textarea placeholder="Comentarios Empleado" data-id="{!! $comment->id !!}" data-entry="user" data-cid="{!! $competition->id!!}" data-stage="end-year" data-uid="{!! $user->id !!}" data-eid="" class="form-control" @if (!$is_logged_user) disabled @endif>{!! $comment->comment !!}</textarea></td>
+            <td><textarea placeholder="Comentarios Empleado" data-id="{!! $comment->id !!}" data-entry="user" data-cid="{!! $competition->id!!}" data-stage="end-year" data-uid="{!! $user->id !!}" data-eid="" class="form-control" @if (!$is_logged_user || !$is_stage_three) disabled @endif>{!! $comment->comment !!}</textarea></td>
           </tr>
           <tr>
             {{-- */ $comment = $competition->getComment('half-year','evaluator', $user->id) /* --}}
             <td>
               @if($visualization_st1)
-              <textarea placeholder="Comentarios Manager" data-entry="evaluator" data-id="{!! $comment->id !!}" data-cid="{!! $competition->id!!}" data-stage="half-year" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" class="form-control" @if ($is_logged_user) disabled @endif>{!! $comment->comment !!}</textarea>
+              <textarea placeholder="Comentarios Manager" data-entry="evaluator" data-id="{!! $comment->id !!}" data-cid="{!! $competition->id!!}" data-stage="half-year" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" class="form-control" @if ($is_logged_user || !$is_stage_two) disabled @endif>{!! $comment->comment !!}</textarea>
               @endif
               </td>
             {{-- */ $comment = $competition->getComment('end-year','evaluator', $user->id) /* --}}
             <td>
               @if($visualization_st2)
-              <textarea placeholder="Comentarios Manager" data-entry="evaluator" data-id="{!! $comment->id !!}" data-cid="{!! $competition->id!!}" data-stage="end-year" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" class="form-control" @if ($is_logged_user) disabled @endif>{!! $comment->comment !!}</textarea>
+              <textarea placeholder="Comentarios Manager" data-entry="evaluator" data-id="{!! $comment->id !!}" data-cid="{!! $competition->id!!}" data-stage="end-year" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" class="form-control" @if ($is_logged_user || !$is_stage_three) disabled @endif>{!! $comment->comment !!}</textarea>
               @endif
               </td>
           </tr>
@@ -137,7 +137,7 @@
 
             setInterval(function() {
                 competitionsSave();
-            }, 5000);
+            }, 2000);
     });
 </script>
 @endif

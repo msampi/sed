@@ -50,6 +50,7 @@ class User extends Authenticatable
     public static $rules = [
             'name' => 'required',
             'last_name' => 'required',
+            'client_id' => 'required',
             'image' => 'image|mimes:jpeg,png'
         ];
 

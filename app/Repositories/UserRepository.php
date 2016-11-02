@@ -4,8 +4,10 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Library\EmailSend;
+use App\Criteria\ClientCriteria;
 use App\Models\Language;
 use InfyOm\Generator\Common\BaseRepository;
+use Auth;
 
 class UserRepository extends AdminBaseRepository
 {
@@ -24,6 +26,14 @@ class UserRepository extends AdminBaseRepository
     public function model()
     {
         return User::class;
+    }
+    
+    public function getCountRecords() {
+        if (Auth::user())
+            if (Auth::user()->role_id == 2){
+                $this->pushCriteria(new ClientCriteria(false));
+            }
+        return $this->all()->count();
     }
 
 

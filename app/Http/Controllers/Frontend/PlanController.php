@@ -81,7 +81,8 @@ class PlanController extends AppFrontendController
         $this->planCommentRepository->createComments(NULL, $this->user);
 
         $plan_comments = new PlanComment();
-        $current_stage = $this->evaluationRepository->getCurrentStage();
+        $is_stage_two = $this->evaluationRepository->isStageTwo();
+        $is_stage_three = $this->evaluationRepository->isStageThree();
 
         $this->printJSactions($plans);
         $visualization_st1 = $this->evaluationRepository->userVisibilityStageOne($this->is_logged_user);
@@ -94,7 +95,8 @@ class PlanController extends AppFrontendController
                                    ->with('plan_improvements',$plan_improvements)
                                    ->with('plan_comments',$plan_comments)
                                    ->with('plans',$plans)
-                                   ->with('current_stage',$current_stage)
+                                   ->with('is_stage_two',$is_stage_two)
+                                   ->with('is_stage_three',$is_stage_three)
                                    ->with('evaluation_id',Session::get('evaluation_id'))
                                    ->with('eue', $this->eue)
                                    ->with('visualization_st1',$visualization_st1)

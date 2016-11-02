@@ -10,7 +10,7 @@
         <tr>
             <td>{!! $evaluation->name !!}</td>
             <td>{!! $evaluation->client->name!!}</td>
-            <td>{!! $evaluation->instructions !!}</td>
+            <td>{!! substr($evaluation->instructions, 0, 300) !!}...</td>
 
             <td>
                 {!! Form::open(['route' => ['admin.evaluations.destroy', $evaluation->id], 'method' => 'delete']) !!}

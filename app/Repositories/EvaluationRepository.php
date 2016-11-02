@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Evaluation;
 use App\Criteria\EqualCriteria;
+use App\Criteria\ClientCriteria;
 use InfyOm\Generator\Common\BaseRepository;
 use Session;
 use Carbon\Carbon;
@@ -38,27 +39,46 @@ class EvaluationRepository extends AdminBaseRepository
     public function getValorationsRating() {
         return $this->model->where('id', Session::get('evaluation_id'))->first()->valorationsRating;
     }
-
-
-    public function getCurrentStage()
+    
+    public function isStageOne()
     {
-
         $evaluation = $this->model->where('id',Session::get('evaluation_id'))->first();
-
         $now = Carbon::now();
-
-        if ($evaluation->start_year_end->gt($now))
-            return 1;
-        else
-        if ($evaluation->half_year_end->gt($now))
-            return 2;
-        else
-            return 3;
-
-        return 2;
-
-
+        
+        if ($evaluation->start_year_end->gt($now) && $evaluation->start_year_start->lt($now) )
+            return true;
+        return false;
     }
+    
+    public function isStageTwo()
+    {
+        $evaluation = $this->model->where('id',Session::get('evaluation_id'))->first();
+        $now = Carbon::now();
+        
+        if ($evaluation->half_year_end->gt($now) && $evaluation->half_year_start->lt($now) )
+            return true;
+        return false;
+    }
+    
+    public function isStageThree()
+    {
+        $evaluation = $this->model->where('id',Session::get('evaluation_id'))->first();
+        $now = Carbon::now();
+        
+        if ($evaluation->end_year_end->gt($now) && $evaluation->end_year_start->lt($now) )
+            return true;
+        return false;
+    }
+    
+    public function getCountRecords() {
+        if (Auth::user())
+            if (Auth::user()->role_id == 2){
+                $this->pushCriteria(new ClientCriteria(false));
+            }
+        return $this->all()->count();
+    }
+
+
 
     public function getEvaluationsList($client = NULL)
     {

@@ -32,6 +32,7 @@
           </div>
         </div>
         <!-- ./col -->
+        @if (Auth::user()->role_id == 1)
         <div class="col-lg-4 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green">
@@ -48,6 +49,7 @@
             </a>
           </div>
         </div>
+        
         <!-- ./col -->
         <div class="col-lg-4 col-xs-6">
           <!-- small box -->
@@ -65,6 +67,7 @@
             </a>
           </div>
         </div>
+        @endif
         <!-- ./col -->
         <div class="col-lg-4 col-xs-6">
           <!-- small box -->
@@ -102,6 +105,7 @@
         </div>
         <!-- ./col -->
         <!-- ./col -->
+        @if (Auth::user()->role_id == 1)
         <div class="col-lg-4 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-gray">
@@ -118,6 +122,7 @@
             </a>
           </div>
         </div>
+        @endif
         <!-- ./col -->
       </div>
       <!-- /.row -->

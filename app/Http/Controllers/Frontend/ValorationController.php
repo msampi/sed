@@ -52,7 +52,8 @@ class ValorationController extends AppFrontendController
           $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso a valores del empleado');
         $valorations = $this->valorationRepository->findWhere(['evaluation_id' => Session::get('evaluation_id'), 'post_id' => $this->user->getEvaluationById(Session::get('evaluation_id'))->post_id]);
         $rating = $this->evaluationRepository->getValorationsRating();
-        $current_stage = $this->evaluationRepository->getCurrentStage();
+        $is_stage_two = $this->evaluationRepository->isStageTwo();
+        $is_stage_three = $this->evaluationRepository->isStageThree();
 
         foreach ($valorations as $valoration) {
            $this->valorationCommentRepository->createComments($valoration, $this->user);
@@ -66,7 +67,8 @@ class ValorationController extends AppFrontendController
                                             ->with('section_name','Valorations')
                                             ->with('valorations',$valorations)
                                             ->with('rating',$rating)
-                                            ->with('current_stage',$current_stage)
+                                            ->with('is_stage_two',$is_stage_two)
+                                            ->with('is_stage_three',$is_stage_three)
                                             ->with('eue', $this->eue)
                                             ->with('visualization_st1',$visualization_st1)
                                             ->with('visualization_st2',$visualization_st2);;

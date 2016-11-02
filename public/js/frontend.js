@@ -69,9 +69,9 @@ function appendPDPArea(target_selector, append_elem){
 }
 function appendObjective(options){
     var stage2, stage3 = '';
-    if (options.stage != 2)
+    if (!options.stage_two)
       stage2 = 'disabled';
-    if (options.stage != 3)
+    if (!options.stage_three)
         stage3 = 'disabled';
 
     objcounter = parseInt(objcounter) + parseInt(options.objnum);

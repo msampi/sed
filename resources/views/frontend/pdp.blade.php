@@ -194,7 +194,7 @@ $(function(){
 
         setInterval(function() {
             pdpSave();
-        }, 10000);
+        }, 2000);
 
 
 });
