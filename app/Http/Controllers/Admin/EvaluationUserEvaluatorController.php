@@ -210,7 +210,7 @@ class EvaluationUserEvaluatorController extends AdminBaseController
             $email = new EmailSend($messageRequest->get('mensaje'), $messageRequest->get('search'), User::find( $value ), NULL, $resend, $this);
             $email->send();
         }
-
+        Flash::success($this->dictionary->translate('Mensajes enviados correctamente'));
         $this->index( $messageRequest );
     }
 

@@ -79,15 +79,15 @@ class EmailSend
 
   	    $config = [
   	        'driver' => 'smtp',
-  	        'host' => 'smtp.mandrillapp.com',
-  	        'port' => '587',
-  	        'username' => 'contactos@ciale.com',
-  	        'password' => 't0Sj3SPV1L2acP8Xsur4sw',
+  	        'host' => 'evaluaciononline.es',
+  	        'port' => '25',
+  	        'username' => 'sed@evaluaciononline.es',
+  	        'password' => 'kyfC10&4',
   	        ];
           \Config::set('mail',$config);
 
-  			$send = Mail::send(['html' => 'emails.message'], [ 'msg' => $msg->message, 'link' => '' ], function($message) use ($msg)
-  			{
+  		$send = Mail::send(['html' => 'emails.message'], [ 'msg' => $msg->message, 'link' => '' ], function($message) use ($msg)
+  		{
   				  $message->from( 'sed@people-experts.com', 'Evaluaciones Online' );
   				  $message->to( $this->user->email, $this->user->name.' '.$this->user->last_name)->subject($msg->getAttributeTranslate($msg->subject, $this->user->language_id));
 
