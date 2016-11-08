@@ -97,7 +97,7 @@ class UserController extends AdminBaseController
         if ($input['role_id'] == 2) :
             $email = new EmailSend($user->register_message_id, NULL, $user, $pass);
             $email->send();
-            $this->postEmail($request);
+            //$this->postEmail($request);
         endif;
 
 
