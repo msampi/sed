@@ -44,7 +44,16 @@ class ObjectiveRepository extends AdminBaseRepository
                                   ->where('post_id',$eue->post_id);
                         })->get();
                   
+        /*return $this->model->where('user_id',$user->id)
+                           ->orWhere('user_id', NULL)
+                           ->orWhere('user_id', 0)
+                           ->where('evaluation_id',Session::get('evaluation_id'))
+                           ->where('post_id',$eue->post_id)->get();*/
         
+        
+        
+        
+           
 
     }
 
