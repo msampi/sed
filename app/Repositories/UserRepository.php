@@ -59,7 +59,15 @@ class UserRepository extends AdminBaseRepository
         $user->city = $row->ciudad;
         $user->role_id = '3';
         $user->area = $row->area;
-        $user->save();
+        $user->department = $row->departamento;
+        $user->area = $row->area;
+        $user->zone = $row->zone;
+        try{
+           $user->save();
+        }
+        catch(Exception $e){
+           echo $e->getMessage();   // insert query
+        }
         $response['user_id'] = $user->id;
         $response['post'] = $row->puesto;
         $response['category'] = $row->categoria;

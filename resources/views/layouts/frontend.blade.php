@@ -278,6 +278,7 @@
       
       $(function () {
         $('.search-table').DataTable({
+          "order": [[ 1, "asc" ]],
           "paging": true,
           "lengthChange": false,
           "searching": true,

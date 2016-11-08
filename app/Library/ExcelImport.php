@@ -78,8 +78,9 @@ class ExcelImport {
     private function validEmail($email, $line)
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-          return false;
+          
           $this->errors[$line][] = 'Formato de email no válido';
+          return false;
         }
         return true;
     }

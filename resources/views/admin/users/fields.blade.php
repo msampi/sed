@@ -54,6 +54,10 @@
         {!! Form::label('department', $dictionary->translate('Departamento') . ':') !!}
         {!! Form::text('department', null, ['class' => 'form-control']); !!}
     </div>
+    <div class="form-group col-sm-6">
+        {!! Form::label('zone', $dictionary->translate('Zona') . ':') !!}
+        {!! Form::text('zone', null, ['class' => 'form-control']); !!}
+    </div>
 </fieldset>
 
 </div>

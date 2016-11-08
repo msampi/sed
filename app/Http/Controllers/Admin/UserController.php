@@ -194,7 +194,7 @@ class UserController extends AdminBaseController
 
         Flash::success($this->dictionary->translate('El usuario se ha editado correctamente'));
 
-        //return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index');
 
 
     }

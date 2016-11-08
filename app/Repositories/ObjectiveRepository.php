@@ -13,9 +13,7 @@ class ObjectiveRepository extends AdminBaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'evaluation_id',
-        'post_id',
-        'user_id'
+        'evaluation_id'
     ];
 
     /**
