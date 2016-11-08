@@ -63,6 +63,7 @@
     	<table class="table table-bordered table-striped search-table" id="users-front-table">
 		    <thead>
 		        <th>ID</th>
+                <th>{!! $dictionary->translate('Jerarquia') !!}</th>
 		        <th>{!! $dictionary->translate('Usuario') !!}</th>
 		        <th>{!! $dictionary->translate('Fecha') !!}</th>
 		        <th>Status</th>
@@ -77,12 +78,13 @@
             @foreach($evaluationUserEvaluators as $ev)
 		        <tr>
 		            <td>{!! $ev->user->id !!}</td>
+                    <td>1</td>
 		            <td><a href="{{ url('/objectives/'.$ev->user->id) }}">{!! $ev->user->name !!} {!! $ev->user->last_name !!}</a></td>
-		            <td>{!! $ev->created_at !!}</td>
+		            <td>{!! $ev->created_at->format('d-m-Y') !!}</td>
 		            <td><small class="label bg-green">{!! $dictionary->translate('Iniciado') !!}</small></td>
 		            <td>{!! $ev->getAttributeTranslate($ev->post->name) !!}</td>
 		            <td>{!! $ev->evaluator->name !!} {!! $ev->evaluator->last_name !!} </td>
-                <td>{!! $dictionary->translate('Aún no asignada') !!}</td>
+                    <td>{!! $dictionary->translate('Aún no asignada') !!}</td>
 		            <td>{!! $dictionary->translate('No disponible') !!}</td>
 		            <td><input type="checkbox"> </td>
 		        </tr>
@@ -92,12 +94,14 @@
                 @foreach($ev->childrenEUA as $eua)
                 <tr>
                     <td>{!! $eua->user->id !!}</td>
-                    <td><a href="{{ url('/objectives/'.$eua->user->id) }}">{!! $eua->user->name !!} {!! $eua->user->last_name !!}</a></td>
-                    <td>{!! $eua->created_at !!}</td>
-                    <td><small class="label pull-right bg-orange">{!! $eua->status !!}</small></td>
-                    <td>Human Resource</td>
+                    <td>2</td>
+                    <td>{!! $eua->user->name !!} {!! $eua->user->last_name !!}</td>
+                    <td>{!! $ev->created_at->format('d-m-Y') !!}</td>
+                    <td><small class="label bg-green">{!! $dictionary->translate('Iniciado') !!}</small></td>
+                    <td>{!! $ev->getAttributeTranslate($ev->post->name) !!}</td>
                     <td>{!! $eua->evaluator->name !!} {!! $eua->evaluator->last_name !!} </td>
-                    <td>Download</td>
+                    <td>{!! $dictionary->translate('Aún no asignada') !!}</td>
+		            <td>{!! $dictionary->translate('No disponible') !!}</td>
                     <td><input type="checkbox"> </td>
                 </tr>
                 @endforeach
@@ -108,3 +112,6 @@
     </div>
 
 @endsection
+
+
+

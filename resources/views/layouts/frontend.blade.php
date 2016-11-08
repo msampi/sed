@@ -274,8 +274,11 @@
     <script type="text/javascript">
       var BASE_URL = '{!! url('/') !!}';
       
+
+
       $(function () {
         $('.search-table').DataTable({
+          "order": [[ 1, "asc" ]],
           "paging": true,
           "lengthChange": false,
           "searching": true,
