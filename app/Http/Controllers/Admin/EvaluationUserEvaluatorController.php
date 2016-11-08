@@ -2,30 +2,47 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\AppBaseController;
-use App\Http\Requests;
-use App\Http\Requests\CreateEvaluationUserEvaluatorRequest;
-use App\Http\Requests\UpdateEvaluationUserEvaluatorRequest;
-use App\Repositories\EvaluationUserEvaluatorRepository;
-use App\Repositories\EvaluationRepository;
-use Illuminate\Http\Request;
 use Flash;
-use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
-use App\Models\Rating;
 use App\Models\Post;
 use App\Models\User;
-
+use App\Http\Requests;
+use App\Models\Rating;
+use App\Model\Message;
+use App\Library\EmailSend;
+use Illuminate\Http\Request;
+use App\Http\Requests\MessageRequest;
+use App\Repositories\MessageRepository;
+use App\Repositories\EvaluationRepository;
+use App\Http\Controllers\AppBaseController;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use App\Repositories\EvaluationUserEvaluatorRepository;
+use App\Http\Requests\CreateEvaluationUserEvaluatorRequest;
+use App\Http\Requests\UpdateEvaluationUserEvaluatorRequest;
 
 class EvaluationUserEvaluatorController extends AdminBaseController
 {
+    use ResetsPasswords;
+
     /** @var  EvaluationRepository */
     private $evaluationUserEvaluatorRepository;
 
+    /** @var  MessageRepository */
+    protected $messageRepository;
 
-    public function __construct(EvaluationUserEvaluatorRepository $evaluationUserEvaluatorRepo)
+
+    /**
+     * { function_description }
+     *
+     * @param      \App\Repositories\EvaluationUserEvaluatorRepository  $evaluationUserEvaluatorRepo  The evaluation user evaluator repo
+     * @param      MessageRepository                                    $messageRepo                  The message repo
+     */
+    public function __construct(EvaluationUserEvaluatorRepository $evaluationUserEvaluatorRepo, MessageRepository $messageRepo)
     {
         $this->evaluationUserEvaluatorRepository = $evaluationUserEvaluatorRepo;
+        $this->messageRepository = $messageRepo;
+
         parent::__construct();
     }
 
@@ -40,9 +57,11 @@ class EvaluationUserEvaluatorController extends AdminBaseController
         $this->evaluationUserEvaluatorRepository->pushCriteria(new RequestCriteria($request));
         $evaluation_users = $this->evaluationUserEvaluatorRepository->all();
         $evaluation = $this->evaRepo->find($request->search);
+        $messages = $this->messageRepository->all();
 
         return view('admin.evaluationUserEvaluators.index')->with('evaluation_users', $evaluation_users)
-                                                            ->with('evaluation', $evaluation);
+                                                           ->with('evaluation', $evaluation)
+                                                           ->with('mensajes', $messages);
 
 
     }
@@ -177,5 +196,39 @@ class EvaluationUserEvaluatorController extends AdminBaseController
         Flash::success($this->dictionary->translate('Evaluación eliminada correctamente'));
 
         return redirect(route('admin.evaluationUserEvaluators.index', 'search='.$evaluation->evaluation_id));
+    }
+
+    /**
+     * { function_description }
+     *
+     * @param      \Illuminate\Http\Request  $request  The request
+     */
+    public function send(Request $request, MessageRequest $messageRequest) {
+
+        foreach ( explode(",", $messageRequest->get('users', ''))  as $key => $value) {
+            $resend = $this->getUsers( $messageRequest );
+            $email = new EmailSend($messageRequest->get('mensaje'), $messageRequest->get('search'), User::find( $value ), NULL, $resend, $this);
+            $email->send();
+        }
+
+        $this->index( $messageRequest );
+    }
+
+    /**
+     * Gets the users.
+     *
+     * @param      \App\Http\Requests\MessageRequest          $messageRequest  The message request
+     *
+     * @return     \App\Http\Requests\MessageRequest|boolean  The users.
+     */
+    private function getUsers( MessageRequest $messageRequest ) {
+        if ( $messageRequest->get('clave', false) ) {
+            $messageRequest->request->add(['email'=>User::findOrFail( $value )->email ]);
+            $resend = $messageRequest;
+        }
+        else
+            $resend = false;
+
+        return $resend;
     }
 }

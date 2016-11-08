@@ -4,7 +4,6 @@ Route::group(['middleware' => 'admin', 'namespace' => 'Admin', 'prefix' => 'admi
 {
 	Route::get('/', 'HomeController@index');
 	Route::resource('evaluations', 'EvaluationController');
-	Route::resource('evaluationUserEvaluators', 'EvaluationUserEvaluatorController');
 	Route::resource('users', 'UserController');
 	Route::resource('valorations', 'ValorationController');
 	Route::resource('competitions', 'CompetitionController');
@@ -17,6 +16,8 @@ Route::group(['middleware' => 'admin', 'namespace' => 'Admin', 'prefix' => 'admi
 	Route::resource('plans', 'PlanController');
 	Route::resource('documents', 'DocumentController');
 
+	Route::resource('evaluationUserEvaluators', 'EvaluationUserEvaluatorController');
+	Route::post('/admin/evaluationUserEvaluators/send', ['as'=>'admin.evaluationUserEvaluators.send', 'uses'=>'EvaluationUserEvaluatorController@send']);
 });
 
 Route::group(['middleware' => 'superadmin', 'namespace' => 'Admin', 'prefix' => 'admin'], function()
