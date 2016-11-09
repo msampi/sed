@@ -23,6 +23,7 @@ Route::group(['namespace' => 'Frontend', 'middleware' => 'auth', 'prefix' => '']
 	Route::get('pdp', 'PlanController@index');
 	Route::get('pdp/{id}', 'PlanController@index');
 	Route::post('pdp/save', 'PlanController@save');
+	Route::post('pdp/delete', 'PlanController@delete');
 
 	Route::get('documents', 'DocumentController@index');
 	Route::get('quit', 'HomeController@quit');
@@ -31,8 +32,6 @@ Route::group(['namespace' => 'Frontend', 'middleware' => 'auth', 'prefix' => '']
 	Route::get('performances/{id}', 'PerformanceController@index');
 	Route::post('performances/store', 'PerformanceController@store');
 
-
-
-
+	Route::post('alert', 'AppFrontendController@getAlert');
 
 });

@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SED | Sistema de Evaluación de Desempeño</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>SED | Sistema de Evaluación de Desempeño</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -69,10 +70,10 @@
                   <li class="header">{!! $dictionary->translate('Tienes')!!} {!! $alerts->count() !!} {!! $dictionary->translate('notificaciones')!!}</li>
                   <li>
                     <!-- inner menu: contains the actual data -->
-                    <ul class="menu">
+                    <ul class="menu hand">
                       @foreach ($alerts as $alert)
                       <li>
-                        <a>
+                        <a key="{!! $alert->id !!}" @if($alert->read ) style="font-weight:initial;" @endif>
                           <i class="fa fa-warning text-yellow"></i> {!! $alert->getDescription()!!}
                         </a>
                       </li>
@@ -222,8 +223,28 @@
     </div>
 
 
-
-
+      <div class="alert-modal hiden modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Alerta</h4>
+            </div>
+            <div class="modal-body">
+              <p id="contenido">
+                
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
 
 
     <!-- JavaScripts -->
@@ -268,15 +289,32 @@
     <script src="{{ URL::asset('plugins/select2/select2.full.min.js') }}"></script>
 
 
-     <script src="{{ URL::asset('js/scripts.js') }}"></script>
-     <script src="{{ URL::asset('js/frontend.js') }}"></script>
+    <script src="{{ URL::asset('js/scripts.js') }}"></script>
+    <script src="{{ URL::asset('js/frontend.js') }}"></script>
 
     <script type="text/javascript">
       var BASE_URL = '{!! url('/') !!}';
-      
-
 
       $(function () {
+        $.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN': '<?php echo csrf_token(); ?>' }
+        });        
+        $('.hand li a').click(function(){
+          $(this).css('font-weight','initial');
+          $.ajax({
+            type: "POST",
+            url: '/alert',
+            data: { id: $(this).attr('key') },
+            success: function(resp) {
+              
+              $('#contenido').html('resp');
+              $('.alert-modal').modal('show');
+            },
+            error: function() {
+            },
+          });
+        });
+
         $('.search-table').DataTable({
           "order": [[ 1, "asc" ]],
           "paging": true,
