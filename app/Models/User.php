@@ -16,7 +16,7 @@ class User extends Authenticatable
     public $table = 'users';
 
     public $fillable = ['name','last_name','email','password','dni','client_id','code','role_id','language_id',
-        'image','category','country','city','area','department','register_message_id'];
+        'image','category','country','city','area','department','zone','register_message_id'];
 
     /**
      * The attributes that should be casted to native types.
@@ -39,6 +39,7 @@ class User extends Authenticatable
         'city' => 'string',
         'area' => 'string',
         'department' => 'string',
+        'zone' => 'string',
     ];
 
 
@@ -50,6 +51,7 @@ class User extends Authenticatable
     public static $rules = [
             'name' => 'required',
             'last_name' => 'required',
+            'client_id' => 'required',
             'image' => 'image|mimes:jpeg,png'
         ];
 

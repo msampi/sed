@@ -45,10 +45,11 @@ class UserController extends AppFrontendController
         $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso a listado de usuarios');
         $this->evaluationUserEvaluatorRepository->pushCriteria(new EvaluationUserEvaluatorCriteria());
         $evaluationUserEvaluators = $this->evaluationUserEvaluatorRepository->all();
-
+        $is_stage_three = $this->evaluationRepository->isStageThree();
         return view('frontend.users')
             ->with('evaluationUserEvaluators', $evaluationUserEvaluators)
-            ->with('eue', $this->eue);
+            ->with('eue', $this->eue)
+            ->with('is_stage_three', $is_stage_three);
 
     }
 }

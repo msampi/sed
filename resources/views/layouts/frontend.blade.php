@@ -176,12 +176,14 @@
 
               </a>
             </li>
+            @if ($is_stage_three)
             <li>
               <a href="{!! URL::asset( 'performances' ) !!}">
                 <i class="fa fa-bar-chart"></i> <span>{!! $dictionary->translate('Valoración Global') !!}</span>
 
               </a>
             </li>
+            @endif
 
             <!--<li class="active treeview">
               <a href="#">
@@ -276,6 +278,7 @@
       
       $(function () {
         $('.search-table').DataTable({
+          "order": [[ 1, "asc" ]],
           "paging": true,
           "lengthChange": false,
           "searching": true,

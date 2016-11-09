@@ -61,6 +61,7 @@ class UserController extends AdminBaseController
     {
 
         $messages = $this->messageRepository->getRoleUserMessages($this->superadmin);
+        $this->clients->prepend('Seleccione...', '');
         return View( 'admin.users.create', array(
                                         'clients' => $this->clients,
                                         'languages' => Language::lists('name', 'id'),
@@ -96,9 +97,10 @@ class UserController extends AdminBaseController
         if ($input['role_id'] == 2) :
             $email = new EmailSend($user->register_message_id, NULL, $user, $pass);
             $email->send();
+            $this->postEmail($request);
         endif;
 
-        $this->postEmail($request);
+
 
         Flash::success($this->dictionary->translate('El usuario se ha guardado correctamente'));
 
@@ -116,7 +118,7 @@ class UserController extends AdminBaseController
     {
 
         $user = $this->userRepository->findWithoutFail($id);
-
+        $this->clients->prepend('Seleccione...', '');
         if (empty($user)) {
             Flash::error($this->dictionary->translate('Usuario no encontrado'));
             return redirect()->route('admin.users.index');
@@ -192,7 +194,7 @@ class UserController extends AdminBaseController
 
         Flash::success($this->dictionary->translate('El usuario se ha editado correctamente'));
 
-        //return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index');
 
 
     }

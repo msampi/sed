@@ -54,9 +54,9 @@
                 <!-- Reviews -->
                 {{-- */ $review = $objective->getReviewsBy('half-year','user',$user->id) /* --}}
 
-    			<td><textarea data-select="half-year-user-selector-{!! $objnum !!}" data-oid="{!! $objective->id !!}" data-entry="user" data-pid="{!! $objective->post_id !!}" data-id="{!! $review->id !!}" data-uid="{!! $user->id !!}" data-eid="" data-stage="half-year" class="form-control @if ($is_logged_user && $current_stage == 2) textarea-small @else textarea-small-disabled @endif">{!! $review->description !!}</textarea></td>
+    			<td><textarea data-select="half-year-user-selector-{!! $objnum !!}" data-oid="{!! $objective->id !!}" data-entry="user" data-pid="{!! $objective->post_id !!}" data-id="{!! $review->id !!}" data-uid="{!! $user->id !!}" data-eid="" data-stage="half-year" class="form-control @if ($is_logged_user && $is_stage_two) textarea-small @else textarea-small-disabled @endif">{!! $review->description !!}</textarea></td>
     			<td class="rating-column ">
-    				<select id="half-year-user-selector-{!! $objnum !!}" class="form-control" @if ((!$is_logged_user) || ($current_stage != 2)) disabled @endif>
+    				<select id="half-year-user-selector-{!! $objnum !!}" class="form-control" @if ((!$is_logged_user) || (!$is_stage_two)) disabled @endif>
                         @foreach( $rating->values as $value)
                             <option @if ($review->rating == $value->value) selected @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
                         @endforeach
@@ -65,9 +65,9 @@
 
                 {{-- */ $review = $objective->getReviewsBy('end-year','user', $user->id) /* --}}
 
-    			<td><textarea  data-select="end-year-user-selector-{!! $objnum !!}" data-oid="{!! $objective->id !!}" data-entry="user" data-pid="{!! $objective->post_id !!}" data-id="{!! $review->id !!}" data-uid="{!! $user->id !!}" data-eid="" data-stage="end-year" class="form-control @if ($is_logged_user && $current_stage == 3) textarea-small @else textarea-small-disabled @endif">{!! $review->description !!}</textarea></td>
+    			<td><textarea  data-select="end-year-user-selector-{!! $objnum !!}" data-oid="{!! $objective->id !!}" data-entry="user" data-pid="{!! $objective->post_id !!}" data-id="{!! $review->id !!}" data-uid="{!! $user->id !!}" data-eid="" data-stage="end-year" class="form-control @if ($is_logged_user && $is_stage_three) textarea-small @else textarea-small-disabled @endif">{!! $review->description !!}</textarea></td>
     			<td class="rating-column">
-    				<select id="end-year-user-selector-{!! $objnum !!}" class="form-control" @if ((!$is_logged_user) || ($current_stage != 3)) disabled @endif>
+    				<select id="end-year-user-selector-{!! $objnum !!}" class="form-control" @if ((!$is_logged_user) || (!$is_stage_three)) disabled @endif>
                         @foreach( $rating->values as $value)
                             <option @if ($review->rating == $value->value) selected @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
                         @endforeach
@@ -88,12 +88,12 @@
                         data-uid="{!! $user->id !!}"
                         data-eid="{!! Auth::user()->id !!}"
                         data-stage="half-year"
-                        class="form-control @if ((!$is_logged_user) && ($current_stage == 2)) textarea-small @else textarea-small-disabled @endif"> {!! $review->description !!} </textarea>
+                        class="form-control @if ((!$is_logged_user) && ($is_stage_two)) textarea-small @else textarea-small-disabled @endif"> {!! $review->description !!} </textarea>
             @endif
           </td>
     			<td class="rating-column">
             @if($visualization_st1)
-    				<select id="half-year-manager-selector-{!! $objnum !!}" class="form-control" @if (($is_logged_user) || ($current_stage != 2)) disabled @endif>
+    				<select id="half-year-manager-selector-{!! $objnum !!}" class="form-control" @if (($is_logged_user) || (!$is_stage_two)) disabled @endif>
 
                         @foreach( $rating->values as $value)
                             <option @if ($review->rating == $value->value) selected @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
@@ -114,12 +114,12 @@
                           data-id="{!! $review->id !!}"
                           data-uid="{!! $user->id !!}"
                           data-eid="{!! Auth::user()->id !!}"
-                          data-stage="end-year" class="form-control @if ((!$is_logged_user) && ($current_stage == 3)) textarea-small @else textarea-small-disabled @endif">{!! $review->description !!} </textarea>
+                          data-stage="end-year" class="form-control @if ((!$is_logged_user) && ($is_stage_three)) textarea-small @else textarea-small-disabled @endif">{!! $review->description !!} </textarea>
             @endif
           </td>
     			<td class="rating-column">
             @if($visualization_st2)
-              <select id="end-year-manager-selector-{!! $objnum !!}" class="form-control" @if (($is_logged_user) || ($current_stage != 3)) disabled @endif>
+              <select id="end-year-manager-selector-{!! $objnum !!}" class="form-control" @if (($is_logged_user) || (!$is_stage_three)) disabled @endif>
 
                         @foreach( $rating->values as $value)
                             <option @if ($review->rating == $value->value) selected @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
@@ -140,7 +140,7 @@
 </div>
 
 <div class="col-lg-12 buttons-pad">
-  @if (!$is_logged_user)
+  @if (!$is_logged_user && $is_stage_one)
     <button class="btn btn-success" id="add-objective" onclick="appendObjective(options)"><i class="fa fa-plus"></i> {!! $dictionary->translate('Agregar objetivo') !!}</button>
   @endif
   <button class="btn btn-success" onclick="objectivesSave(true);"><i class="fa fa-save"></i> {!! $dictionary->translate('Guardar') !!}</button>
@@ -153,7 +153,8 @@
             weight:"Ponderacion",
             reviewHY:"Revision Medio Año",
             reviewFY:"Revision Fin de Año",
-            stage:"{!! $current_stage !!}",
+            stage_two:"{!! $is_stage_two !!}",
+            stage_three:"{!! $is_stage_three !!}",
             uid: "{!! $user->id !!}",
             eid: "{!! Auth::user()->id !!}",
             objnum: "{!! $objnum !!}",
@@ -163,12 +164,11 @@
         };
 
     $(function(){
-
         // Guardado automatico objetivos
 
             setInterval(function() {
                 objectivesSave();
-            }, 10000);
+            }, 2000);
 
             changeWeightColor();
             $('.weight-column select').change(function(){

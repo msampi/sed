@@ -6,7 +6,7 @@
     <tbody>
     @foreach($messages as $message)
         <tr>
-            <td>{!! $message->subject[1] !!}</td>
+            <td>{!! substr($message->subject[1], 0, 300) !!}...</td>
             <td>
                 {!! Form::open(['route' => ['admin.messages.destroy', $message->id], 'method' => 'delete']) !!}
                 {{-- */ $confirm = $dictionary->translate('Esta seguro de eliminar este mensaje?') /* --}}

@@ -71,23 +71,14 @@ class EmailSend
           $msg->message = str_replace("evaluation_name", $evaluation->name, $msg->message);
         }
 
-        // http://localhost/sed/public/password/reset/57d34ba7083b5ba09d227054ac909851384ba32b956e05afdb54355a9c69682f?email=matiassampietro%40gmail.com
-
+        
         $msg->message = str_replace("web_link", \URL::to('/'), $msg->message);
 
         $config = array();
 
-  	    $config = [
-  	        'driver' => 'smtp',
-  	        'host' => 'smtp.mandrillapp.com',
-  	        'port' => '587',
-  	        'username' => 'contactos@ciale.com',
-  	        'password' => 't0Sj3SPV1L2acP8Xsur4sw',
-  	        ];
-          \Config::set('mail',$config);
 
-  			$send = Mail::send(['html' => 'emails.message'], [ 'msg' => $msg->message, 'link' => '' ], function($message) use ($msg)
-  			{
+  		$send = Mail::send(['html' => 'emails.message'], [ 'msg' => $msg->message, 'link' => '' ], function($message) use ($msg)
+  		{
   				  $message->from( 'sed@people-experts.com', 'Evaluaciones Online' );
   				  $message->to( $this->user->email, $this->user->name.' '.$this->user->last_name)->subject($msg->getAttributeTranslate($msg->subject, $this->user->language_id));
 

@@ -49,7 +49,8 @@ class CompetitionController extends AppFrontendController
         parent::setCurrentUser($id);
         $competitions = $this->competitionRepository->findWhere(['evaluation_id' => Session::get('evaluation_id'), 'post_id' => $this->eue->post_id]);
         $rating = $this->evaluationRepository->getCompetitionsRating();
-        $current_stage = $this->evaluationRepository->getCurrentStage();
+        $is_stage_two = $this->evaluationRepository->isStageTwo();
+        $is_stage_three = $this->evaluationRepository->isStageThree();
         if ($this->is_logged_user)
           $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso a competencias');
         else
@@ -66,7 +67,8 @@ class CompetitionController extends AppFrontendController
                                             ->with('section_name','Competencias')
                                             ->with('competitions',$competitions)
                                             ->with('rating',$rating)
-                                            ->with('current_stage',$current_stage)
+                                            ->with('is_stage_two',$is_stage_two)
+                                            ->with('is_stage_three',$is_stage_three)
                                             ->with('eue', $this->eue)
                                             ->with('visualization_st1',$visualization_st1)
                                             ->with('visualization_st2',$visualization_st2);

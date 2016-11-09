@@ -27,7 +27,7 @@ class BehaviourRatingRepository extends BaseRepository
        
         foreach ($input as $value) {
             
-            $rating = $this->model->firstOrCreate(['user_id' => $value->uid, 'entry' => $value->entry, 'stage' => $value->stage, 'evaluator_id' => $value->eid, 'behaviour_id' => $value->bid]);
+            $rating = $this->model->firstOrNew(['user_id' => $value->uid, 'entry' => $value->entry, 'stage' => $value->stage, 'evaluator_id' => $value->eid, 'behaviour_id' => $value->bid]);
             $rating->rating = $value->rating;
             $rating->user_id = $value->uid;
             $rating->entry = $value->entry;

@@ -49,7 +49,7 @@ function appendPDPObjective(){
                                     '<td><textarea data-field="meta" class="form-control"></textarea></td>'+
                                     '<td><textarea data-field="action" class="form-control"></textarea></td>'+
                                     '<td><textarea data-field="resource" class="form-control"></textarea></td>'+
-                                    '<td><a onclick="$(this).parent().parent().remove()" class="btn btn-danger btn-sm"><i class="fa fa-trash" style="font-size:16px"></i></a></td>'+
+                                    '<td><a onclick="removePDPImprovement($(this).parent().parent(),$(this).parent().parent().attr(\'data-id\'), \'Esta seguro de eliminar este objetivo?\')" class="btn btn-danger btn-sm"><i class="fa fa-trash" style="font-size:16px"></i></a></td>'+
                                 '</tr>');
     objcounter++;
 }
@@ -69,9 +69,9 @@ function appendPDPArea(target_selector, append_elem){
 }
 function appendObjective(options){
     var stage2, stage3 = '';
-    if (options.stage != 2)
+    if (!options.stage_two)
       stage2 = 'disabled';
-    if (options.stage != 3)
+    if (!options.stage_three)
         stage3 = 'disabled';
 
     objcounter = parseInt(objcounter) + parseInt(options.objnum);
@@ -130,6 +130,23 @@ function removeObjective(elem, id, message){
         $.ajax({
           type: "POST",
           url: BASE_URL+'/objectives/delete',
+          data: {'_token': $('input[name=_token]').val(), 'id': id},
+          success: function(){
+            $(elem).remove();
+          },
+          error: function(){
+            $(elem).remove();
+          },
+          dataType: 'json'
+        });
+}
+
+function removePDPImprovement(elem, id, message){
+
+    if (confirm(message))
+        $.ajax({
+          type: "POST",
+          url: BASE_URL+'/pdp/delete',
           data: {'_token': $('input[name=_token]').val(), 'id': id},
           success: function(){
             $(elem).remove();
@@ -295,7 +312,7 @@ function getPDPDataToSave(){
             resource: $(this).find('textarea[data-field="resource"]')[0].value,
             flag:$(this).data('flag')
         };
-        console.log(data);
+
         elements.improvements.push(data);
     });
 
