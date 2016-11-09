@@ -22,4 +22,22 @@ class AlertRepository extends AdminBaseRepository
         return Alert::class;
     }
 
+    /**
+     * { function_description }
+     *
+     * @param      <type>  $id     The identifier
+     *
+     * @return     <type>  ( description_of_the_return_value )
+     */
+    public function findByID( $id, $read ) {
+        $alert = Alert::findOrFail( $id );
+
+        // Marcar como leido
+        if ( $read ) {
+            $alert->read = 1;
+            $alert->save();
+        }
+
+        return $alert;
+    }
 }

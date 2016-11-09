@@ -27,7 +27,7 @@ class MessageRequest extends Request
         return [
             'mensaje' => 'required',
             'users'   => 'required',
-            'search'  => 'required',
+            'search'  => '',
             'email'   => '',
         ];
     }

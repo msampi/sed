@@ -23,5 +23,14 @@ class LanguageRepository extends AdminBaseRepository
         return Language::class;
     }
 
-  
+    /**
+     * Gets the prefix by id.
+     *
+     * @param      <type>  $id     The identifier
+     *
+     * @return     <type>  The prefix by id.
+     */
+    public function getPrefixByIdLang( $id ) {
+        return Language::findOrFail( $id )->prefix;
+    }
 }
