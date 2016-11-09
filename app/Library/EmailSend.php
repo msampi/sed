@@ -77,15 +77,6 @@ class EmailSend
         $config = array();
 
 
-  	    $config = [
-  	        'driver' => 'smtp',
-  	        'host' => 'evaluaciononline.es',
-  	        'port' => '25',
-  	        'username' => 'sed@evaluaciononline.es',
-  	        'password' => 'kyfC10&4',
-  	        ];
-          \Config::set('mail',$config);
-
   		$send = Mail::send(['html' => 'emails.message'], [ 'msg' => $msg->message, 'link' => '' ], function($message) use ($msg)
   		{
   				  $message->from( 'sed@people-experts.com', 'Evaluaciones Online' );
