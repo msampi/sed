@@ -32,8 +32,6 @@ Route::group(['namespace' => 'Frontend', 'middleware' => 'auth', 'prefix' => '']
 	Route::get('performances/{id}', 'PerformanceController@index');
 	Route::post('performances/store', 'PerformanceController@store');
 
-
-
-
+	Route::post('alert', 'AppFrontendController@getAlert');
 
 });
