@@ -10,6 +10,7 @@ use App\Repositories\EvaluationRepository;
 use App\Repositories\TrackingRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\AlertRepository;
+use App\Repositories\LanguageRepository;
 use Illuminate\Http\Request;
 use Response;
 use Auth;
@@ -69,6 +70,14 @@ class AppFrontendController extends AppBaseController
 
     }
 
+    /**
+     * Gets the alert.
+     */
+    public function getAlert( Request $request, AlertRepository $alert, LanguageRepository $lang ) {
+        
+        $user = Auth::user();
 
+        return $alert->findByID( $request->get('id'), $user )->description[ $user->language_id ];
+    }
 
 }

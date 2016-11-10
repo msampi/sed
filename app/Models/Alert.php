@@ -40,10 +40,35 @@ class Alert extends BaseModel
         
     ];
 
+    /**
+     * Obtiene las evaluaciones relacionadas con la alerta.
+     *
+     * @return     <type>  ( description_of_the_return_value )
+     */
     public function evaluation()
     {
         return $this->belongsTo('App\Models\Evaluation');
     }
 
+    /**
+     * Obtiene el estado de la alerta por usuarios (leida o no leida).
+     *
+     * @return     <type>  ( description_of_the_return_value )
+     */
+    public function alerts()
+    {
+        return $this->hasMany('App\Models\AlertUser', 'alert_id');
+    }
 
+    /**
+     * Devuelve el estado de la alerta segun el usuario especificado.
+     *
+     * @param      <type>  $user_id  The user identifier
+     *
+     * @return     <type>  ( description_of_the_return_value )
+     */
+    public function alertByUser( $user_id )
+    {
+        return $this->hasMany( 'App\Models\AlertUser', 'alert_id' )->where( 'user_id', $user_id );
+    }
 }
