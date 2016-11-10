@@ -27,12 +27,17 @@ class BaseModel extends Model
 
     public function getAttributeTranslate($attr, $lang_id = NULL)
     {
-			if (!$lang_id)
+            
+			if (!$lang_id){
 				if (isset($attr[Auth::user()->language_id]))
-	            return $attr[Auth::user()->language_id];
+	               return $attr[Auth::user()->language_id];
+                return NULL;
+            }
 			else
-				if (isset($attr[$lang_id]))
+				if (isset($attr[$lang_id])){
+                    
 				    return $attr[$lang_id];
+                }
 
 
 			return NULL;

@@ -56,18 +56,12 @@
 				<td>user_email</td>
 				<td>{!! $dictionary->translate('Email de usuario') !!}.</td>
 	    </tr>
-			<tr>
-				<td>user_password</td>
-				<td>{!! $dictionary->translate('Contraseña de usuario') !!}.</td>
-	    </tr>
-			<tr>
+			
+            <tr>
 				<td>client_name</td>
 				<td>{!! $dictionary->translate('Nombre de cliente') !!}.</td>
 	    </tr>
-			<tr>
-				<td>web_link</td>
-				<td>{!! $dictionary->translate('Link de acceso a la plataforma') !!}.</td>
-	    </tr>
+			
 			<tr>
 				<td>evaluation_name</td>
 				<td>{!! $dictionary->translate('Nombre de la evaluación') !!}.</td>

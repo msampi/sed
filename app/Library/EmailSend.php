@@ -52,9 +52,8 @@ class EmailSend
       if ( $this->request == false ) {
   			$config = array();
   		  $msg = Message::where('id',$this->message_id)->first();
-
+        
         $msg->message = $msg->getAttributeTranslate($msg->message, $this->user->language_id);
-
       	$msg->message = str_replace("user_name", $this->user->name, $msg->message);
         $msg->message = str_replace("user_last_name", $this->user->last_name, $msg->message);
         $msg->message = str_replace("user_email", $this->user->email, $msg->message);
@@ -88,19 +87,4 @@ class EmailSend
         $this->controller->postEmail($this->request);
 	}
 }
-
-/*      if ( $this->send_link ) {
-        $broker = $this->getBroker();
-        $user = Password::broker($broker)->getUser(['email' => $this->user->email]);
-        // echo '<pre>';
-        // print_r($user);
-        $user->forceFill([
-            'password' => bcrypt($this->send_link['password']),
-            'remember_token' => ($token = Str::random(60)),
-        ])->save();
-
-        Auth::guard($this->getGuard())->login($user);
-        // dd($user);
-      } else $token = "";
-      */
 ?>

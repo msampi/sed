@@ -6,13 +6,13 @@
     <tbody>
     @foreach($messages as $message)
         <tr>
-            <td>{!! substr($message->subject[1], 0, 300) !!}...</td>
+            <td>{!! $message->subject[1] !!}</td>
             <td>
                 {!! Form::open(['route' => ['admin.messages.destroy', $message->id], 'method' => 'delete']) !!}
                 {{-- */ $confirm = $dictionary->translate('Esta seguro de eliminar este mensaje?') /* --}}
 
-                    <a href="{!! route('admin.messages.edit', [$message->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
-                    {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('$confirm')"]) !!}
+                    <a href="{!! route('admin.messages.edit', [$message->id]) !!}" class='btn btn-default btn-sm'><i class="glyphicon glyphicon-edit"></i></a>
+                    {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'onclick' => "return confirm('$confirm')"]) !!}
 
                 {!! Form::close() !!}
             </td>
