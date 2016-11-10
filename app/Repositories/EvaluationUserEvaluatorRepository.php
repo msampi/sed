@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\EvaluationUserEvaluator;
 use InfyOm\Generator\Common\BaseRepository;
+use App\Http\Requests\CreateUserRequest;
 use App\Criteria\EqualCriteria;
 use App\Library\EmailSend;
 use App\Models\User;
@@ -51,36 +52,7 @@ class EvaluationUserEvaluatorRepository extends AdminBaseRepository
 
     }
 
-    private function generatePass()
-    {
-        $str1 = "";
-        $str2 = "";
-        $str3 = "";
-        $str4 = "";
-
-        #if ( $letras_mayusculas  )
-            $str1= "ABCDEFGHIJKLMNOPQRSTUVWXYZA";
-        #if ( $letras_minusculas )
-            $str2= "abcdefghijklmnopqrstuvwxyza";
-        #if ( $numeros )
-            $str3= "123456789012345678901234567";
-        #if ( $caracteres )
-            $str4= "!@#$%^&*()-=+*!@#$%^&*()_+*";
-
-        $cad = "";
-
-        for( $i=1; $i<=2; $i++ )
-            $cad .= substr( $str1, rand( 0, 25 ), 1 );
-        for( $i=1; $i<=2; $i++ )
-            $cad .= substr( $str2, rand( 0, 25 ), 1 );
-        for( $i=1; $i<=2; $i++ )
-            $cad .= substr( $str3, rand( 0, 25 ), 1 );
-        for( $i=1; $i<=2; $i++ )
-            $cad .= substr( $str4, rand( 0, 25 ), 1 );
-
-        return $cad;
-    }
-
+    
     public function saveFromExcel($data)
     {
         $ev = $this->model->firstOrCreate(['user_id' => $data['user_id'],'evaluation_id' => $data['evaluation_id'], 'post_id' => $data['post_id']]);
@@ -100,12 +72,12 @@ class EvaluationUserEvaluatorRepository extends AdminBaseRepository
 
         foreach ($eue as $ev) {
           $user = User::where('id',$ev->user_id)->first();
-          $pass = $this->generatePass();
-          $user->password = $pass;
-          $user->save();
-          $email = new EmailSend($evaluation->register_message_id, NULL, $user, $pass);
+          $request = new CreateUserRequest();
+          $request->merge(['email' => $user->email]);
+          $request->merge(['name' => $user->name]);
+          $email = new EmailSend($evaluation->register_message_id, NULL, $user, $request);
           $email->send();
-          $email = new EmailSend($evaluation->welcome_message_id, NULL, $user, NULL);
+          $email = new EmailSend($evaluation->welcome_message_id, NULL, $user);
           $email->send();
           $ev->started = 1;
           $ev->save();

@@ -94,10 +94,10 @@ class UserController extends AdminBaseController
         $pass = $this->generatePass();
         $input['password'] = $pass;
         $user = $this->userRepository->create($input);
+        
         if ($input['role_id'] == 2) :
-            $email = new EmailSend($user->register_message_id, NULL, $user, $pass);
+            $email = new EmailSend($user->register_message_id, NULL, $user, $request);
             $email->send();
-            $this->postEmail($request);
         endif;
 
 

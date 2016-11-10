@@ -12,7 +12,7 @@
     <tbody>
     @foreach($evaluation_users as $evaluation)
         <tr>
-            <td><input type="checkbox" name="user[]" value="{!! $evaluation->user->id !!}"></td>
+            <td><input type="checkbox" name="user[]" value="{!! $evaluation->user->id or '' !!}"></td>
             <td>{!! $evaluation->user->name or '' !!} {!! $evaluation->user->last_name or '' !!}</td>
             <td>{!! $evaluation->user->email or '' !!}</td>
             <td>@if ($evaluation->post) {!! $evaluation->post->getName() !!} @endif</td>
