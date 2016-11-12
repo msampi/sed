@@ -72,7 +72,11 @@ class AppFrontendController extends AppBaseController
      * Gets the alert.
      */
     public function getAlert( Request $request, AlertRepository $alert, LanguageRepository $lang ) {
-        return $alert->findByID($request->get('id'), true)->description[ Auth::user()->language_id ];
+
+        $user = Auth::user();
+
+        return $alert->findByID( $request->get('id'), $user )->description[ $user->language_id ];
+
     }
 
 }
