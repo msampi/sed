@@ -320,13 +320,13 @@ function getPDPDataToSave(){
 
 }
 
-function objectivesSave(redirect = false){
+function objectivesSave(redirect = false, status = 0){
     $("#saving-label").show();
 
     $.ajax({
       type: "POST",
       url: BASE_URL+'/objectives/save',
-      data: {'_token': $('input[name=_token]').val(), 'data': getObjectivesDataToSave()},
+      data: {'_token': $('input[name=_token]').val(), 'data': getObjectivesDataToSave(),'status':status},
       success: function(data){
         $("#saving-label").hide();
         $('[data-flag]').each(function(){
@@ -341,12 +341,12 @@ function objectivesSave(redirect = false){
 
 }
 
-function competitionsSave(redirect = false){
+function competitionsSave(redirect = false, status = 0){
     $("#saving-label").show();
     $.ajax({
       type: "POST",
       url: BASE_URL+'/competitions/save',
-      data: {'_token': $('input[name=_token]').val(), 'data': getCompetitionsDataToSave()},
+      data: {'_token': $('input[name=_token]').val(), 'data': getCompetitionsDataToSave(), 'status':status},
       success: function(){
         $("#saving-label").hide();
         if (redirect)
@@ -357,12 +357,12 @@ function competitionsSave(redirect = false){
 
 }
 
-function valorationsSave(redirect = false){
+function valorationsSave(redirect = false, status = 0){
     $("#saving-label").show();
     $.ajax({
       type: "POST",
       url: BASE_URL+'/valorations/save',
-      data: {'_token': $('input[name=_token]').val(), 'data': getValorationsDataToSave()},
+      data: {'_token': $('input[name=_token]').val(), 'data': getValorationsDataToSave(), 'status':status},
       success: function(){
         $("#saving-label").hide();
         if (redirect)
@@ -400,7 +400,7 @@ function getAverage(elemclass){
     sum += parseInt($(this).val());
     count++;
   })
-  return parseFloat(sum/(count/2)).toFixed(2);
+  return parseFloat(sum/(count)).toFixed(2);
 }
 
 
@@ -436,11 +436,5 @@ $(function(){
     $('.sel-us-full').change(function(){
       $('#average-comp-user-full').html(getAverage('sel-us-full'));
     });
-
-
-
-
-
-
 
 })

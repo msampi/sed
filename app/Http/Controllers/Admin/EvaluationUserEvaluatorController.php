@@ -61,7 +61,8 @@ class EvaluationUserEvaluatorController extends AdminBaseController
 
         return view('admin.evaluationUserEvaluators.index')->with('evaluation_users', $evaluation_users)
                                                            ->with('evaluation', $evaluation)
-                                                           ->with('mensajes', $messages);
+                                                           ->with('mensajes', $messages)
+                                                           ->with('evaluation_id', $request->search);
 
 
     }
@@ -206,12 +207,13 @@ class EvaluationUserEvaluatorController extends AdminBaseController
     public function send(Request $request, MessageRequest $messageRequest) {
 
         foreach ( explode(",", $messageRequest->get('users', ''))  as $key => $value) {
-            $resend = $this->getUsers( $messageRequest );
-            $email = new EmailSend($messageRequest->get('mensaje'), $messageRequest->get('search'), User::find( $value ), NULL, $resend, $this);
+            $resend = $this->getUsers( $messageRequest, $value );
+            $email = new EmailSend($messageRequest->get('mensaje'), $messageRequest->get('search'), User::find( $value ), $resend, $this);
             $email->send();
         }
+        
         Flash::success($this->dictionary->translate('Mensajes enviados correctamente'));
-        $this->index( $messageRequest );
+        return redirect(route('admin.evaluationUserEvaluators.index', 'search='.$request->get('evaluation_id')));
     }
 
     /**
@@ -221,7 +223,7 @@ class EvaluationUserEvaluatorController extends AdminBaseController
      *
      * @return     \App\Http\Requests\MessageRequest|boolean  The users.
      */
-    private function getUsers( MessageRequest $messageRequest ) {
+    private function getUsers( MessageRequest $messageRequest, $value ) {
         if ( $messageRequest->get('clave', false) ) {
             $messageRequest->request->add(['email'=>User::findOrFail( $value )->email ]);
             $resend = $messageRequest;

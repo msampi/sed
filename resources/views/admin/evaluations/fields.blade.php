@@ -43,7 +43,7 @@
 
 </div>
 <div class="col-md-12">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <h3>{!! $dictionary->translate('Primera Etapa') !!}</h3>
         <em>(Objetivos)</em>
         <div class="form-group">
@@ -58,7 +58,7 @@
                 <!-- /.input group -->
               </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <h3>{!! $dictionary->translate('Segunda Etapa') !!}</h3>
         <em>(Review Mitad de Año)</em>
         <div class="form-group">
@@ -73,7 +73,7 @@
                 <!-- /.input group -->
               </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <h3>{!! $dictionary->translate('Tercera Etapa') !!}</h3>
         <em>(Review Fin de Año)</em>
         <div class="form-group">
@@ -87,6 +87,18 @@
                 </div>
                 <!-- /.input group -->
               </div>
+    </div>
+    <div class="col-md-3">
+        <h3>{!! $dictionary->translate('Secciones') !!}</h3>
+        <em>(Que deben completarse)</em>
+        <br>
+        
+        {!! Form::checkbox('mandatory_sections[]', 1,  (isset($evaluation) && in_array('1', $evaluation->mandatory_sections) ? true : false) ) !!} {!! $dictionary->translate('Objetivos') !!}
+        <br>
+        {!! Form::checkbox('mandatory_sections[]', 2,  (isset($evaluation) && in_array('2', $evaluation->mandatory_sections) ? true : false) ) !!} {!! $dictionary->translate('Competencias') !!}
+        <br>
+        {!! Form::checkbox('mandatory_sections[]', 3, (isset($evaluation) && in_array('3', $evaluation->mandatory_sections) ? true : false) ) !!} {!! $dictionary->translate('Valores') !!}
+            
     </div>
 </div>
 <div class="col-md-12">
@@ -206,7 +218,7 @@
 <!-- Submit Field -->
 <div class="col-sm-12" style="margin-top:20px">
     <div class="col-md-12">
-      <label style="font-size:16px">{!! $dictionary->translate('Lanzar simulación') !!}</label>
+      <label style="font-size:16px">{!! $dictionary->translate('Lanzar evaluación') !!}</label>
       {!! Form::checkbox('start',false); !!}
     </div>
      <div class="col-md-12">

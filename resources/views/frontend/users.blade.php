@@ -63,13 +63,15 @@
     	<table class="table table-bordered table-striped search-table" id="users-front-table">
 		    <thead>
 		        <th>ID</th>
-                <th>Jerarquia</th>
+                <th>Or.</th>
 		        <th>{!! $dictionary->translate('Usuario') !!}</th>
 		        <th>{!! $dictionary->translate('Fecha') !!}</th>
-		        <th>Status</th>
+		        <th>{!! $dictionary->translate('Primera etapa') !!}</th>
+                <th>{!! $dictionary->translate('Segunda etapa') !!}</th>
+                <th>{!! $dictionary->translate('Tercera etapa') !!}</th>
 		        <th>{!! $dictionary->translate('Puesto') !!}</th>
 		        <th>{!! $dictionary->translate('Evaluador') !!}</th>
-            <th>{!! $dictionary->translate('Puntuación Final') !!}</th>
+            <th>{!! $dictionary->translate('Puntuación') !!}</th>
 		        <th>{!! $dictionary->translate('Informe') !!}</th>
 		        <th>Sel</th>
 		    </thead>
@@ -81,11 +83,37 @@
                     <td>1</td>
 		            <td><a href="{{ url('/objectives/'.$ev->user->id) }}">{!! $ev->user->name !!} {!! $ev->user->last_name !!}</a></td>
 		            <td>{!! $ev->created_at->format('d/m/Y') !!}</td>
-		            <td><small class="label bg-green">{!! $dictionary->translate('Iniciado') !!}</small></td>
+		            <td>
+                        @if ($ev->getStageStatus(0) == 0)
+                        <small class="label bg-red">{!! $dictionary->translate('No iniciado') !!}</small>
+                        @elseif  ($ev->getStageStatus(0) == 1)
+                        <small class="label bg-orange">{!! $dictionary->translate('Iniciado') !!}</small>
+                        @else
+                        <small class="label bg-orange">{!! $dictionary->translate('Completado') !!}</small>
+                        @endif
+                    </td>
+                    <td>
+                        @if ($ev->getStageStatus(1) == 0)
+                        <small class="label bg-red">{!! $dictionary->translate('No iniciado') !!}</small>
+                        @elseif  ($ev->getStageStatus(1) == 1)
+                        <small class="label bg-orange">{!! $dictionary->translate('Iniciado') !!}</small>
+                        @else
+                        <small class="label bg-orange">{!! $dictionary->translate('Completado') !!}</small>
+                        @endif
+                    </td>
+                    <td>
+                        @if ($ev->getStageStatus(2) == 0)
+                        <small class="label bg-red">{!! $dictionary->translate('No iniciado') !!}</small>
+                        @elseif  ($ev->getStageStatus(2) == 1)
+                        <small class="label bg-orange">{!! $dictionary->translate('Iniciado') !!}</small>
+                        @else
+                        <small class="label bg-orange">{!! $dictionary->translate('Completado') !!}</small>
+                        @endif
+                    </td>
 		            <td>{!! $ev->getAttributeTranslate($ev->post->name) !!}</td>
 		            <td>{!! $ev->evaluator->name !!} {!! $ev->evaluator->last_name !!} </td>
-                <td>{!! $dictionary->translate('Aún no asignada') !!}</td>
-		            <td>{!! $dictionary->translate('No disponible') !!}</td>
+                <td>{!! $dictionary->translate('N/A') !!}</td>
+		            <td>{!! $dictionary->translate('N/D') !!}</td>
 		            <td><input type="checkbox"> </td>
 		        </tr>
             @endforeach
@@ -97,11 +125,37 @@
                     <td>2</td>
                     <td>{!! $eua->user->name !!} {!! $eua->user->last_name !!}</td>
                     <td>{!! $eua->created_at->format('d/m/Y') !!}</td>
-                    <td><small class="label bg-green">{!! $dictionary->translate('Iniciado') !!}</small></td>
+                    <td>
+                        @if ($ev->getStageStatus(0) == 0)
+                        <small class="label bg-red">{!! $dictionary->translate('No iniciado') !!}</small>
+                        @elseif  ($ev->getStageStatus(0) == 1)
+                        <small class="label bg-orange">{!! $dictionary->translate('Iniciado') !!}</small>
+                        @else
+                        <small class="label bg-orange">{!! $dictionary->translate('Completado') !!}</small>
+                        @endif
+                    </td>
+                    <td>
+                        @if ($ev->getStageStatus(1) == 0)
+                        <small class="label bg-red">{!! $dictionary->translate('No iniciado') !!}</small>
+                        @elseif  ($ev->getStageStatus(1) == 1)
+                        <small class="label bg-orange">{!! $dictionary->translate('Iniciado') !!}</small>
+                        @else
+                        <small class="label bg-orange">{!! $dictionary->translate('Completado') !!}</small>
+                        @endif
+                    </td>
+                    <td>
+                        @if ($ev->getStageStatus(2) == 0)
+                        <small class="label bg-red">{!! $dictionary->translate('No iniciado') !!}</small>
+                        @elseif  ($ev->getStageStatus(2) == 1)
+                        <small class="label bg-orange">{!! $dictionary->translate('Iniciado') !!}</small>
+                        @else
+                        <small class="label bg-orange">{!! $dictionary->translate('Completado') !!}</small>
+                        @endif
+                    </td>
                     <td>{!! $ev->getAttributeTranslate($ev->post->name) !!}</td>
                     <td>{!! $eua->evaluator->name !!} {!! $eua->evaluator->last_name !!} </td>
-                    <td>{!! $dictionary->translate('Aún no asignada') !!}</td>
-                    <td>{!! $dictionary->translate('No disponible') !!}</td>
+                    <td>{!! $dictionary->translate('N/A') !!}</td>
+                    <td>{!! $dictionary->translate('N/D') !!}</td>
                     <td><input type="checkbox"> </td>
                 </tr>
                 @endforeach

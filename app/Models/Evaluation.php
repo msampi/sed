@@ -46,7 +46,8 @@ class Evaluation extends BaseModel
         'visualization',
         'welcome_message_id',
         'register_message_id',
-        'recovery_message_id'
+        'recovery_message_id',
+        'mandatory_sections'
 
     ];
 
@@ -59,7 +60,8 @@ class Evaluation extends BaseModel
         'name' => 'string',
         'instructions' => 'string',
         'client_id' => 'integer',
-        'visualization' => 'boolean'
+        'visualization' => 'boolean',
+        'mandatory_sections' => 'array'
     ];
 
     /**
@@ -75,7 +77,7 @@ class Evaluation extends BaseModel
         'third_stage' => 'required',
         'objectives_rating_id' => 'required',
         'competitions_rating_id' => 'required',
-        'valorations_rating_id' => 'required',
+        'valorations_rating_id' => 'required'
     ];
 
     public function messages()

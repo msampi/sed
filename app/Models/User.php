@@ -65,15 +65,7 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Language');
     }
 
-    public function setPasswordAttribute($value)
-    {
-        if ($value)
-            $this->attributes['password'] = bcrypt($value);
-        else
-            $this->attributes['password'] = $this->password;
-
-    }
-
+    
     public function role()
     {
         return $this->belongsTo('App\Models\Role');

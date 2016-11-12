@@ -40,15 +40,16 @@ class DocumentController extends AppFrontendController
         parent::setCurrentUser(NULL);
         $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso a documentos');
         $this->documentRepository->pushCriteria(new RequestCriteria($request));
+        $is_stage_three = $this->evaluationRepository->isStageThree();
         $documents = $this->documentRepository->all();
-        $current_stage = $this->evaluationRepository->getCurrentStage();
+        
 
         return view('frontend.documents')
             ->with('documents', $documents)
             ->with('section_name','Documentos')
             ->with('is_logged_user',$this->is_logged_user)
             ->with('user',$this->user)
-            ->with('current_stage',$current_stage)
+            ->with('is_stage_three',$is_stage_three)
             ->with('eue', $this->eue);
     }
 

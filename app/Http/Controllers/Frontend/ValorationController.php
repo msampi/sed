@@ -61,6 +61,8 @@ class ValorationController extends AppFrontendController
 
         $visualization_st1 = $this->evaluationRepository->userVisibilityStageOne($this->is_logged_user);
         $visualization_st2 = $this->evaluationRepository->userVisibilityStageTwo($this->is_logged_user);
+        
+        $status = $this->eue->getStageStatus(2);
 
         return view('frontend.valorations')->with('user',$this->user)
                                             ->with('is_logged_user',$this->is_logged_user)
@@ -71,14 +73,18 @@ class ValorationController extends AppFrontendController
                                             ->with('is_stage_three',$is_stage_three)
                                             ->with('eue', $this->eue)
                                             ->with('visualization_st1',$visualization_st1)
-                                            ->with('visualization_st2',$visualization_st2);;
+                                            ->with('visualization_st2',$visualization_st2)
+                                            ->with('status',$status);
     }
 
     public function save(Request $request)
     {
 
         $input = json_decode($request->data);
-
+        if ($request->status){
+            $this->eue->setStatus(2,$request->status);
+            $this->eue->save();
+        }
         $this->valorationCommentRepository->saveComment($input->comments);
         $this->valorationRatingRepository->saveRating($input->ratings);
         echo 1;

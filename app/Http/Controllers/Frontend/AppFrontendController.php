@@ -48,6 +48,7 @@ class AppFrontendController extends AppBaseController
 
         $alerts = $this->alertRepository->findWhere(['evaluation_id' => Session::get('evaluation_id')]);
         View::share('alerts', $alerts);
+        $this->eue = $this->evaluationUserEvaluatorRepository->findWhere([['user_id','=',Auth::user()->id], ['evaluation_id','=',Session::get('evaluation_id')]])[0];
 
 
     }
@@ -63,10 +64,7 @@ class AppFrontendController extends AppBaseController
             $this->eue = $this->evaluationUserEvaluatorRepository->findWhere([['user_id','=',$this->user->id], ['evaluator_id','=',Auth::user()->id], ['evaluation_id','=',Session::get('evaluation_id')]])[0];
 
         }
-        else{
-          $this->eue = $this->evaluationUserEvaluatorRepository->findWhere([['user_id','=',Auth::user()->id], ['evaluation_id','=',Session::get('evaluation_id')]])[0];
-
-        }
+        
 
     }
 

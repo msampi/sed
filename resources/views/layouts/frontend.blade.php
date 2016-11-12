@@ -147,24 +147,30 @@
 
               </a>
             </li>
+            @if ($enabledObjectives) 
             <li>
               <a href="{!! URL::asset( 'objectives' ) !!}">
                 <i class="fa fa-calendar-check-o"></i> <span>{!! $dictionary->translate('Objetivos') !!}</span>
 
               </a>
             </li>
+            @endif
+            @if ($enabledCompetitions) 
             <li>
               <a href="{!! URL::asset( 'competitions' ) !!}">
                 <i class="fa fa-suitcase"></i> <span>{!! $dictionary->translate('Competencias') !!}</span>
 
               </a>
             </li>
+            @endif
+            @if ($enabledValorations) 
             <li>
               <a href="{!! URL::asset( 'valorations' ) !!}">
                 <i class="fa fa-tasks"></i> <span>{!! $dictionary->translate('Valores') !!}</span>
 
               </a>
             </li>
+            @endif
             <li>
               <a href="{!! URL::asset( 'pdp' ) !!}">
                 <i class="fa fa-bars"></i> <span>{!! $dictionary->translate('PDP') !!}</span>

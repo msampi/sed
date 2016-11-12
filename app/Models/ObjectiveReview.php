@@ -44,6 +44,6 @@ class ObjectiveReview extends Model
      * @var array
      */
     public static $rules = [
-        'evaluation_id' => 'n'
+       
     ];
 }

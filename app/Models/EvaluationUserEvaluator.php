@@ -32,7 +32,8 @@ class EvaluationUserEvaluator extends BaseModel
     protected $casts = [
         'evaluation_id' => 'integer',
         'evaluator_id' => 'integer',
-        'user_id' => 'integer'
+        'user_id' => 'integer',
+        'status' => 'array'
     ];
 
     /**
@@ -68,6 +69,22 @@ class EvaluationUserEvaluator extends BaseModel
     public function allChildrenEUA()
     {
         return $this->childrenEUA()->with('allChildrenEUA');
+    }
+    
+    public function getStageStatus($number){
+        if (isset($this->status[$number]))
+            return $this->status[$number];
+        return 0;
+            
+    }
+    
+    public function setStatus($index, $value)
+    {
+        if ($value){
+            $aux = $this->status;
+            $aux[$index] = $value;
+            $this->status = $aux;
+        }
     }
 
 

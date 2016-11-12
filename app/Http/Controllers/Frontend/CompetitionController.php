@@ -51,6 +51,8 @@ class CompetitionController extends AppFrontendController
         $rating = $this->evaluationRepository->getCompetitionsRating();
         $is_stage_two = $this->evaluationRepository->isStageTwo();
         $is_stage_three = $this->evaluationRepository->isStageThree();
+        $status = $this->eue->getStageStatus(1);
+        
         if ($this->is_logged_user)
           $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso a competencias');
         else
@@ -71,14 +73,18 @@ class CompetitionController extends AppFrontendController
                                             ->with('is_stage_three',$is_stage_three)
                                             ->with('eue', $this->eue)
                                             ->with('visualization_st1',$visualization_st1)
-                                            ->with('visualization_st2',$visualization_st2);
+                                            ->with('visualization_st2',$visualization_st2)
+                                            ->with('status',$status);
     }
 
     public function save(Request $request)
     {
 
         $input = json_decode($request->data);
-
+        if ($request->status){
+            $this->eue->setStatus(1,$request->status);
+            $this->eue->save();
+        }
         $this->competitionCommentRepository->saveComment($input->comments);
         $this->behaviourRatingRepository->saveRating($input->ratings);
         echo 1;

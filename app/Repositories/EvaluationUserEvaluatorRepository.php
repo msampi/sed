@@ -71,16 +71,19 @@ class EvaluationUserEvaluatorRepository extends AdminBaseRepository
         $eue = $this->all();
 
         foreach ($eue as $ev) {
-          $user = User::where('id',$ev->user_id)->first();
-          $request = new CreateUserRequest();
-          $request->merge(['email' => $user->email]);
-          $request->merge(['name' => $user->name]);
-          $email = new EmailSend($evaluation->register_message_id, NULL, $user, $request);
-          $email->send();
-          $email = new EmailSend($evaluation->welcome_message_id, NULL, $user);
-          $email->send();
-          $ev->started = 1;
-          $ev->save();
+          if (!$ev->started):
+              $user = User::where('id',$ev->user_id)->first();
+              $request = new CreateUserRequest();
+              $request->merge(['email' => $user->email]);
+              $request->merge(['name' => $user->name]);
+              $email = new EmailSend($evaluation->register_message_id, NULL, $user, $request);
+              $email->send();
+              $email = new EmailSend($evaluation->welcome_message_id, NULL, $user);
+              $email->send();
+              $ev->started = 1;
+              $ev->status = [1,0,0];
+              $ev->save();
+         endif;
 
         }
     }

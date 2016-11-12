@@ -36,18 +36,19 @@
 <br />
 
 {!! Form::open(['route' => ['admin.evaluationUserEvaluators.send'], 'method' => 'post', 'id' => "send"]) !!}
-    <div class="col-xs-3">
+<input type="hidden" name="evaluation_id" value="{!! $evaluation_id !!}">    
+<div class="col-sm-3">
         <select name="mensaje" class="form-control">
             @foreach($mensajes as $item)
                 <option value="{{$item->id}}">{{$item->subject[1]}}</option>
             @endforeach
         </select>
-    </div>
-    <div class="col-xs-3">
+</div>
+    <div class="col-sm-3">
         <input type="button" id="sub" class="btn btn-primary" value="Enviar a usuarios seleccionados">
     </div>
-    <div class="col-xs-12">
-        <input type="checkbox" name="clave" value="true">Enviar reseteo de clave.
+    <div class="row">
+        <input type="checkbox" name="clave" value="true"> Enviar reseteo de clave.
     </div>
     <input type="hidden" name="users" id="users" value="">
 {!! Form::close() !!}

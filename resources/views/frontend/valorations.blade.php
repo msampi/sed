@@ -97,6 +97,13 @@
 </div>
 <div class="col-lg-12 buttons-pad">
     <button class="btn btn-success" onclick="valorationsSave(true)"><i class="fa fa-save"></i> {!! $dictionary->translate('Guardar') !!}</button>
+    @if ($is_logged_user)
+        @if ($status == 2)
+            <button class="btn btn-warning pull-right" onclick="valorationsSave(true,1);"> {!! $dictionary->translate('Volver a estado iniciado') !!}</button>
+        @else
+            <button class="btn btn-danger pull-right" onclick="valorationsSave(true, 2);"> {!! $dictionary->translate('Finalizar') !!}</button>
+        @endif
+      @endif
 </div>
 <script type="text/javascript">
 

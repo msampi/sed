@@ -144,6 +144,13 @@
     <button class="btn btn-success" id="add-objective" onclick="appendObjective(options)"><i class="fa fa-plus"></i> {!! $dictionary->translate('Agregar objetivo') !!}</button>
   @endif
   <button class="btn btn-success" onclick="objectivesSave(true);"><i class="fa fa-save"></i> {!! $dictionary->translate('Guardar') !!}</button>
+  @if ($is_logged_user)
+    @if ($status == 2)
+        <button class="btn btn-warning pull-right" onclick="objectivesSave(true,1);"> {!! $dictionary->translate('Volver a estado iniciado') !!}</button>
+    @else
+        <button class="btn btn-danger pull-right" onclick="objectivesSave(true, 2);"> {!! $dictionary->translate('Finalizar') !!}</button>
+    @endif
+  @endif
 </div>
 
 <script type="text/javascript">

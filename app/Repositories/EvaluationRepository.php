@@ -134,6 +134,21 @@ class EvaluationRepository extends AdminBaseRepository
       return false;
 
     }
+    
+    public function enabledObjectives($evaluation)
+    {
+        return in_array(1,$evaluation->mandatory_sections);
+    }
+    
+    public function enabledCompetitions($evaluation)
+    {
+        return in_array(2,$evaluation->mandatory_sections);
+    }
+    
+    public function enabledValorations($evaluation)
+    {
+        return in_array(3,$evaluation->mandatory_sections);
+    }
 
 
 }
