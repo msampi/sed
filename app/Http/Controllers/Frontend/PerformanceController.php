@@ -6,6 +6,9 @@ use App\Http\Requests;
 use App\Repositories\UserRepository;
 use App\Repositories\EvaluationUserEvaluatorRepository;
 use App\Repositories\EvaluationRepository;
+use App\Repositories\ObjectiveReviewRepository;
+use App\Repositories\BehaviourRatingRepository;
+use App\Repositories\ValorationRatingRepository;
 use App\Http\Requests\CreatePerformanceRequest;
 use App\Http\Requests\UpdatePerformanceRequest;
 use App\Repositories\PerformanceRepository;
@@ -22,14 +25,23 @@ class PerformanceController extends AppFrontendController
 {
     /** @var  PerformanceRepository */
     private $performanceRepository;
+    private $behaviourRatingRepository;
+    private $valorationRatingRepository;
+    private $objectiveReviewRepository;
 
     public function __construct(UserRepository $userRepo,
                                 EvaluationRepository $evaluationRepo,
                                 PerformanceRepository $performanceRepo,
-                                EvaluationUserEvaluatorRepository $evaluationUserEvaluatorRepo)
+                                EvaluationUserEvaluatorRepository $evaluationUserEvaluatorRepo,
+                                ObjectiveReviewRepository $objectiveReviewRepo,
+                                ValorationRatingRepository $valorationRatingRepo,
+                                BehaviourRatingRepository $behaviourRatingRepo)
     {
         parent::__construct($userRepo, $evaluationRepo, $evaluationUserEvaluatorRepo);
         $this->performanceRepository = $performanceRepo;
+        $this->behaviourRatingRepository = $behaviourRatingRepo;
+        $this->valorationRatingRepository = $valorationRatingRepo;
+        $this->objectiveReviewRepository = $objectiveReviewRepo;
     }
 
     /**
@@ -50,6 +62,10 @@ class PerformanceController extends AppFrontendController
         $viewControlls->userId = $this->user->id;
         $viewControlls->isEmpleado = $this->is_logged_user;
 
+        $avgUser = $this->objectiveReviewRepository->getAverage($this->user->id,'user') + $this->behaviourRatingRepository->getAverage($this->user->id,'user') + $this->valorationRatingRepository->getAverage($this->user->id,'user');
+        
+        $avgEvaluator = $this->objectiveReviewRepository->getAverage($this->user->id,'evaluator') + $this->behaviourRatingRepository->getAverage($this->user->id,'evaluator') + $this->valorationRatingRepository->getAverage($this->user->id,'evaluator');
+        
 
         if (!$this->is_logged_user) :
             $viewControlls->evaluatorId = Auth::user()->id;
@@ -62,15 +78,21 @@ class PerformanceController extends AppFrontendController
 
         if (!$performance)
             return view('frontend.performances.create')->with('viewControlls', $viewControlls)
-                                                        ->with('eue', $this->eue);
+                                                        ->with('eue', $this->eue)
+                                                        ->with('avgUser', $avgUser)
+                                                        ->with('avgEvaluator', $avgEvaluator);
         else
             if (($this->is_logged_user && $performance->finish_user) || (!$this->is_logged_user && $performance->finish_evaluator))
               return view('frontend.performances.edit')->with('performance', $performance)
                                                        ->with('viewControlls', $viewControlls)
-                                                       ->with('eue', $this->eue);
+                                                       ->with('eue', $this->eue)
+                                                       ->with('avgUser', $avgUser)
+                                                       ->with('avgEvaluator', $avgEvaluator);
             else
               return view('frontend.performances.show')->with('performance', $performance)
-                                                      ->with('eue', $this->eue);
+                                                      ->with('eue', $this->eue)
+                                                      ->with('avgUser', $avgUser)
+                                                      ->with('avgEvaluator', $avgEvaluator);
 
 
     }

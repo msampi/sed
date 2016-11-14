@@ -108,7 +108,8 @@ class EvaluationRepository extends AdminBaseRepository
         return true;
       if (!$evaluation->visualization)
         return false;
-
+    if (!$evaluation->vis_half_year_start)
+        return false;
       if ($evaluation->vis_half_year_start->lt($now) && $evaluation->vis_half_year_end->gt($now))
           return true;
 
@@ -127,7 +128,8 @@ class EvaluationRepository extends AdminBaseRepository
         return true;
       if (!$evaluation->visualization)
         return false;
-
+      if (!$evaluation->vis_end_year_start)
+        return false;
       if ($evaluation->vis_end_year_start->lt($now) && $evaluation->vis_end_year_end->gt($now))
           return true;
 

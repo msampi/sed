@@ -36,4 +36,9 @@ class ValorationRating extends Model
     public static $rules = [
         
     ];
+    
+    public function valoration()
+    {
+        return $this->belongsTo('App\Models\Valoration');
+    }
 }

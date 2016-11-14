@@ -40,4 +40,15 @@ class ValorationRatingRepository extends BaseRepository
         }
         
     }
+    
+    public function getAverage($user_id, $entry)
+    {
+        $valorationRatings = $this->model->where('user_id',$user_id)->where('entry', $entry)->get();
+        $count = 0;
+        foreach($valorationRatings as $vr)
+        
+            $count = $count + (($vr->valoration->weight/100) * $vr->rating);
+        
+        return $count;
+    }
 }

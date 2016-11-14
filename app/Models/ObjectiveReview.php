@@ -46,4 +46,9 @@ class ObjectiveReview extends Model
     public static $rules = [
        
     ];
+    
+    public function objective()
+    {
+        return $this->belongsTo('App\Models\Objective');
+    }
 }

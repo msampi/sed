@@ -40,4 +40,15 @@ class BehaviourRatingRepository extends BaseRepository
         }
         
     }
+    
+    public function getAverage($user_id, $entry)
+    {
+        $behaviourRatings = $this->model->where('user_id',$user_id)->where('entry', $entry)->get();
+        $count = 0;
+        foreach($behaviourRatings as $br)
+        
+            $count = $count + (($br->behaviour->competition->weight/100) * $br->rating);
+        
+        return $count;
+    }
 }

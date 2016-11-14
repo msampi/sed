@@ -36,4 +36,9 @@ class BehaviourRating extends Model
     public static $rules = [
         
     ];
+    
+    public function behaviour()
+    {
+        return $this->belongsTo('App\Models\Behaviour');
+    }
 }

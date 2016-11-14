@@ -56,5 +56,10 @@ class Behaviour extends BaseModel
         }
         return new BehaviourRating();
     }
+    
+    public function competition()
+    {
+        return $this->belongsTo('App\Models\Competition');
+    }
 
 }

@@ -2,7 +2,7 @@
 <input type="hidden" name="evaluation_id" value="{!! $viewControlls->evaluationId  !!}">
 <input type="hidden" name="evaluator_id" value="{!! $viewControlls->evaluatorId !!}">
 <div class="col-md-6">
-  <h4>{!! $dictionary->translate('Promedio Empleado') !!}: </h4>
+  <h4>{!! $dictionary->translate('Promedio Empleado') !!}: {!! $avgUser!!} </h4>
   <div class="form-group col-sm-12">
       {!! Form::label('user_comment', $dictionary->translate('Comentarios Empleado')) !!}
       @if ($viewControlls->isEmpleado)
@@ -31,7 +31,7 @@
   </div>
 </div>
 <div class="col-md-6">
-  <h4>{!! $dictionary->translate('Promedio Manager') !!}: </h4>
+  <h4>{!! $dictionary->translate('Promedio Manager') !!}: {!! $avgEvaluator!!}</h4>
   <div class="form-group col-sm-12">
       {!! Form::label('evaluator_comment', $dictionary->translate('Comentarios Manager')) !!}
       @if ($viewControlls->isEmpleado)
