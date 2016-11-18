@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Auth\Passwords\PasswordBroker;
 use App\Http\Controllers\AppBaseController;
 
 class EmailSend extends AppBaseController
@@ -22,6 +23,7 @@ class EmailSend extends AppBaseController
   private $user;
   private $evaluation_id;
   private $request = false;
+  private $passwords;
   
 
   /**
@@ -40,7 +42,30 @@ class EmailSend extends AppBaseController
       $this->user = $user;
       $this->request = $request;
       
+      
   }
+    
+  public function postEmail($request)
+  {
+        
+        $broker = $this->getBroker();
+
+        $response = Password::broker($broker)->sendResetLink(['email' => $this->user->email], function($message) 
+        {
+            $message->subject('Reseteo de clave');
+            $message->from('sed@evaluaciononline.es','Evaluacion Online');
+        });
+
+        switch ($response) {
+            case Password::RESET_LINK_SENT:
+                return $this->getSendResetLinkEmailSuccessResponse($response);
+            case Password::INVALID_USER:
+            default:
+                return $this->getSendResetLinkEmailFailureResponse($response);
+        }
+    
+ }
+
 
   /**
    * { function_description }
@@ -72,7 +97,7 @@ class EmailSend extends AppBaseController
 
   		$send = Mail::send(['html' => 'emails.message'], [ 'msg' => $msg->message, 'link' => '' ], function($message) use ($msg)
   		{
-  				  $message->from( 'sed@people-experts.com', 'Evaluaciones Online' );
+  				  $message->from( 'sed@evaluaciononline.es', 'Evaluacion Online' );
   				  $message->to( $this->user->email, $this->user->name.' '.$this->user->last_name)->subject($msg->getAttributeTranslate($msg->subject, $this->user->language_id));
 
         });

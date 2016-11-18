@@ -61,10 +61,12 @@ class GlobalComposer
         $view->with('alertCount',  $this->alertRepo->getCountRecords());
         
         if (Session::get('evaluation_id')) :
-            $evaluation = $this->evaluationRepo->find(Session::get('evaluation_id'));
+            $evaluation = $this->evaluationRepo->findWithoutFail(Session::get('evaluation_id'));
+            if ($evaluation):
             $view->with('enabledObjectives',  $this->evaluationRepo->enabledObjectives($evaluation));
             $view->with('enabledCompetitions',  $this->evaluationRepo->enabledCompetitions($evaluation));
             $view->with('enabledValorations',  $this->evaluationRepo->enabledValorations($evaluation));
+            endif;
         endif;
         
     }

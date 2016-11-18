@@ -22,7 +22,8 @@
     <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="../../index2.html"><b>SED</b><br>Sistema de Evaluación de Desempeño</a>
+            <img src="{{ URL::asset('img/logo.png') }}">
+            <h3>Sistema de Evaluación de Desempeño</h3>
         </div><!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg"></p>

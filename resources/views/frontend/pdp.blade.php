@@ -43,21 +43,21 @@
       <tbody>
         <tr>
           {{-- */ $comment = $plan_comments->getComment($user->id, 'half-year', 'user', 1) /* --}}
-          <td><textarea placeholder="{!! $dictionary->translate('Comentarios empleado') !!}" data-id="{!! $comment->id !!}" data-entry="user"  data-stage="half-year" data-uid="{!! $user->id !!}" data-eid="" class="form-control comment" @if (!$is_logged_user || !$is_stage_two) disabled @endif>{!! $comment->comment !!}</textarea>
+          <td><textarea placeholder="{!! $dictionary->translate('Comentarios Evaluado') !!}" data-id="{!! $comment->id !!}" data-entry="user"  data-stage="half-year" data-uid="{!! $user->id !!}" data-eid="" class="form-control comment" @if (!$is_logged_user || !$is_stage_two) disabled @endif>{!! $comment->comment !!}</textarea>
           </td>
           {{-- */ $comment = $plan_comments->getComment($user->id, 'end-year', 'user', 1) /* --}}
-          <td><textarea placeholder="{!! $dictionary->translate('Comentarios empleado') !!}" data-id="{!! $comment->id !!}" data-entry="user"  data-stage="end-year" data-uid="{!! $user->id !!}" data-eid="" class="form-control comment" @if (!$is_logged_user || !$is_stage_three) disabled @endif>{!! $comment->comment !!}</textarea>
+          <td><textarea placeholder="{!! $dictionary->translate('Comentarios Evaluado') !!}" data-id="{!! $comment->id !!}" data-entry="user"  data-stage="end-year" data-uid="{!! $user->id !!}" data-eid="" class="form-control comment" @if (!$is_logged_user || !$is_stage_three) disabled @endif>{!! $comment->comment !!}</textarea>
           </td>
         </tr>
         <tr>
           @if ($visualization_st1)
           {{-- */ $comment = $plan_comments->getComment($user->id, 'half-year', 'evaluator', 1) /* --}}
-          <td><textarea placeholder="{!! $dictionary->translate('Comentarios manager') !!}" data-id="{!! $comment->id !!}" data-entry="evaluator"  data-stage="half-year" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" class="form-control comment" @if ($is_logged_user || !$is_stage_two) disabled @endif>{!! $comment->comment !!}</textarea>
+          <td><textarea placeholder="{!! $dictionary->translate('Comentarios Manager') !!}" data-id="{!! $comment->id !!}" data-entry="evaluator"  data-stage="half-year" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" class="form-control comment" @if ($is_logged_user || !$is_stage_two) disabled @endif>{!! $comment->comment !!}</textarea>
           </td>
           @endif
           @if ($visualization_st2)
           {{-- */ $comment = $plan_comments->getComment($user->id, 'end-year', 'evaluator', 1) /* --}}
-          <td><textarea placeholder="{!! $dictionary->translate('Comentarios manager') !!}" data-id="{!! $comment->id !!}" data-entry="evaluator"  data-stage="end-year" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" class="form-control comment" @if ($is_logged_user || !$is_stage_three) disabled @endif>{!! $comment->comment !!}</textarea></td>
+          <td><textarea placeholder="{!! $dictionary->translate('Comentarios Manager') !!}" data-id="{!! $comment->id !!}" data-entry="evaluator"  data-stage="end-year" data-uid="{!! $user->id !!}" data-eid="{!! Auth::user()->id !!}" class="form-control comment" @if ($is_logged_user || !$is_stage_three) disabled @endif>{!! $comment->comment !!}</textarea></td>
           @endif
         </tr>
       </tbody>
@@ -110,11 +110,11 @@
         <tr>
           <td>
             {{-- */ $comment = $plan_comments->getComment($user->id, 'half-year', 'user', 2) /* --}}
-            <textarea data-id="{!! $comment->id !!}" data-entry="user"  data-stage="half-year" data-eid="" data-uid="{!! $user->id !!}" class="form-control comment" placeholder="{!! $dictionary->translate('Comentarios empleado') !!}" @if (!$is_logged_user || !$is_stage_two) disabled @endif>{!! $comment->comment !!}</textarea><br>
+            <textarea data-id="{!! $comment->id !!}" data-entry="user"  data-stage="half-year" data-eid="" data-uid="{!! $user->id !!}" class="form-control comment" placeholder="{!! $dictionary->translate('Comentarios Evaluado') !!}" @if (!$is_logged_user || !$is_stage_two) disabled @endif>{!! $comment->comment !!}</textarea><br>
             @if ($visualization_st1)
             {{-- */ $comment = $plan_comments->getComment($user->id, 'half-year', 'evaluator', 2) /* --}}
 
-            <textarea data-id="{!! $comment->id !!}" data-entry="evaluator"  data-stage="half-year" data-eid="{!! Auth::user()->id !!}" data-uid="{!! $user->id !!}" class="form-control comment" placeholder="{!! $dictionary->translate('Comentarios manager') !!}" @if ($is_logged_user || !$is_stage_two) disabled @endif>{!! $comment->comment !!}</textarea>
+            <textarea data-id="{!! $comment->id !!}" data-entry="evaluator"  data-stage="half-year" data-eid="{!! Auth::user()->id !!}" data-uid="{!! $user->id !!}" class="form-control comment" placeholder="{!! $dictionary->translate('Comentarios Manager') !!}" @if ($is_logged_user || !$is_stage_two) disabled @endif>{!! $comment->comment !!}</textarea>
             @endif
           </td>
 
@@ -166,10 +166,10 @@
         <tr>
           <td>
             {{-- */ $comment = $plan_comments->getComment($user->id, 'end-year', 'user', 2) /* --}}
-            <textarea data-id="{!! $comment->id !!}" data-uid="{!! $user->id !!}" data-entry="user"  data-stage="end-year" data-eid="" class="form-control comment" placeholder="{!! $dictionary->translate('Comentarios empleado') !!}" @if (!$is_logged_user || !$is_stage_three) disabled @endif>{!! $comment->comment !!}</textarea><br>
+            <textarea data-id="{!! $comment->id !!}" data-uid="{!! $user->id !!}" data-entry="user"  data-stage="end-year" data-eid="" class="form-control comment" placeholder="{!! $dictionary->translate('Comentarios Evaluado') !!}" @if (!$is_logged_user || !$is_stage_three) disabled @endif>{!! $comment->comment !!}</textarea><br>
             @if ($visualization_st2)
             {{-- */ $comment = $plan_comments->getComment($user->id, 'end-year', 'evaluator', 2) /* --}}
-            <textarea data-id="{!! $comment->id !!}" data-uid="{!! $user->id !!}" data-entry="evaluator"  data-stage="end-year" data-eid="" class="form-control comment" placeholder="{!! $dictionary->translate('Comentarios manager') !!}" @if ($is_logged_user || !$is_stage_three) disabled @endif>{!! $comment->comment !!}</textarea>
+            <textarea data-id="{!! $comment->id !!}" data-uid="{!! $user->id !!}" data-entry="evaluator"  data-stage="end-year" data-eid="" class="form-control comment" placeholder="{!! $dictionary->translate('Comentarios Manager') !!}" @if ($is_logged_user || !$is_stage_three) disabled @endif>{!! $comment->comment !!}</textarea>
             @endif
           </td>
 

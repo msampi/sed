@@ -37,9 +37,13 @@ class Client extends BaseModel
      *
      * @var array
      */
+    
     public static $rules = [
         'name' => 'required'
     ];
+    
+    
+    
 
     /**
      * { function_description }

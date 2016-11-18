@@ -35,7 +35,7 @@ function appendRatingSelect(op, disabled){
     rating = $.parseJSON(op.rating);
     var options = "";
     for(var key in rating)
-        options += '<option>'+rating[key].value[op.lang]+'</option>';
+        options += '<option value="'+rating[key].value+'">'+rating[key].name[op.lang]+'</option>';
 	return '<td class="rating-column">'+
 				'<select '+disabled+' class="form-control">'+
                     options+

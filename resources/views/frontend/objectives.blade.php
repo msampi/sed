@@ -58,7 +58,7 @@
     			<td class="rating-column ">
     				<select id="half-year-user-selector-{!! $objnum !!}" class="form-control" @if ((!$is_logged_user) || (!$is_stage_two)) disabled @endif>
                         @foreach( $rating->values as $value)
-                            <option @if ($review->rating == $value->value) selected @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
+                            <option value="{!! $value->value !!}" @if ($review->rating == $value->value) selected @endif>{!! $value->getAttributeTranslate($value->name) !!}</option>
                         @endforeach
     				</select>
     			</td>
@@ -69,7 +69,7 @@
     			<td class="rating-column">
     				<select id="end-year-user-selector-{!! $objnum !!}" class="form-control" @if ((!$is_logged_user) || (!$is_stage_three)) disabled @endif>
                         @foreach( $rating->values as $value)
-                            <option @if ($review->rating == $value->value) selected @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
+                            <option value="{!! $value->value !!}" @if ($review->rating == $value->value) selected @endif>{!! $value->getAttributeTranslate($value->name) !!}</option>
                         @endforeach
     				</select>
     			</td>
@@ -96,7 +96,7 @@
     				<select id="half-year-manager-selector-{!! $objnum !!}" class="form-control" @if (($is_logged_user) || (!$is_stage_two)) disabled @endif>
 
                         @foreach( $rating->values as $value)
-                            <option @if ($review->rating == $value->value) selected @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
+                            <option value="{!! $value->value !!}" @if ($review->rating == $value->value) selected @endif>{!! $value->getAttributeTranslate($value->name) !!}</option>
                         @endforeach
 
     				</select>
@@ -122,7 +122,7 @@
               <select id="end-year-manager-selector-{!! $objnum !!}" class="form-control" @if (($is_logged_user) || (!$is_stage_three)) disabled @endif>
 
                         @foreach( $rating->values as $value)
-                            <option @if ($review->rating == $value->value) selected @endif>{!! $value->getAttributeTranslate($value->value) !!}</option>
+                            <option value="{!! $value->value !!}" @if ($review->rating == $value->value) selected @endif>{!! $value->getAttributeTranslate($value->name) !!}</option>
                         @endforeach
 
     				  </select>

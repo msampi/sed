@@ -64,13 +64,13 @@
 		    <thead>
 		        <th>ID</th>
                 <th>Or.</th>
-		        <th>{!! $dictionary->translate('Usuario') !!}</th>
+		        <th>{!! $dictionary->translate('Evaluado') !!}</th>
 		        <th>{!! $dictionary->translate('Fecha') !!}</th>
 		        <th>{!! $dictionary->translate('Primera etapa') !!}</th>
                 <th>{!! $dictionary->translate('Segunda etapa') !!}</th>
                 <th>{!! $dictionary->translate('Tercera etapa') !!}</th>
 		        <th>{!! $dictionary->translate('Puesto') !!}</th>
-		        <th>{!! $dictionary->translate('Evaluador') !!}</th>
+		        <th>{!! $dictionary->translate('Manager') !!}</th>
             <th>{!! $dictionary->translate('Puntuación') !!}</th>
 		        <th>{!! $dictionary->translate('Informe') !!}</th>
 		        <th>Sel</th>

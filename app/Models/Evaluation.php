@@ -77,7 +77,8 @@ class Evaluation extends BaseModel
         'third_stage' => 'required',
         'objectives_rating_id' => 'required',
         'competitions_rating_id' => 'required',
-        'valorations_rating_id' => 'required'
+        'valorations_rating_id' => 'required',
+        'mandatory_sections' => 'required'
     ];
 
     public function messages()

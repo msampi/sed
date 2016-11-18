@@ -14,8 +14,11 @@
   		</div>
   		<div class="panel-body">
   			<div class="row">
-	  			<div class="col-md-10">
+	  			<div class="col-md-2">
 	  				<label>{!! $dictionary->translate('Valor') !!}</label>
+	  			</div>
+                <div class="col-md-8">
+	  				<label>{!! $dictionary->translate('Nombre') !!}</label>
 	  			</div>
 	  			<div class="col-md-2">
 	  				<label>{!! $dictionary->translate('Acción') !!}</label>
@@ -28,11 +31,14 @@
             @else
 	            @foreach ($rating->values as $value)
 	            <div class="row">
-	            	<div class="col-md-10 multilang-group">
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" name="values[{!! $value->id !!}][value]" value="{{ $value->value }}">
+                    </div>
+	            	<div class="col-md-8 multilang-group">
 	            		@foreach ($languages as $language)
-      
-		                    <input type="text" class="form-control multilang" data-lang="{{ $language->name }}" name="values[{!! $value->id !!}][{!! $language->id !!}]" value="{{ $value->value[$language->id] or '' }}">
-		                
+                            
+		                    <input type="text" class="form-control multilang" data-lang="{{ $language->name }}" name="values[{!! $value->id !!}][name][{!! $language->id !!}]" value="{{ $value->name[$language->id] or '' }}">
+		                  
 		                @endforeach
 	                    
 	                </div>

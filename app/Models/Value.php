@@ -17,6 +17,7 @@ class Value extends BaseModel
 
     public $fillable = [
         'value',
+        'name',
         'rating_id'
     ];
 
@@ -26,7 +27,8 @@ class Value extends BaseModel
      * @var array
      */
     protected $casts = [
-        'value' => 'array',
+        'value' => 'integer',
+        'name' => 'array',
         'rating_id' => 'integer'
     ];
 
@@ -36,6 +38,7 @@ class Value extends BaseModel
      * @var array
      */
     public static $rules = [
-        'value' => 'required'
+        'value' => 'required',
+        'name' => 'required'
     ];
 }

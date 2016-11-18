@@ -8,7 +8,7 @@
     @foreach($alerts as $alert)
         <tr>
             <td>{!! $alert->getDescription() !!}</td>
-            <td>{!! $alert->evaluation->name !!}</td>
+            <td>@if ($alert->evaluation) {!! $alert->evaluation->name !!} @endif</td>
             <td>
                 {!! Form::open(['route' => ['admin.alerts.destroy', $alert->id], 'method' => 'delete']) !!}
 

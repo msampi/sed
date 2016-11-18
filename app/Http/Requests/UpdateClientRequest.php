@@ -27,4 +27,11 @@ class UpdateClientRequest extends Request
     {
         return Client::$rules;
     }
+    
+    public function messages()
+    {
+        return [
+            'name.required'=>'Debe completar el campo nombre'
+        ];
+    }
 }

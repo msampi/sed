@@ -138,13 +138,13 @@ class MessageController extends AdminBaseController
         if (empty($message)) {
             Flash::error($this->dictionary->translate('Mensaje no encontrado'));
 
-            return redirect(route('messages.index'));
+            return redirect(route('admin.messages.index'));
         }
 
         $this->messageRepository->delete($id);
 
         Flash::success($this->dictionary->translate('Mensaje eliminado correctamente'));
 
-        return redirect(route('messages.index'));
+        return redirect(route('admin.messages.index'));
     }
 }

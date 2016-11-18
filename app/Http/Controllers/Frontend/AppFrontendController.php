@@ -65,7 +65,7 @@ class AppFrontendController extends AppBaseController
 
         }
         
-
+       
     }
 
     /**

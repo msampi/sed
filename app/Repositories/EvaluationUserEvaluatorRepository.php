@@ -55,7 +55,7 @@ class EvaluationUserEvaluatorRepository extends AdminBaseRepository
     
     public function saveFromExcel($data)
     {
-        $ev = $this->model->firstOrCreate(['user_id' => $data['user_id'],'evaluation_id' => $data['evaluation_id'], 'post_id' => $data['post_id']]);
+        $ev = $this->model->firstOrCreate(['user_id' => $data['user_id'],'evaluation_id' => $data['evaluation_id']]);
         if (isset($data['evaluator_id']))
           $ev->evaluator_id = $data['evaluator_id'];
         $ev->user_id = $data['user_id'];
@@ -73,9 +73,9 @@ class EvaluationUserEvaluatorRepository extends AdminBaseRepository
         foreach ($eue as $ev) {
           if (!$ev->started):
               $user = User::where('id',$ev->user_id)->first();
+              
               $request = new CreateUserRequest();
-              $request->merge(['email' => $user->email]);
-              $request->merge(['name' => $user->name]);
+        
               $email = new EmailSend($evaluation->register_message_id, NULL, $user, $request);
               $email->send();
               $email = new EmailSend($evaluation->welcome_message_id, NULL, $user);

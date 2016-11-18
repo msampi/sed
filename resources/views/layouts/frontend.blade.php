@@ -145,7 +145,7 @@
             </li>
             <li>
               <a href="{!! URL::asset( 'users' ) !!}">
-                <i class="fa fa-users"></i> <span>{!! $dictionary->translate('Usuarios') !!}</span>
+                <i class="fa fa-users"></i> <span>{!! $dictionary->translate('Evaluados') !!}</span>
 
               </a>
             </li>
@@ -288,7 +288,7 @@
           $(this).css('font-weight','initial');
           $.ajax({
             type: "POST",
-            url: '/alert',
+            url: BASE_URL+'/alert',
             data: { id: $(this).attr('key') },
             success: function(resp) {
               

@@ -31,9 +31,11 @@ class RatingRepository extends AdminBaseRepository
 
         if (isset($input['values']))
             foreach ($input['values'] as $v) {
+                
                 $value = new Value();
                 $value->rating_id = $rating->id;
-                $value->value = $v;
+                $value->value = $v['value'];
+                $value->name = $v['name'];
                 $value->save();
             }
         return $rating;
@@ -47,9 +49,11 @@ class RatingRepository extends AdminBaseRepository
 
         if (isset($input['values']))
             foreach ($input['values'] as $key => $v) {
+                
                 $value = Value::firstOrNew(['id' => $key]);
                 $value->rating_id = $rating->id;
-                $value->value = $v;
+                $value->value = $v['value'];
+                $value->name = $v['name'];
                 $value->save();
             }
 

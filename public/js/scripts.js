@@ -100,10 +100,14 @@ $(function () {
 
         for (var key in languages) {
 
-                inputs+='<input type="text" data-lang="'+languages[key]+'" name="values['+id+']['+key+']" class="form-control multilang">';
+                inputs+='<input type="text" data-lang="'+languages[key]+'" name="values['+id+'][name]['+key+']" class="form-control multilang">';
         }
 
-        $(".many-list .panel-body").append('<div class="row"><div id='+id+' class="col-md-10">'+
+        $(".many-list .panel-body").append('<div class="row">'+
+                                '<div class="col-md-2">'+
+                                    '<input type="text" name="values['+id+'][value]" class="form-control">'+
+                                '</div>'+
+                                '<div id='+id+' class="col-md-8">'+
                                     inputs+
                                 '</div>'+
                                 '<div class="col-md-2">'+

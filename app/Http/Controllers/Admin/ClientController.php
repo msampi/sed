@@ -101,7 +101,7 @@ class ClientController extends AdminBaseController
     public function update($id, UpdateClientRequest $request)
     {
         $client = $this->clientRepository->findWithoutFail($id);
-
+        
         if (empty($client)) {
             Flash::error($this->dictionary->translate('Cliente no encontrado'));
 
