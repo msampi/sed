@@ -15,7 +15,7 @@
     	<tbody>
     		<tr>
     			<td width="22%"><strong>{!! $dictionary->translate('Objetivo') !!}</strong></td>
-    			<td class="rating-column weight-column font-white"><strong>{!! $dictionary->translate('Ponderacion') !!}</strong></td>
+    			<td class="rating-column weight-column font-white"><strong>{!! $dictionary->translate('Ponderación') !!}</strong></td>
     			<td><strong>{!! $dictionary->translate('Review mitad año') !!}</strong></td>
     			<td class="rating-column"><strong>Rating</strong></td>
     			<td><strong>{!! $dictionary->translate('Review año completo') !!}</strong></td>
@@ -143,14 +143,16 @@
   @if (!$is_logged_user && $is_stage_one)
     <button class="btn btn-success" id="add-objective" onclick="appendObjective(options)"><i class="fa fa-plus"></i> {!! $dictionary->translate('Agregar objetivo') !!}</button>
   @endif
-  <button class="btn btn-success" onclick="objectivesSave(true);"><i class="fa fa-save"></i> {!! $dictionary->translate('Guardar') !!}</button>
+  <br><br>
   @if ($is_logged_user)
     @if ($status == 2)
-        <button class="btn btn-warning pull-right" onclick="objectivesSave(true,1);"> {!! $dictionary->translate('Volver a estado iniciado') !!}</button>
+        <button class="btn btn-warning" onclick="objectivesSave(true,1);"> {!! $dictionary->translate('Volver a estado iniciado') !!}</button>
     @else
-        <button class="btn btn-danger pull-right" onclick="objectivesSave(true, 2);"> {!! $dictionary->translate('Finalizar') !!}</button>
+        <button class="btn btn-danger" onclick="objectivesSave(true, 2);"> {!! $dictionary->translate('Haga clic aquí para cambiar de estado Iniciado a Finalizado') !!}</button>
     @endif
   @endif
+    <br><br>
+    <button class="btn btn-success" onclick="objectivesSave(true);"><i class="fa fa-save"></i> {!! $dictionary->translate('Guardar') !!}</button>
 </div>
 
 <script type="text/javascript">

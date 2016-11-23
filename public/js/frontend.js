@@ -238,7 +238,7 @@ function getCompetitionsDataToSave(){
             entry: $(this).data('entry'),
             rating: $(this).val()
         };
-
+       
         elements.ratings.push(data);
     });
 

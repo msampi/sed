@@ -19,7 +19,6 @@ class Performance extends Model
         'user_comment',
         'evaluator_comment',
         'user_agree',
-        'evaluator_agree',
         'user_final_score',
         'evaluator_final_score',
         'user_id',

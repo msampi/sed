@@ -64,6 +64,7 @@ class PerformanceController extends AppFrontendController
 
         $avgUser = $this->objectiveReviewRepository->getAverage($this->user->id,'user') + $this->behaviourRatingRepository->getAverage($this->user->id,'user') + $this->valorationRatingRepository->getAverage($this->user->id,'user');
         
+        
         $avgEvaluator = $this->objectiveReviewRepository->getAverage($this->user->id,'evaluator') + $this->behaviourRatingRepository->getAverage($this->user->id,'evaluator') + $this->valorationRatingRepository->getAverage($this->user->id,'evaluator');
         
 

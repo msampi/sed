@@ -52,11 +52,15 @@ class ObjectiveReviewRepository extends BaseRepository
     
     public function getAverage($user_id, $entry)
     {
-        $objectivesReviews = $this->model->where('user_id',$user_id)->where('entry', $entry)->get();
+        $objectivesReviews = $this->model->where('evaluation_id',Session::get('evaluation_id'))
+                                ->where('user_id',$user_id)
+                                ->where('entry',$entry)->get();
+        
         $count = 0;
         foreach($objectivesReviews as $or)
            
-            $count = $count + (($or->objective->weight/100) * $or->rating);
+            if ($or->objective)
+                $count = $count + (($or->objective->weight/100) * $or->rating);
         
         return $count;
     }

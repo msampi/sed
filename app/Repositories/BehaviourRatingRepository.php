@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\BehaviourRating;
 use InfyOm\Generator\Common\BaseRepository;
+use Session;
 
 class BehaviourRatingRepository extends BaseRepository
 {
@@ -31,6 +32,7 @@ class BehaviourRatingRepository extends BaseRepository
             $rating->rating = $value->rating;
             $rating->user_id = $value->uid;
             $rating->entry = $value->entry;
+            $rating->evaluation_id = Session::get('evaluation_id');
             $rating->stage = $value->stage;
             $rating->behaviour_id = $value->bid;
             $rating->evaluator_id = $value->eid;
@@ -43,12 +45,18 @@ class BehaviourRatingRepository extends BaseRepository
     
     public function getAverage($user_id, $entry)
     {
-        $behaviourRatings = $this->model->where('user_id',$user_id)->where('entry', $entry)->get();
-        $count = 0;
-        foreach($behaviourRatings as $br)
+        $sum = 0;
+        $behaviour_ratings = $this->model->distinct('behaviour_id')
+                                  ->where('user_id',$user_id) 
+                                  ->where('entry',$entry)
+                                  ->where('evaluation_id',Session::get('evaluation_id'))->get();
+        foreach($behaviour_ratings as $br){
+            $count = $br->behaviourRatingSum($br->behaviour->id, $user_id, $entry);
+            $sum = $sum + ($count * ($br->behaviour->competition->weight /100));
+            
+        }
         
-            $count = $count + (($br->behaviour->competition->weight/100) * $br->rating);
-        
-        return $count;
+        return $sum;
+                
     }
 }

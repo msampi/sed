@@ -29,7 +29,7 @@
 
             <select data-id="" data-entry="user" data-uid="{!! $user->id !!}"  data-eid="" data-stage="half-year" data-bid="{!! $valoration->id !!}" class="form-control bh-selector" @if (!$is_logged_user || !$is_stage_two) disabled @endif>
                 @foreach( $rating->values as $value)
-                    <option value="{!! $value->value !!}" @if ($valrating->rating == $value->getAttributeTranslate($value->value)) selected="selected" @endif>{!! $value->getAttributeTranslate($value->name) !!}</option>
+                    <option value="{!! $value->value !!}" @if ($valrating->rating == $value->value) selected="selected" @endif>{!! $value->getAttributeTranslate($value->name) !!}</option>
                 @endforeach
             </select>
 
@@ -37,7 +37,7 @@
             @if($visualization_st1)
             <select data-id="" data-entry="evaluator" data-uid="{!! $user->id !!}"  data-eid="" data-stage="half-year" data-bid="{!! $valoration->id !!}" class="form-control bh-selector margin-top-3" @if ($is_logged_user || !$is_stage_two) disabled @endif>
                 @foreach( $rating->values as $value)
-                    <option value="{!! $value->value !!}" @if ($valrating->rating == $value->getAttributeTranslate($value->value)) selected="selected" @endif>{!! $value->getAttributeTranslate($value->name) !!}</option>
+                    <option value="{!! $value->value !!}" @if ($valrating->rating == $value->value) selected="selected" @endif>{!! $value->getAttributeTranslate($value->name) !!}</option>
                 @endforeach
             </select>
           @endif
@@ -48,7 +48,7 @@
 
             <select data-id="" data-entry="user" data-uid="{!! $user->id !!}"  data-eid="" data-stage="end-year" data-bid="{!! $valoration->id !!}" class="form-control bh-selector" @if (!$is_logged_user || !$is_stage_three) disabled @endif>
                 @foreach( $rating->values as $value)
-                    <option value="{!! $value->value !!}" @if ($valrating->rating == $value->getAttributeTranslate($value->value)) selected="selected" @endif>{!! $value->getAttributeTranslate($value->name) !!}</option>
+                    <option value="{!! $value->value !!}" @if ($valrating->rating == $value->value) selected="selected" @endif>{!! $value->getAttributeTranslate($value->name) !!}</option>
                 @endforeach
             </select>
 
@@ -56,7 +56,7 @@
             @if($visualization_st2)
             <select data-id="" data-entry="evaluator" data-uid="{!! $user->id !!}"  data-eid="" data-stage="end-year" data-bid="{!! $valoration->id !!}" class="form-control bh-selector margin-top-3" @if ($is_logged_user || !$is_stage_three) disabled @endif>
                 @foreach( $rating->values as $value)
-                    <option value="{!! $value->value !!}" @if ($valrating->rating == $value->getAttributeTranslate($value->value)) selected="selected" @endif>{!! $value->getAttributeTranslate($value->name) !!}</option>
+                    <option value="{!! $value->value !!}" @if ($valrating->rating == $value->value) selected="selected" @endif>{!! $value->getAttributeTranslate($value->name) !!}</option>
                 @endforeach
             </select>
           @endif
@@ -96,14 +96,16 @@
     {!! Form::close() !!}
 </div>
 <div class="col-lg-12 buttons-pad">
-    <button class="btn btn-success" onclick="valorationsSave(true)"><i class="fa fa-save"></i> {!! $dictionary->translate('Guardar') !!}</button>
+   
     @if ($is_logged_user)
         @if ($status == 2)
-            <button class="btn btn-warning pull-right" onclick="valorationsSave(true,1);"> {!! $dictionary->translate('Volver a estado iniciado') !!}</button>
+            <button class="btn btn-warning" onclick="valorationsSave(true,1);"> {!! $dictionary->translate('Volver a estado iniciado') !!}</button>
         @else
-            <button class="btn btn-danger pull-right" onclick="valorationsSave(true, 2);"> {!! $dictionary->translate('Finalizar') !!}</button>
+            <button class="btn btn-danger" onclick="valorationsSave(true, 2);"> {!! $dictionary->translate('Haga clic aquí para cambiar de estado Iniciado a Finalizado') !!}</button>
         @endif
       @endif
+    <br><br>
+     <button class="btn btn-success" onclick="valorationsSave(true)"><i class="fa fa-save"></i> {!! $dictionary->translate('Guardar') !!}</button>
 </div>
 <script type="text/javascript">
 

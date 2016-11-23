@@ -48,6 +48,7 @@ class Competition extends BaseModel
     {
         return $this->hasMany('App\Models\Behaviour');
     }
+    
 
     public function comments()
     {

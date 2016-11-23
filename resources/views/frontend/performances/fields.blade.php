@@ -42,17 +42,6 @@
 
   </div>
   <div class="form-group col-sm-12">
-      {!! Form::label('evaluator_agree', $dictionary->translate('Conforme')) !!}?
-      @if ($viewControlls->isEmpleado)
-        Si {!! Form::radio('evaluator_agree', '1', true,['disabled']); !!}
-        No {!! Form::radio('evaluator_agree', '0', false,['disabled']); !!}
-      @else
-        Si {!! Form::radio('evaluator_agree', '1', true); !!}
-        No {!! Form::radio('evaluator_agree', '0', false); !!}
-      @endif
-
-  </div>
-  <div class="form-group col-sm-12">
       {!! Form::label('evaluator_final_score', $dictionary->translate('Puntuación final manager')) !!}
       @if ($viewControlls->isEmpleado)
         {!! Form::text('evaluator_final_score', null, ['class' => 'form-control', 'disabled']) !!}
