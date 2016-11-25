@@ -49,8 +49,7 @@ class AppFrontendController extends AppBaseController
         $alerts = $this->alertRepository->findWhere(['evaluation_id' => Session::get('evaluation_id')]);
         View::share('alerts', $alerts);
         $this->eue = $this->evaluationUserEvaluatorRepository->findWhere([['user_id','=',Auth::user()->id], ['evaluation_id','=',Session::get('evaluation_id')]])[0];
-
-
+        
     }
 
     public function setCurrentUser($id = NULL)
@@ -66,6 +65,47 @@ class AppFrontendController extends AppBaseController
         }
         
        
+    }
+    
+    public function changeStatus($status, $stage)
+    {
+        if ($status[$stage] == 0)
+        {
+            
+            if ($stage == 0){
+                if ($this->evaluationRepository->isStageOne())
+                    $status[$stage] = 1;
+            }
+            if ($stage == 1){
+                if ($this->evaluationRepository->isStageTwo())
+                    $status[$stage] = 1;
+            }
+            if ($stage == 2){
+                if ($this->evaluationRepository->isStageThree())
+                    $status[$stage] = 1;
+            }
+        }
+        return $status;
+        
+    }
+    
+    public function setStatus()
+    {
+        $status_objectives = $this->eue->status_objectives;
+        $status_competitions = $this->eue->status_competitions;
+        $status_valorations = $this->eue->status_valorations;
+        $status_objectives = $this->changeStatus($status_objectives, 0);
+        $status_objectives = $this->changeStatus($status_objectives, 1);
+        $status_objectives = $this->changeStatus($status_objectives, 2);
+        $status_competitions = $this->changeStatus($status_competitions, 1);
+        $status_competitions = $this->changeStatus($status_competitions, 2);
+        $status_valorations = $this->changeStatus($status_valorations, 1);
+        $status_valorations = $this->changeStatus($status_valorations, 2);
+        $this->eue->status_objectives = $status_objectives;
+        $this->eue->status_competitions = $status_competitions;
+        $this->eue->status_valorations = $status_valorations;
+        $this->eue->save();
+        
     }
 
     /**

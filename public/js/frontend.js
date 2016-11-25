@@ -320,13 +320,13 @@ function getPDPDataToSave(){
 
 }
 
-function objectivesSave(redirect = false, status = 0){
+function objectivesSave(redirect = false, stage = 0, status = 0){
     $("#saving-label").show();
 
     $.ajax({
       type: "POST",
       url: BASE_URL+'/objectives/save',
-      data: {'_token': $('input[name=_token]').val(), 'data': getObjectivesDataToSave(),'status':status},
+      data: {'_token': $('input[name=_token]').val(), 'data': getObjectivesDataToSave(),'status':status, 'stage': stage},
       success: function(data){
         $("#saving-label").hide();
         $('[data-flag]').each(function(){
@@ -341,12 +341,12 @@ function objectivesSave(redirect = false, status = 0){
 
 }
 
-function competitionsSave(redirect = false, status = 0){
+function competitionsSave(redirect = false, stage = 0, status = 0){
     $("#saving-label").show();
     $.ajax({
       type: "POST",
       url: BASE_URL+'/competitions/save',
-      data: {'_token': $('input[name=_token]').val(), 'data': getCompetitionsDataToSave(), 'status':status},
+      data: {'_token': $('input[name=_token]').val(), 'data': getCompetitionsDataToSave(), 'status':status, 'stage':stage},
       success: function(){
         $("#saving-label").hide();
         if (redirect)
@@ -357,12 +357,12 @@ function competitionsSave(redirect = false, status = 0){
 
 }
 
-function valorationsSave(redirect = false, status = 0){
+function valorationsSave(redirect = false, stage = 0, status = 0){
     $("#saving-label").show();
     $.ajax({
       type: "POST",
       url: BASE_URL+'/valorations/save',
-      data: {'_token': $('input[name=_token]').val(), 'data': getValorationsDataToSave(), 'status':status},
+      data: {'_token': $('input[name=_token]').val(), 'data': getValorationsDataToSave(), 'status':status, 'stage':stage},
       success: function(){
         $("#saving-label").hide();
         if (redirect)

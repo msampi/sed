@@ -80,12 +80,12 @@ class EvaluationRepository extends AdminBaseRepository
 
 
 
-    public function getEvaluationsList($client = NULL)
+    public function getEvaluationsList($client_id = NULL)
     {
-      if (!$client)
+      if (!$client_id)
         $evaluations = $this->all();
       else
-        $evaluations = $this->findWhere(['client_id' => $client->id]);
+        $evaluations = $this->findWhere(['client_id' => $client_id]);
 
 
       $result = array();
@@ -151,6 +151,8 @@ class EvaluationRepository extends AdminBaseRepository
     {
         return in_array(3,$evaluation->mandatory_sections);
     }
+    
+    
 
 
 }

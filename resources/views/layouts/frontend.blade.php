@@ -184,15 +184,14 @@
                 <i class="fa fa-file-text-o"></i> <span>{!! $dictionary->translate('Documentos') !!}</span>
 
               </a>
-            </li>
-            @if ($is_stage_three)
+            </li>    
             <li>
               <a href="{!! URL::asset( 'performances' ) !!}">
                 <i class="fa fa-bar-chart"></i> <span>{!! $dictionary->translate('Valoración Global') !!}</span>
 
               </a>
             </li>
-            @endif
+            
             </ul>
         </section>
     </aside>
@@ -294,7 +293,7 @@
             data: { id: $(this).attr('key') },
             success: function(resp) {
               
-              $('#contenido').html('resp');
+              $('#contenido').html(resp);
               $('.alert-modal').modal('show');
             },
             error: function() {

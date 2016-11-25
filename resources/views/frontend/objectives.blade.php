@@ -145,11 +145,28 @@
   @endif
   <br><br>
   @if ($is_logged_user)
-    @if ($status == 2)
-        <button class="btn btn-warning" onclick="objectivesSave(true,1);"> {!! $dictionary->translate('Volver a estado iniciado') !!}</button>
-    @else
-        <button class="btn btn-danger" onclick="objectivesSave(true, 2);"> {!! $dictionary->translate('Haga clic aquí para cambiar de estado Iniciado a Finalizado') !!}</button>
+    @if ($is_stage_one)
+        @if ($status->first_stage == 2)
+            <button class="btn btn-warning" onclick="objectivesSave(true,1,1);"> {!! $dictionary->translate('Volver a iniciar etapa de objetivos') !!}</button>
+        @else
+            <button class="btn btn-danger" onclick="objectivesSave(true,1,2);"> {!! $dictionary->translate('Finalizar etapa de objetivos') !!}</button>
+        @endif
     @endif
+    @if ($is_stage_two)
+        @if ($status->second_stage == 2)
+            <button class="btn btn-warning" onclick="objectivesSave(true,2,1);"> {!! $dictionary->translate('Volver a iniciar etapa de mitad de año') !!}</button>
+        @else
+            <button class="btn btn-danger" onclick="objectivesSave(true,2,2);"> {!! $dictionary->translate('Finalizar etapa de mitad de año') !!}</button>
+        @endif
+    @endif
+    @if ($is_stage_three)
+        @if ($status->third_stage == 2)
+            <button class="btn btn-warning" onclick="objectivesSave(true,3,1);"> {!! $dictionary->translate('Volver a iniciar etapa de fin de año') !!}</button>
+        @else
+            <button class="btn btn-danger" onclick="objectivesSave(true,3,2);"> {!! $dictionary->translate('Finalizar etapa de fin de año') !!}</button>
+        @endif
+    @endif
+    
   @endif
     <br><br>
     <button class="btn btn-success" onclick="objectivesSave(true);"><i class="fa fa-save"></i> {!! $dictionary->translate('Guardar') !!}</button>

@@ -3,15 +3,21 @@
 namespace App\Repositories;
 
 use App\Models\EvaluationUserEvaluator;
+use App\Repositories\ObjectiveReviewRepository;
+use App\Repositories\BehaviourRatingRepository;
+use App\Repositories\ValorationRatingRepository;
 use InfyOm\Generator\Common\BaseRepository;
 use App\Http\Requests\CreateUserRequest;
 use App\Criteria\EqualCriteria;
 use App\Library\EmailSend;
 use App\Models\User;
-
+use Auth;
+use App;
 
 class EvaluationUserEvaluatorRepository extends AdminBaseRepository
 {
+    
+    
     /**
      * @var array
      */
@@ -22,6 +28,9 @@ class EvaluationUserEvaluatorRepository extends AdminBaseRepository
     /**
      * Configure the Model
      **/
+    
+    
+    
     public function model()
     {
         return EvaluationUserEvaluator::class;
@@ -81,11 +90,53 @@ class EvaluationUserEvaluatorRepository extends AdminBaseRepository
               $email = new EmailSend($evaluation->welcome_message_id, NULL, $user);
               $email->send();
               $ev->started = 1;
-              $ev->status = [1,0,0];
+              $ev->status_objectives = [0,0,0];
+              $ev->status_competitions = [0,0,0];
+              $ev->status_valorations = [0,0,0];
               $ev->save();
          endif;
 
         }
+    }
+    
+    
+    
+    public function getCompletedEvaluations()
+    {
+        $evaluations = $this->findWhere(['evaluator_id' => Auth::user()->id]);
+        
+        $completed = 0;
+        foreach($evaluations as $evaluation)
+            if ($evaluation->completed())
+                $completed++;
+        
+        return $completed;
+        
+        
+    }
+    
+    public function getTotalEvaluations()
+    {
+        return count($this->findWhere(['evaluator_id' => Auth::user()->id]));
+        
+        
+    }
+    
+    public function getTotalAverage()
+    {
+        $objectiveReviewRepository = App::make(ObjectiveReviewRepository::class);
+        $behaviourRatingRepository = App::make(BehaviourRatingRepository::class);
+        $valorationRatingRepository = App::make(ValorationRatingRepository::class);
+        
+        $evaluations = $this->findWhere(['evaluator_id' => Auth::user()->id]);
+        $average = 0;
+        foreach($evaluations as $evaluation)
+        {
+            $average = $objectiveReviewRepository->getAverage($evaluation->user_id,'user') + $behaviourRatingRepository->getAverage($evaluation->user_id,'user') + $valorationRatingRepository->getAverage($evaluation->user_id,'user') + $average;
+           
+        }
+        
+        return $average/$evaluations->count();
     }
 
 

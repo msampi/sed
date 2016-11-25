@@ -54,7 +54,12 @@ class ObjectiveController extends AppFrontendController
         $is_stage_one = $this->evaluationRepository->isStageOne();
         $is_stage_two = $this->evaluationRepository->isStageTwo();
         $is_stage_three = $this->evaluationRepository->isStageThree();
-        $status = $this->eue->getStageStatus(0);
+        
+        $status = new \stdClass();
+        $status->first_stage = $this->eue->getStageStatus(0,'objectives');
+        $status->second_stage = $this->eue->getStageStatus(1, 'objectives');
+        $status->third_stage = $this->eue->getStageStatus(2, 'objectives');
+    
         
         $rating = $this->evaluationRepository->getObjectivesRating();
         $visualization_st1 = $this->evaluationRepository->userVisibilityStageOne($this->is_logged_user);
@@ -80,8 +85,10 @@ class ObjectiveController extends AppFrontendController
     {
 
         $input = json_decode($request->data);
-        $this->eue->setStatus(0,$request->status);
-        $this->eue->save();
+        if ($request->status){
+            $this->eue->setStatus($request->status, $request->stage, 'objectives');
+            $this->eue->save();
+        }
         $flags = $this->objectiveRepository->saveObjective($input);
         $this->objectiveReviewRepository->saveReview($input);
         echo json_encode($flags);

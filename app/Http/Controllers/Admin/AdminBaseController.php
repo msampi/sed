@@ -17,6 +17,7 @@ class AdminBaseController extends AppBaseController
     protected $evaRepo;
     protected $superadmin;
     protected $clients;
+    protected $client_id;
 
 
     public function __construct()
@@ -24,12 +25,15 @@ class AdminBaseController extends AppBaseController
         $this->languageRepository = App::make(LanguageRepository::class);
         $this->evaRepo = App::make(EvaluationRepository::class);
         $this->superadmin = NULL;
+        $this->client_id = NULL;
         if (Auth::user()->role->id == 1){
           $this->superadmin = Auth::user();
           $this->clients = Client::lists('name', 'id');
         }
-        else
+        else{
             $this->clients = Client::where('id', Auth::user()->client_id)->lists('name','id');
+            $this->client_id = Auth::user()->client_id;
+        }
 
 
         View::share('superadmin', $this->superadmin);

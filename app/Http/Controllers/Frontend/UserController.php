@@ -13,6 +13,7 @@ use App\Models\Translation;
 use App\Library\Dictionary;
 use Session;
 use Auth;
+use App;
 
 
 class UserController extends AppFrontendController
@@ -46,10 +47,17 @@ class UserController extends AppFrontendController
         $this->evaluationUserEvaluatorRepository->pushCriteria(new EvaluationUserEvaluatorCriteria());
         $evaluationUserEvaluators = $this->evaluationUserEvaluatorRepository->all();
         $is_stage_three = $this->evaluationRepository->isStageThree();
+        $total_evaluations = $this->evaluationUserEvaluatorRepository->getTotalEvaluations();
+        $completed = $this->evaluationUserEvaluatorRepository->getCompletedEvaluations();
+        $global_performance = $this->evaluationUserEvaluatorRepository->getTotalAverage();
         return view('frontend.users')
             ->with('evaluationUserEvaluators', $evaluationUserEvaluators)
             ->with('eue', $this->eue)
-            ->with('is_stage_three', $is_stage_three);
+            ->with('is_stage_three', $is_stage_three)
+            ->with('total_evaluations', $total_evaluations)
+            ->with('completed', $completed)
+            ->with('global_performance', $global_performance);
+            
 
     }
 }

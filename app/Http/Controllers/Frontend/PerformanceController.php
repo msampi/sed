@@ -61,7 +61,8 @@ class PerformanceController extends AppFrontendController
         $viewControlls->evaluationId = Session::get('evaluation_id');
         $viewControlls->userId = $this->user->id;
         $viewControlls->isEmpleado = $this->is_logged_user;
-
+        $viewControlls->is_stage_three = $this->evaluationRepository->isStageThree();
+        
         $avgUser = $this->objectiveReviewRepository->getAverage($this->user->id,'user') + $this->behaviourRatingRepository->getAverage($this->user->id,'user') + $this->valorationRatingRepository->getAverage($this->user->id,'user');
         
         
@@ -82,6 +83,7 @@ class PerformanceController extends AppFrontendController
                                                         ->with('eue', $this->eue)
                                                         ->with('avgUser', $avgUser)
                                                         ->with('avgEvaluator', $avgEvaluator);
+                                                        
         else
             if (($this->is_logged_user && $performance->finish_user) || (!$this->is_logged_user && $performance->finish_evaluator))
               return view('frontend.performances.edit')->with('performance', $performance)

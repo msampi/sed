@@ -42,6 +42,7 @@ class HomeController extends AppFrontendController
         if ($id)
             Session::set('evaluation_id',$id);
         $this->setCurrentUser();
+        $this->setStatus();
         $evaluation = $this->evaluationRepository->find(Session::get('evaluation_id'));
         $this->trackingRepository->saveTrackingAction($this->tracking->id,'Ingreso al sistema');
         $this->evaluationUserEvaluatorRepository->pushCriteria(new EvaluationUserEvaluatorCriteria());
