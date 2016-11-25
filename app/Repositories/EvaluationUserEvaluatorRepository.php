@@ -13,6 +13,7 @@ use App\Library\EmailSend;
 use App\Models\User;
 use Auth;
 use App;
+use Session;
 
 class EvaluationUserEvaluatorRepository extends AdminBaseRepository
 {
@@ -128,7 +129,7 @@ class EvaluationUserEvaluatorRepository extends AdminBaseRepository
         $behaviourRatingRepository = App::make(BehaviourRatingRepository::class);
         $valorationRatingRepository = App::make(ValorationRatingRepository::class);
         
-        $evaluations = $this->findWhere(['evaluator_id' => Auth::user()->id]);
+        $evaluations = $this->findWhere(['evaluator_id' => Auth::user()->id, 'evaluation_id' => Session::get('evaluation_id')]);
         $average = 0;
         foreach($evaluations as $evaluation)
         {
@@ -137,6 +138,22 @@ class EvaluationUserEvaluatorRepository extends AdminBaseRepository
         }
         
         return $average/$evaluations->count();
+    }
+    
+    public function getTotalUsers()
+    {
+        return $this->findWhere(['evaluator_id' => Auth::user()->id, 'evaluation_id' => Session::get('evaluation_id')])->count();
+    }
+    
+    public function getAgreeUsers()
+    {
+        $evaluations = $this->findWhere(['evaluator_id' => Auth::user()->id, 'evaluation_id' => Session::get('evaluation_id')]);
+        $agree = 0;
+        foreach($evaluations as $evaluation)
+            if ($evaluation->user->performanceEvaluation())
+                if ($evaluation->user->performanceEvaluation()->user_agree)
+                    $agree++;
+        return $agree;
     }
 
 

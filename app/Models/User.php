@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Eloquent as Model;
 use Crypt;
+use Session;
 
 /**
  * Class User
@@ -94,6 +95,13 @@ class User extends Authenticatable
             if ($ev->evaluation_id == $id)
                 return $ev;
         }
+        return NULL;
+    }
+    public function performanceEvaluation(){
+        $performances = $this->hasMany('App\Models\Performance');
+        foreach($performances as $performance)
+            if ($performance->evaluation_id == Session::get('evaluation_id'))
+                return $performance;
         return NULL;
     }
 

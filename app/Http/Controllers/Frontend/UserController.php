@@ -50,13 +50,17 @@ class UserController extends AppFrontendController
         $total_evaluations = $this->evaluationUserEvaluatorRepository->getTotalEvaluations();
         $completed = $this->evaluationUserEvaluatorRepository->getCompletedEvaluations();
         $global_performance = $this->evaluationUserEvaluatorRepository->getTotalAverage();
+        $total_users = $this->evaluationUserEvaluatorRepository->getTotalUsers();
+        $agree_users = $this->evaluationUserEvaluatorRepository->getAgreeUsers();
         return view('frontend.users')
             ->with('evaluationUserEvaluators', $evaluationUserEvaluators)
             ->with('eue', $this->eue)
             ->with('is_stage_three', $is_stage_three)
             ->with('total_evaluations', $total_evaluations)
             ->with('completed', $completed)
-            ->with('global_performance', $global_performance);
+            ->with('global_performance', $global_performance)
+            ->with('total_users', $total_users)
+            ->with('agree_users', $agree_users);
             
 
     }

@@ -33,7 +33,7 @@
             <div style="width: 100%" class="progress-bar"></div>
           </div>
               <span class="progress-description">
-                De 3 participantes
+                {!! $dictionary->translate('De') !!} {!! $total_users !!} {!! $dictionary->translate('participantes') !!}
               </span>
         </div>
         <!-- /.info-box-content -->
@@ -46,13 +46,13 @@
 
         <div class="info-box-content">
           <span class="info-box-text">{!! $dictionary->translate('Ratio de conformidad') !!}</span>
-          <span class="info-box-number">0</span>
+          <span class="info-box-number">{!! $agree_users !!}/{!! $total_users !!}</span>
 
           <div class="progress">
             <div style="width: 70%" class="progress-bar"></div>
           </div>
               <span class="progress-description">
-                De 3 participantes
+                 {!! $dictionary->translate('De') !!} {!! $total_users !!} {!! $dictionary->translate('participantes') !!}
               </span>
         </div>
         <!-- /.info-box-content -->
