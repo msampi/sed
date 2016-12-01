@@ -126,27 +126,27 @@
                     <td>{!! $eua->user->name !!} {!! $eua->user->last_name !!}</td>
                     <td>{!! $eua->created_at->format('d/m/Y') !!}</td>
                     <td>
-                        @if ($ev->getStageStatus(0) == 0)
+                        @if ($ev->getFirstStageStatus() == 0)
                         <small class="label bg-red">{!! $dictionary->translate('No iniciado') !!}</small>
-                        @elseif  ($ev->getStageStatus(0) == 1)
+                        @elseif  ($ev->getFirstStageStatus() == 1)
                         <small class="label bg-orange">{!! $dictionary->translate('Iniciado') !!}</small>
                         @else
                         <small class="label bg-green">{!! $dictionary->translate('Completado') !!}</small>
                         @endif
                     </td>
                     <td>
-                        @if ($ev->getStageStatus(1) == 0)
+                        @if ($ev->getSecondStageStatus() == 0)
                         <small class="label bg-red">{!! $dictionary->translate('No iniciado') !!}</small>
-                        @elseif  ($ev->getStageStatus(1) == 1)
+                        @elseif  ($ev->getSecondStageStatus() == 1)
                         <small class="label bg-orange">{!! $dictionary->translate('Iniciado') !!}</small>
                         @else
                         <small class="label bg-green">{!! $dictionary->translate('Completado') !!}</small>
                         @endif
                     </td>
                     <td>
-                        @if ($ev->getStageStatus(2) == 0)
+                        @if ($ev->getThirdStageStatus() == 0)
                         <small class="label bg-red">{!! $dictionary->translate('No iniciado') !!}</small>
-                        @elseif  ($ev->getStageStatus(2) == 1)
+                        @elseif  ($ev->getThirdStageStatus() == 1)
                         <small class="label bg-orange">{!! $dictionary->translate('Iniciado') !!}</small>
                         @else
                         <small class="label bg-green">{!! $dictionary->translate('Completado') !!}</small>
